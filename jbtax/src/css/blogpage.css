@@ -1,0 +1,277 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* General Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+/* Header Styles */
+header {
+    background: #0077cc; /* Match background color */
+    color: #fff;
+    padding: 10px 20px; /* Adjust padding to match blog-post.css */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Match box shadow */
+    display: flex;
+    justify-content: space-between; /* Space between logo and navigation */
+    align-items: center; /* Align items vertically */
+    box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+}
+
+/* Navigation */
+header nav {
+    display: flex; /* Ensure the nav and its items are laid out in a row */
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center; /* Vertically align items in the center */
+}
+
+header nav ul li {
+    margin-left: 20px; /* Adjust margin for spacing */
+}
+
+header nav ul li:first-child {
+    margin-left: 0; /* Remove left margin from the first item */
+}
+
+header nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+    display: block; /* Ensure the entire area is clickable */
+}
+
+header nav ul li a.active,
+header nav ul li a:hover {
+    color: #ffffff;
+}
+
+/* Get Started Button (Positioned on the far right) */
+.get-started-button {
+    background-color: #ffcc00;
+    color: #00274d;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: auto; /* Pushes the button to the right */
+}
+
+.get-started-button:hover {
+    background-color: #ff9900; /* Darker yellow on hover */
+}
+
+
+
+/* Main Content Styles */
+main {
+    padding: 80px 20px 20px; /* Adjust top padding to account for fixed header */
+}
+
+/* Blog Header with Background Image */
+.blog-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 100px 20px;
+    background: url('images/peru-scaled.jpeg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    color: #fff; /* White text */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.blog-header h2 {
+    margin: 0;
+    font-size: 2.5em; /* Match font size */
+    z-index: 1;
+    position: relative;
+    padding: 10px 20px;
+    background-color: rgba(14, 20, 106, 0.8); /* Semi-transparent background for the banner */
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.blog-header p {
+    font-size: 1.2em;
+    color: #56a814;
+    z-index: 1;
+    position: relative;
+    margin-top: 15px;
+}
+
+/* Blog Posts Container */
+.blog-posts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Individual Blog Post */
+.blog-post {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: calc(33.333% - 20px); /* Three posts per row */
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.blog-post img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+}
+
+.blog-post-content {
+    padding: 20px;
+}
+
+.blog-post-content h3 {
+    margin: 0 0 10px;
+    font-size: 1.4em;
+}
+
+.blog-post-content h3 a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-post-content h3 a:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+
+.blog-post-content .date {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.blog-post-content p {
+    margin: 0 0 10px;
+    color: #555;
+}
+
+.blog-post-content .read-more {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.blog-post-content .read-more:hover {
+    color: #1c7430;
+    text-decoration: underline;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
+.pagination a.active {
+    background: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
+/* Footer Styles */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer h2 {
+    margin: 0 0 10px;
+    font-size: 1.8em;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+footer .social-media {
+    margin-top: 15px;
+}
+
+footer .social-media a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+footer .social-media a:hover {
+    color: #28a745;
+    text-decoration: underline;
+}

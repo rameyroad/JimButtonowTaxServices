@@ -1,0 +1,173 @@
+/* Include header styles */
+@import url('header.css');
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Main content padding to avoid being hidden behind fixed header */
+main {
+    padding-top: 80px; /* Adjust this value based on the header height */
+}
+
+/* Blog Header */
+.blog-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: #140556;
+    color: #fff;
+    padding: 2rem 1rem;
+    margin-top: 4rem;
+}
+
+
+/* Blog Header */
+.blog-header {
+    display: flex;
+    flex-direction: column; /* Stack title and image vertically */
+    justify-content: center;
+    align-items: flex-start; /* Align items to the start of the container */
+    background: #140556;
+    color: #fff;
+    padding: 2rem 1rem;
+    margin-top: 4rem; /* To ensure it is below the fixed header */
+}
+
+.blog-header .header-content {
+    display: flex;
+    flex-direction: row; /* Arrange title and image in a row */
+    justify-content: space-between; /* Space between title and image */
+    align-items: center; /* Align items vertically */
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.blog-header .blog-post-title {
+    margin-right: 10rem; /* Space between title and image */
+    text-align: left; /* Align title text to the right */
+}
+
+.blog-header .blog-post-title h2 {
+    font-size: 3rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.blog-header .blog-post-image {
+    text-align: right; /* Align image to the right */
+}
+
+.blog-header .blog-post-image img {
+    width: 600px; /* Make the image responsive */
+    height: auto;
+    border-radius: 20px;
+}
+
+.blog-post-content {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-content p.date {
+    color: #888;
+    font-size: 0.9rem;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.blog-post-content p {
+    margin: 1rem 0;
+}
+
+.related-articles {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.related-articles h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.article-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.related-article {
+    flex: 1 1 calc(33.333% - 1rem);
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.related-article img {
+    width: 100%;
+    height: auto;
+}
+
+.related-article-content {
+    padding: 1rem;
+}
+
+.related-article-content h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.related-article-content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.related-article-content a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background: #333;
+    color: #fff;
+}
+
+footer h2 {
+    margin-bottom: 1rem;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+.social-media a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.social-media a:hover {
+    text-decoration: underline;
+}
