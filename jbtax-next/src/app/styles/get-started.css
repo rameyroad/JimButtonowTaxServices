@@ -1,0 +1,52 @@
+/* Include header styles */
+@import url('header.css');
+
+/* Offset for the fixed header */
+main {
+    padding-top: 80px; /* Adjust this value based on the height of your header */
+}
+
+
+/* Fixed Header */
+.fixed-header {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.fixed-header .logo h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.fixed-header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.fixed-header nav ul li {
+    margin-left: 20px;
+    position: relative;
+}
+
+.fixed-header nav ul li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.fixed-header nav ul li a:hover,
+.fixed-header nav ul li a.active {
+    color: #0077cc;
+    border-bottom: 2px solid #0077cc;
+}

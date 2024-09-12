@@ -1,0 +1,43 @@
+/* Header Styles */
+.header {
+    background-color: #fff; /* Background color for the header */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header .logo h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.header nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.header nav ul li {
+    margin-left: 20px;
+    position: relative;
+}
+
+.header nav ul li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.header nav ul li a:hover,
+.header nav ul li a.active {
+    color: #0077cc;
+    border-bottom: 2px solid #0077cc;
+}
