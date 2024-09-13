@@ -90,7 +90,6 @@ nav ul li a {
     /* Match color to fit the theme */
 }
 
-
 /* Dropdown Container */
 .dropdown {
     position: relative;
@@ -129,8 +128,8 @@ nav ul li a {
     display: block;
 
     /* fixed to the left of the window */
-    position: fixed;
-    top: 60px;
+    position: fixed !important;
+    top: 80px;
     left: 0;
 
     width: 100vw;
@@ -276,14 +275,13 @@ main {
 
 .sidebar {
     flex: 4;
-    background-color: #FAF9F6;
+    background-color: #faf9f6;
     padding: 20px;
     margin-left: 10px; /* Adjust the margin-left as needed to move the sidebar to the left */
     order: 1;
     margin-top: -200px;
     margin-bottom: 40px;
 }
-
 
 .sidebar p {
     font-size: 16px;
@@ -327,7 +325,6 @@ form textarea {
 .gform_button:hover {
     background-color: #005b96;
 }
-
 
 /* Footer Styles */
 footer {
