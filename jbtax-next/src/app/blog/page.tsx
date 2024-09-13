@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 
 import "../../styles/blogpage.css";
-// import "../../styles/blog-post.css";
 
 export default function Blog() {
     return (
@@ -32,7 +31,7 @@ export default function Blog() {
                     <h3>Related Articles</h3>
                     <div className="article-grid">
                         <article className="related-article">
-                            <img src="https://via.placeholder.com/300x200" alt="Top 5 Tips for Filing Expat Taxes" />
+                            <img src="" alt="Top 5 Tips for Filing Expat Taxes" />
                             <div className="related-article-content">
                                 <h4>
                                     <a href="blog-post2.html">Top 5 Tips for Filing Expat Taxes</a>
