@@ -1,13 +1,37 @@
-import { Fragment } from "react";
+"use client";
 
+import { useEffect, useState, Fragment } from "react";
+
+// Hero Component
 const Hero = () => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const images = [
+        "/images/Home_-_father_son.webp",
+        "/images/Home_-_backpacking_couple.webp",
+        "/images/Home_-_woman_eiffel-3.webp",
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 3000); // Change image every 3 seconds
+
+        return () => clearInterval(interval); // Cleanup on component unmount
+    }, [images.length]);
+
     return (
         <section className="hero">
             <div className="hero-content">
                 <div className="header-images">
-                    <img src="css/images/Home_-_father_son.webp" alt="Tax Services Image 1" className="active" />
-                    <img src="css/images/Home_-_backpacking_couple.webp" alt="Tax Services Image 2" />
-                    <img src="css/images/Home_-_woman_eiffel-3.webp" alt="Tax Services Image 3" />
+                    {images.map((src, index) => (
+                        <img
+                            key={index}
+                            src={src}
+                            alt={`Tax Services Image ${index + 1}`}
+                            className={currentImageIndex === index ? "active" : ""}
+                        />
+                    ))}
                 </div>
                 <div className="text-content">
                     <h1>US Expat tax services and preparation done right.</h1>
@@ -18,9 +42,11 @@ const Hero = () => {
     );
 };
 
+
+
+// BusinessStats Component
 const BusinessStats = () => {
     return (
-        // <!-- Business Stats Section -->
         <section className="business-stats">
             <div className="stats-item">
                 <h3>10+ Years</h3>
@@ -38,13 +64,13 @@ const BusinessStats = () => {
     );
 };
 
+// HomeContent Component
 const HomeContent = () => {
     return (
-        // <!-- Main Content and Sidebar Section -->
         <div className="content-sidebar-wrapper">
             <main>
                 <div className="main-content">
-                    <div className="container-form-home active" style={{ minHeight: "736px" }}>
+                    <div className="container-form-home" style={{ minHeight: "736px" }}>
                         <h2>Start Your US Expat Tax Return</h2>
                         <form method="post" encType="multipart/form-data" noValidate>
                             <div className="gform-body">
@@ -65,7 +91,7 @@ const HomeContent = () => {
                                         <label htmlFor="country">Country You Currently Live In *</label>
                                         <select id="country" name="country" required>
                                             <option value="">--Select Country--</option>
-                                            {/* <!-- Add more countries as options --> */}
+                                            {/* Add more countries as options */}
                                         </select>
                                     </li>
                                     <li className="gfield">
@@ -80,36 +106,34 @@ const HomeContent = () => {
                         </form>
                     </div>
                 </div>
-
-               
             </main>
 
             <aside className="sidebar">
-                {/* <!-- Add sidebar content here --> */}
                 <h1>Bigger Title</h1>
-                    <ul>
-                        <li>
-                            <h3>Title</h3>
-                            <p>subtext</p>
-                        </li>
-                        <li>
-                            <h3>Title</h3>
-                            <p>subtext</p>
-                        </li>
-                        <li>
-                            <h3>Title</h3>
-                            <p>subtext</p>
-                        </li>
-                        <li>
-                            <h3>Title</h3>
-                            <p>subtext</p>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                </ul>
             </aside>
         </div>
     );
 };
 
+// Main Component
 export default function Home() {
     return (
         <Fragment>
