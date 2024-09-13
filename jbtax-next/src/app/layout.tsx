@@ -5,15 +5,15 @@ import { Header } from "./views/shared/header";
 import { Footer } from "./views/shared/footer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles/styles.css";
+import "../styles/styles.css";
 
 const geistSans = localFont({
-    src: "./fonts/GeistVF.woff",
+    src: "../fonts/GeistVF.woff",
     variable: "--font-geist-sans",
     weight: "100 900",
 });
 const geistMono = localFont({
-    src: "./fonts/GeistMonoVF.woff",
+    src: "../fonts/GeistMonoVF.woff",
     variable: "--font-geist-mono",
     weight: "100 900",
 });
