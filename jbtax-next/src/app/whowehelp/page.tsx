@@ -1,7 +1,5 @@
 import { Fragment } from "react";
 
-import * as BootStrap from "react-bootstrap";
-
 export default function Page() {
     return (
         <Fragment>

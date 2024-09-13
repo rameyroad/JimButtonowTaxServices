@@ -28,7 +28,7 @@ export const Footer = () => {
                     </div>
                 </div>
                 {/* <!-- Middle Columns --> */}
-                <div className="footer-middle">
+                <div className="footer-middle d-sm-none d-md-flex ">
                     <div className="footer-column">
                         <h3>Helpful Links</h3>
                         <ul>

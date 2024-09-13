@@ -21,8 +21,11 @@ body {
     /* White background */
     color: black;
     position: fixed;
-    width: 100%;
+    width: 100vw;
+    /* Full view width */
     top: 0;
+    left: 0;
+    /* Fixed to the left of the window */
     z-index: 1000;
 }
 
@@ -87,7 +90,6 @@ nav ul li a {
     /* Match color to fit the theme */
 }
 
-
 /* Dropdown Container */
 .dropdown {
     position: relative;
@@ -112,9 +114,11 @@ nav ul li a {
     top: 100%;
     left: 0;
     background-color: white;
+    border-radius: 0;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     padding: 10px;
     width: 300px;
+
     /* Adjust width as needed */
     z-index: 1000;
 }
@@ -122,6 +126,13 @@ nav ul li a {
 /* Show Dropdown Menu */
 .dropdown-menu.show {
     display: block;
+
+    /* fixed to the left of the window */
+    position: fixed !important;
+    top: 80px;
+    left: 0;
+
+    width: 100vw;
 }
 
 /* Dropdown Menu Items */
@@ -264,14 +275,13 @@ main {
 
 .sidebar {
     flex: 4;
-    background-color: #FAF9F6;
+    background-color: #faf9f6;
     padding: 20px;
     margin-left: 10px; /* Adjust the margin-left as needed to move the sidebar to the left */
     order: 1;
     margin-top: -200px;
     margin-bottom: 40px;
 }
-
 
 .sidebar p {
     font-size: 16px;
@@ -315,7 +325,6 @@ form textarea {
 .gform_button:hover {
     background-color: #005b96;
 }
-
 
 /* Footer Styles */
 footer {

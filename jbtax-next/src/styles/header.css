@@ -81,3 +81,15 @@
         margin: 10px 0; /* Add margin for spacing on smaller screens */
     }
 }
+
+.navbar-nav > .nav-item.dropdown .dropdown-menu.show {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+    border: 0;
+    background-color: #fdf7ee;
+    display: none;
+    opacity: 0;
+    padding: 1rem var(--t-navbar-padding);
+    transform: translateY(10px);
+}
