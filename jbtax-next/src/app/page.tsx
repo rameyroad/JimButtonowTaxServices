@@ -101,7 +101,7 @@ const HomeContent = () => {
                             <p>You only pay after your draft tax return is completed by your accountant and reviewed by you.</p>
                         </li>
                         <li>
-                            <h3>You're Done</h3>
+                            <h3>You&apos;re Done</h3>
                             <p>Once you submit your payment, your accountant files your taxes for you.</p>
                         </li>
                     </ul>
@@ -126,7 +126,7 @@ const HomeContent = () => {
                             <p>You only pay after your draft tax return is completed by your accountant and reviewed by you.</p>
                         </li>
                         <li>
-                            <h3>You're Done</h3>
+                            <h3>You&apos;re Done</h3>
                             <p>Once you submit your payment, your accountant files your taxes for you.</p>
                         </li>
                     </ul>
@@ -151,7 +151,7 @@ const HomeContent = () => {
                             <p>You only pay after your draft tax return is completed by your accountant and reviewed by you.</p>
                         </li>
                         <li>
-                            <h3>You're Done</h3>
+                            <h3>You&apos;re Done</h3>
                             <p>Once you submit your payment, your accountant files your taxes for you.</p>
                         </li>
                     </ul>
