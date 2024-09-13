@@ -5,9 +5,9 @@ const Hero = () => {
         <section className="hero">
             <div className="hero-content">
                 <div className="header-images">
-                    <img src="css/images/Home_-_father_son.webp" alt="Tax Services Image 1" className="active" />
-                    <img src="css/images/Home_-_backpacking_couple.webp" alt="Tax Services Image 2" />
-                    <img src="css/images/Home_-_woman_eiffel-3.webp" alt="Tax Services Image 3" />
+                    <img src="/images/Home_-_father_son.webp" alt="Tax Services Image 1" className="active" />
+                    <img src="/images/Home_-_backpacking_couple.webp" alt="Tax Services Image 2" />
+                    <img src="/images/Home_-_woman_eiffel-3.webp" alt="Tax Services Image 3" />
                 </div>
                 <div className="text-content">
                     <h1>US Expat tax services and preparation done right.</h1>

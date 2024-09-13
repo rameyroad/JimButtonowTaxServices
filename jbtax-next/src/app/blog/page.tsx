@@ -1,8 +1,9 @@
 import { Fragment } from "react";
 
-import "../styles/blogpage.css";
+import "../../styles/blogpage.css";
+// import "../../styles/blog-post.css";
 
-export default function Page() {
+export default function Blog() {
     return (
         <Fragment>
             <section className="blog-header">
