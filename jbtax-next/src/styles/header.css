@@ -1,8 +1,8 @@
 /* Header Styles */
-.header {
-    background-color: #fff; /* Background color for the header */
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.fixed-header {
+    background-color: #ffffff; /* White background for the header */
+    padding: 0.5rem 1rem; /* Adjusted padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,32 +12,72 @@
     z-index: 1000;
 }
 
-.header .logo h1 {
-    font-size: 24px;
-    color: #333;
-    margin: 0;
+/* Navbar logo styling */
+.fixed-header .navbar-brand img {
+    height: 60px; /* Adjust logo height */
+    width: auto; /* Maintain aspect ratio */
 }
 
-.header nav ul {
-    list-style: none;
+/* Navbar link styles */
+.navbar-nav .nav-link {
+    color: #333; /* Default link color */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0077cc; /* Hover color */
+    border-bottom: 2px solid #0077cc; /* Underline on hover */
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    min-width: 200px; /* Minimum width for dropdown */
+}
+
+/* Contact info styling */
+.contact-info {
     display: flex;
-    margin: 0;
-    padding: 0;
+    align-items: center;
 }
 
-.header nav ul li {
-    margin-left: 20px;
-    position: relative;
+.contact-info img {
+    height: 24px; /* Icon height */
+    width: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Pointer cursor for clickable icons */
+    margin-right: 10px; /* Space between icons */
 }
 
-.header nav ul li a {
-    color: #333;
+.contact-info img:last-of-type {
+    margin-right: 0; /* Remove margin for the last icon */
+}
+
+.btn-primary {
+    margin-left: 15px; /* Space between contact buttons and Get Started button */
+}
+
+/* Get Started Button */
+.get-started-button {
+    background-color: #ffcc00; /* Yellow background */
+    color: #00274d; /* Dark blue text */
+    padding: 10px 20px;
     text-decoration: none;
-    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: auto; /* Pushes the button to the right within flex container */
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
-.header nav ul li a:hover,
-.header nav ul li a.active {
-    color: #0077cc;
-    border-bottom: 2px solid #0077cc;
+.get-started-button:hover {
+    background-color: #ff9900; /* Darker yellow on hover */
+    color: white; /* White text color on hover */
+}
+
+/* Ensure responsive design */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center; /* Center align nav items on smaller screens */
+    }
+    
+    .get-started-button {
+        margin: 10px 0; /* Add margin for spacing on smaller screens */
+    }
 }

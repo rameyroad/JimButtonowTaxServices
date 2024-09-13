@@ -81,87 +81,30 @@ const HomeContent = () => {
                     </div>
                 </div>
 
-                <section className="how-it-works">
-                    <h1>How it Works</h1>
-                    <ul>
-                        <li>
-                            <h3>Greenback Tax Companion Account</h3>
-                            <p>Fill out this form to create your account and set your password.</p>
-                        </li>
-                        <li>
-                            <h3>Your Accountant</h3>
-                            <p>Your personal accountant will contact you within 1 business day to get you started.</p>
-                        </li>
-                        <li>
-                            <h3>Tax Prep</h3>
-                            <p>Your accountant will work with you to ensure your tax return is done swiftly and accurately.</p>
-                        </li>
-                        <li>
-                            <h3>Draft Complete and Payment</h3>
-                            <p>You only pay after your draft tax return is completed by your accountant and reviewed by you.</p>
-                        </li>
-                        <li>
-                            <h3>You're Done</h3>
-                            <p>Once you submit your payment, your accountant files your taxes for you.</p>
-                        </li>
-                    </ul>
-                </section>
-                <section className="how-it-works">
-                    <h1>How it Works</h1>
-                    <ul>
-                        <li>
-                            <h3>Greenback Tax Companion Account</h3>
-                            <p>Fill out this form to create your account and set your password.</p>
-                        </li>
-                        <li>
-                            <h3>Your Accountant</h3>
-                            <p>Your personal accountant will contact you within 1 business day to get you started.</p>
-                        </li>
-                        <li>
-                            <h3>Tax Prep</h3>
-                            <p>Your accountant will work with you to ensure your tax return is done swiftly and accurately.</p>
-                        </li>
-                        <li>
-                            <h3>Draft Complete and Payment</h3>
-                            <p>You only pay after your draft tax return is completed by your accountant and reviewed by you.</p>
-                        </li>
-                        <li>
-                            <h3>You're Done</h3>
-                            <p>Once you submit your payment, your accountant files your taxes for you.</p>
-                        </li>
-                    </ul>
-                </section>
-                <section className="how-it-works">
-                    <h1>FILLER CONTENT</h1>
-                    <ul>
-                        <li>
-                            <h3>Greenback Tax Companion Account</h3>
-                            <p>Fill out this form to create your account and set your password.</p>
-                        </li>
-                        <li>
-                            <h3>Your Accountant</h3>
-                            <p>Your personal accountant will contact you within 1 business day to get you started.</p>
-                        </li>
-                        <li>
-                            <h3>Tax Prep</h3>
-                            <p>Your accountant will work with you to ensure your tax return is done swiftly and accurately.</p>
-                        </li>
-                        <li>
-                            <h3>Draft Complete and Payment</h3>
-                            <p>You only pay after your draft tax return is completed by your accountant and reviewed by you.</p>
-                        </li>
-                        <li>
-                            <h3>You're Done</h3>
-                            <p>Once you submit your payment, your accountant files your taxes for you.</p>
-                        </li>
-                    </ul>
-                </section>
+               
             </main>
 
             <aside className="sidebar">
                 {/* <!-- Add sidebar content here --> */}
-                <h2>Sidebar Title</h2>
-                <p>Sidebar content goes here. You can add links, information, or additional features here.</p>
+                <h1>Bigger Title</h1>
+                    <ul>
+                        <li>
+                            <h3>Title</h3>
+                            <p>subtext</p>
+                        </li>
+                        <li>
+                            <h3>Title</h3>
+                            <p>subtext</p>
+                        </li>
+                        <li>
+                            <h3>Title</h3>
+                            <p>subtext</p>
+                        </li>
+                        <li>
+                            <h3>Title</h3>
+                            <p>subtext</p>
+                        </li>
+                    </ul>
             </aside>
         </div>
     );
