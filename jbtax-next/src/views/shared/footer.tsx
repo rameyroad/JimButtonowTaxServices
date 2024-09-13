@@ -18,7 +18,7 @@ export const Footer = () => {
             <div className="footer-content">
                 {/* <!-- Left Side: Logo, Name, Social Media Links --> */}
                 <div className="footer-left">
-                    <img src="https://placehold.co/128x64" alt="Company Logo" className="footer-logo" />
+                    <img src="/images/JL Buttonow banner logo.png"  alt="Company Logo" className="footer-logo" />
                     <h2>Company Name</h2>
                     <div className="social-media">
                         <a href="#">Facebook</a>

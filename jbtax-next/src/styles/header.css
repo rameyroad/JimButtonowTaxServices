@@ -43,7 +43,7 @@
     height: 24px; /* Icon height */
     width: auto; /* Maintain aspect ratio */
     cursor: pointer; /* Pointer cursor for clickable icons */
-    margin-right: 10px; /* Space between icons */
+    margin-right: 20px; /* Space between icons */
 }
 
 .contact-info img:last-of-type {
@@ -62,7 +62,7 @@
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    margin-left: auto; /* Pushes the button to the right within flex container */
+    margin-left: 20px; /* Pushes the button to the right within flex container */
     transition: background-color 0.3s ease; /* Smooth transition */
 }
 
