@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 // import localFont from "next/font/local";
 
-import { Header } from "./views/shared/header";
-import { Footer } from "./views/shared/footer";
+import { Header } from "../views/shared/header";
+import { Footer } from "../views/shared/footer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/styles.css";
