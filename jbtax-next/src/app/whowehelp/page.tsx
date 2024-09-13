@@ -7,7 +7,7 @@ export default function Page() {
         <Fragment>
             {/* Who We Help Hero Section */}
             <section className="wwh-hero">
-                <img src="css/images/peru-scaled.jpeg" alt="Hero Background" className="wwh-hero-img" />
+                <img src="/images/peru-scaled.jpeg" alt="Hero Background" className="wwh-hero-img" />
                 <div className="wwh-hero-content">
                     <h1>Who We Help</h1>
                 </div>
