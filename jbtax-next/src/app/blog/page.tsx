@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 
 import "../../styles/blogpage.css";
+import "../../styles/styles.css";
+
 
 export default function Blog() {
     return (

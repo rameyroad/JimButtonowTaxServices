@@ -19,7 +19,7 @@ export const Footer = () => {
                 {/* <!-- Left Side: Logo, Name, Social Media Links --> */}
                 <div className="footer-left">
                     <img src="/images/JL Buttonow banner logo.png"  alt="Company Logo" className="footer-logo" />
-                    <h2>Company Name</h2>
+                    <h4>We Resolve Problems</h4>
                     <div className="social-media">
                         <a href="#">Facebook</a>
                         <a href="#">Twitter</a>

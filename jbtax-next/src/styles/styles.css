@@ -116,48 +116,56 @@ nav ul li a {
     /* RameyRoad- These styles define basics of the .dropdown-menu, but none are visible due to the display: none; */
     /* When .show is added to the .dropdown-menu, it will be displayed along with the other rules */
 }
-
 /* Show Dropdown Menu */
 .dropdown-menu.show {
     display: block;
-    position: fixed !important; /* RameyRoad- Must be fixed when open (or show) and !important overrides a style lower in the cascade */
-    width: 100vw; /* RameyRoad- Must be 100vw for full window width */
-    top: 80px; /* RameyRoad- Adjust top position to be below the main menu */
+    position: fixed !important;
+    width: 100vw; /* Full viewport width */
+    top: 80px; /* Adjust based on main menu height */
     left: 0;
 }
 
-/* Dropdown Menu Items */
-.dropdown-submenu-icons--nav {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+/* 3x3 Grid for Other Services - Clean Look */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+    gap: 5px; /* Spacing between grid items */
+    width: 100%; /* Full-width display */
 }
 
-.dropdown-submenu-icons--nav .nav-item {
-    margin-bottom: 10px;
+.services-grid .nav-item {
+    text-align: center; /* Center align text for better appearance */
+    font-size: 12px; /* Smaller font size */
 }
 
-.dropdown-submenu-icons--nav .nav-link {
+.services-grid .nav-link {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: #333;
+    background-color: transparent; /* Remove background color */
 }
 
 .nav-link--img img {
-    border-radius: 4px;
+    width: 40px; /* Adjusted image size */
+    height: 40px; /* Adjusted image size */
 }
 
 .nav-link--content {
-    margin-left: 10px;
+    margin-left: 5px; /* Reduced space between image and text */
 }
 
 .nav-link--title {
+    font-size: 12px; /* Smaller font size */
     font-weight: bold;
+    text-align: center; /* Center align title */
 }
 
-.nav-link--description {
-    color: #666;
+/* Make sure dropdown looks clean */
+.dropdown-submenu-icons {
+    background-color: #fff; /* Background color */
+    border: 1px solid #ddd; /* Light border around the dropdown */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 /* Hero Section */
@@ -247,14 +255,22 @@ nav ul li a {
 /* Style the form container to overlap the hero and stats */
 .container-form-home {
     position: absolute;
-    left: 50%; /* Center the container horizontally */
-    transform: translate(10%, -50%); /* Move it to the right */
-    z-index: 2; /* Ensure it's above the hero and stats sections */
-    background: white; /* Background color for the form */
-    padding: 20px; /* Padding around the form */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
-    width: 80%; /* Adjust the width as needed */
-    max-width: 600px; /* Set a maximum width if desired */
+    left: 50%;
+    /* Center the container horizontally */
+    transform: translate(10%, -50%);
+    /* Move it to the right */
+    z-index: 2;
+    /* Ensure it's above the hero and stats sections */
+    background: white;
+    /* Background color for the form */
+    padding: 20px;
+    /* Padding around the form */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Optional: Add shadow for better visibility */
+    width: 80%;
+    /* Adjust the width as needed */
+    max-width: 600px;
+    /* Set a maximum width if desired */
     border-radius: 15px;
 }
 
@@ -268,7 +284,8 @@ main {
     flex: 4;
     background-color: #faf9f6;
     padding: 20px;
-    margin-left: 10px; /* Adjust the margin-left as needed to move the sidebar to the left */
+    margin-left: 10px;
+    /* Adjust the margin-left as needed to move the sidebar to the left */
     order: 1;
     margin-top: -200px;
     margin-bottom: 40px;
@@ -319,14 +336,14 @@ form textarea {
 
 /* Footer Styles */
 footer {
-    background-color: #00274d;
+    background-color: #ffffff;
     /* Dark blue background */
     color: white;
     padding: 20px;
 }
 
 .footer-top {
-    background-color: #003366;
+    background-color: #6BBDD1;
     /* Slightly lighter blue for the top bar */
     padding: 10px 0;
 }
@@ -356,6 +373,7 @@ footer {
 }
 
 .footer-content {
+    color: black;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -375,7 +393,7 @@ footer {
 }
 
 .social-media a {
-    color: white;
+    color: rgb(0, 0, 0);
     margin-right: 10px;
     text-decoration: none;
 }
@@ -398,6 +416,7 @@ footer {
 }
 
 .footer-column h3 {
+    color: black;
     border-bottom: 2px solid #ffcc00;
     padding-bottom: 10px;
     margin-bottom: 10px;
@@ -413,7 +432,7 @@ footer {
 }
 
 .footer-column ul li a {
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
@@ -433,33 +452,48 @@ footer {
 /* Business Stats Section */
 .business-stats {
     display: flex;
-    flex-direction: row; /* Ensure items are in a row */
-    justify-content: flex-start; /* Align items to the left side */
-    background-color: #6bbdd1; /* Background color */
-    padding: 20px; /* Add padding around the section */
-    width: 100%; /* Ensure the container spans the full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    flex-direction: row;
+    /* Ensure items are in a row */
+    justify-content: flex-start;
+    /* Align items to the left side */
+    background-color: #6bbdd1;
+    /* Background color */
+    padding: 20px;
+    /* Add padding around the section */
+    width: 100%;
+    /* Ensure the container spans the full width */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
 }
 
 /* Style for each stats item */
 .stats-item {
-    flex: 0 1 auto; /* Allow items to shrink and grow as needed */
-    margin-right: 20px; /* Space between items */
+    flex: 0 1 auto;
+    /* Allow items to shrink and grow as needed */
+    margin-right: 20px;
+    /* Space between items */
 }
 
 /* Style for headings inside stats items */
 .stats-item h3 {
-    font-size: 24px; /* Font size for the heading */
-    color: #ffffff; /* White color for text */
-    margin: 0; /* Remove default margin */
-    padding-bottom: 5px; /* Add padding below heading */
+    font-size: 24px;
+    /* Font size for the heading */
+    color: #ffffff;
+    /* White color for text */
+    margin: 0;
+    /* Remove default margin */
+    padding-bottom: 5px;
+    /* Add padding below heading */
 }
 
 /* Style for paragraphs inside stats items */
 .stats-item p {
-    font-size: 16px; /* Font size for paragraph */
-    color: #ffffff; /* White color for text */
-    margin: 0; /* Remove default margin */
+    font-size: 16px;
+    /* Font size for paragraph */
+    color: #ffffff;
+    /* White color for text */
+    margin: 0;
+    /* Remove default margin */
 }
 
 /* Get Started Button */
@@ -564,13 +598,25 @@ footer {
     font-size: 1.2rem;
 }
 
+.target-item a {
+    color: black;
+    text-decoration: none;
+}
+
+.target-item a:hover {
+    text-decoration: underline;
+}
+
+
 .difference-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 auto; /* Center the section horizontally */
+    margin: 0 auto;
+    /* Center the section horizontally */
     padding: 60px;
-    max-width: 1200px; /* Set a max-width for the section */
+    max-width: 1200px;
+    /* Set a max-width for the section */
     margin-top: 200px;
 }
 
@@ -580,13 +626,15 @@ footer {
 }
 
 .difference-image img {
-    max-width: 150%; /* Adjust the width of the image */
+    max-width: 150%;
+    /* Adjust the width of the image */
     height: auto;
 }
 
 .difference-content {
     flex: 2;
-    padding-left: 100px; /* Add more space between image and text */
+    padding-left: 100px;
+    /* Add more space between image and text */
 }
 
 .difference-content h1 {
@@ -602,5 +650,6 @@ footer {
 .difference-item p {
     font-size: 1rem;
     margin-bottom: 20px;
-    color: #555; /* Adjust the color */
+    color: #555;
+    /* Adjust the color */
 }
