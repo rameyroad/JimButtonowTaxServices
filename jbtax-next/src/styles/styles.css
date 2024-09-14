@@ -87,7 +87,6 @@ nav ul li a {
     /* Match color to fit the theme */
 }
 
-
 /* Dropdown Container */
 .dropdown {
     position: relative;
@@ -108,20 +107,23 @@ nav ul li a {
 .dropdown-menu {
     display: none;
     /* Hidden by default */
-    position: fixed;
-    top: 100%;
-    left: 0;
     background-color: white;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    width: 300px;
     /* Adjust width as needed */
     z-index: 1000;
+
+    /* RameyRoad- These styles define basics of the .dropdown-menu, but none are visible due to the display: none; */
+    /* When .show is added to the .dropdown-menu, it will be displayed along with the other rules */
 }
 
 /* Show Dropdown Menu */
 .dropdown-menu.show {
     display: block;
+    position: fixed !important; /* RameyRoad- Must be fixed when open (or show) and !important overrides a style lower in the cascade */
+    width: 100vw; /* RameyRoad- Must be 100vw for full window width */
+    top: 80px; /* RameyRoad- Adjust top position to be below the main menu */
+    left: 0;
 }
 
 /* Dropdown Menu Items */
@@ -264,14 +266,13 @@ main {
 
 .sidebar {
     flex: 4;
-    background-color: #FAF9F6;
+    background-color: #faf9f6;
     padding: 20px;
     margin-left: 10px; /* Adjust the margin-left as needed to move the sidebar to the left */
     order: 1;
     margin-top: -200px;
     margin-bottom: 40px;
 }
-
 
 .sidebar p {
     font-size: 16px;
@@ -315,7 +316,6 @@ form textarea {
 .gform_button:hover {
     background-color: #005b96;
 }
-
 
 /* Footer Styles */
 footer {
@@ -371,7 +371,7 @@ footer {
 
 .footer-logo {
     width: 200px;
-    margin-bottom: 10px;    
+    margin-bottom: 10px;
 }
 
 .social-media a {
@@ -572,36 +572,35 @@ footer {
     padding: 60px;
     max-width: 1200px; /* Set a max-width for the section */
     margin-top: 200px;
-  }
-  
-  .difference-image {
+}
+
+.difference-image {
     flex: 1;
     text-align: center;
-  }
-  
-  .difference-image img {
+}
+
+.difference-image img {
     max-width: 150%; /* Adjust the width of the image */
     height: auto;
-  }
-  
-  .difference-content {
+}
+
+.difference-content {
     flex: 2;
     padding-left: 100px; /* Add more space between image and text */
-  }
-  
-  .difference-content h1 {
+}
+
+.difference-content h1 {
     margin-bottom: 20px;
     font-weight: bold;
-  }
-  
-  .difference-item h4 {
+}
+
+.difference-item h4 {
     font-weight: bold;
     margin-bottom: 5px;
-  }
-  
-  .difference-item p {
+}
+
+.difference-item p {
     font-size: 1rem;
     margin-bottom: 20px;
     color: #555; /* Adjust the color */
-  }
-  
+}
