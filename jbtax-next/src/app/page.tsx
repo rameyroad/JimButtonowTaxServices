@@ -122,6 +122,35 @@ const HomeContent = () => {
     );
 };
 
+const DifferenceContent = () => {
+    return (
+        <div className="difference-section">
+            <div className="difference-image">
+                <img src="/images/JL Buttonow CPA Difference logo.png" alt="JL Buttonow CPA Difference logo" />
+            </div>
+            <div className="difference-content">
+                <h1>The JL Buttonow Difference</h1>
+                <div className="difference-item">
+                    <h4>Bold Text Title</h4>
+                    <p>Smaller Descriptive non bold text</p>
+                </div>
+                <div className="difference-item">
+                    <h4>Bold Text Title</h4>
+                    <p>Smaller Descriptive non bold text</p>
+                </div>
+                <div className="difference-item">
+                    <h4>Bold Text Title</h4>
+                    <p>Smaller Descriptive non bold text</p>
+                </div>
+            </div>
+        </div>
+
+    );
+
+};
+
+
+
 // Main Component
 export default function Home() {
     return (
@@ -129,6 +158,7 @@ export default function Home() {
             <Hero />
             <BusinessStats />
             <HomeContent />
+            <DifferenceContent />
         </Fragment>
     );
 }
