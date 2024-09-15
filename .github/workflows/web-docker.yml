@@ -17,7 +17,7 @@ on:
         branches: ["dev", "main"]
         paths:
             - ".github/workflows/web-docker.yml" # when this script changes
-            - "src/lms-app-new/**" # when the Web app changes
+            - "jb-tax-next/**" # when the Web app changes
     # pull_request:
     #   branches: ["dev", "main"]
     #   paths:
