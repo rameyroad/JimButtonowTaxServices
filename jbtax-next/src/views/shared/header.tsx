@@ -347,11 +347,101 @@ export const Header = () => {
                                     </ul>
                                 </div>
                             </DropDownItem>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/contact">
-                                    About
-                                </a>
-                            </li>
+
+                            <DropDownItem title="About">
+                                <div className="dropdown-submenu-icons">
+                                    <ul className="dropdown-submenu-icons--nav">
+                                        <li className="nav-item">
+                                            <a href="/about_firm" className="nav-link">
+                                                <div className="nav-link--img">
+                                                    <img
+                                                        width="40"
+                                                        height="40"
+                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="nav-link--content">
+                                                    <div className="nav-link--title">About Our Firm</div>
+                                                    <div className="nav-link--description"><h3>Brief description</h3></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+
+                                        <li className="nav-item">
+                                            <a href="/contact_us" className="nav-link">
+                                                <div className="nav-link--img">
+                                                    <img
+                                                        width="40"
+                                                        height="40"
+                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="nav-link--content">
+                                                    <div className="nav-link--title">Contact Us</div>
+                                                    <div className="nav-link--description"><h3>Brief description</h3></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+
+                                        <li className="nav-item">
+                                            <a href="/our_partners" className="nav-link">
+                                                <div className="nav-link--img">
+                                                    <img
+                                                        width="40"
+                                                        height="40"
+                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="nav-link--content">
+                                                    <div className="nav-link--title">Our Partners</div>
+                                                    <div className="nav-link--description"><h3>Brief description</h3></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li className="nav-item">
+                                            <a href="/meet_our_tax_professionals" className="nav-link">
+                                                <div className="nav-link--img">
+                                                    <img
+                                                        width="40"
+                                                        height="40"
+                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="nav-link--content">
+                                                    <div className="nav-link--title">Meet Our Tax Professionals</div>
+                                                    <div className="nav-link--description"><h3>Brief description</h3></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li className="nav-item">
+                                            <a href="/newsroom" className="nav-link">
+                                                <div className="nav-link--img">
+                                                    <img
+                                                        width="40"
+                                                        height="40"
+                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="nav-link--content">
+                                                    <div className="nav-link--title">Newsroom</div>
+                                                    <div className="nav-link--description"><h3>Brief descriptiom</h3></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </DropDownItem>
+
                         </ul>
                         <div className="contact-info d-flex align-items-center" style={{ marginLeft: "auto" }}>
                             <img src="/images/phone_icon.png" alt="Copy Phone Number" onClick={() => copyToClipboard("123-456-7890")} />
