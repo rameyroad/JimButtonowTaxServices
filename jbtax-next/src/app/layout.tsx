@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import Script from "next/script";
 // import localFont from "next/font/local";
 
 import { Header } from "../views/shared/header";
