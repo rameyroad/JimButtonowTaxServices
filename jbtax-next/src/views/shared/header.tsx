@@ -17,7 +17,7 @@ const DropDownItem = ({
         setOpen(!open);
     };
 
-    var name = title.replace(" ", "_").toLowerCase();
+    const name = title.replace(" ", "_").toLowerCase();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -249,7 +249,6 @@ export const Header = () => {
                                             </li>
                                             {/* Repeat similar blocks for the remaining services */}
                                         </div>
-
                                     </ul>
                                 </div>
                             </DropDownItem>
@@ -269,11 +268,12 @@ export const Header = () => {
                                                 </div>
                                                 <div className="nav-link--content">
                                                     <div className="nav-link--title">Blog</div>
-                                                    <div className="nav-link--description"><h3>Blog description</h3></div>
+                                                    <div className="nav-link--description">
+                                                        <h3>Blog description</h3>
+                                                    </div>
                                                 </div>
                                             </a>
                                         </li>
-
 
                                         <li className="nav-item">
                                             <a href="/knowledge_center" className="nav-link">
@@ -287,11 +287,12 @@ export const Header = () => {
                                                 </div>
                                                 <div className="nav-link--content">
                                                     <div className="nav-link--title">Knowledge Center</div>
-                                                    <div className="nav-link--description"><h3>Blog description</h3></div>
+                                                    <div className="nav-link--description">
+                                                        <h3>Blog description</h3>
+                                                    </div>
                                                 </div>
                                             </a>
                                         </li>
-
 
                                         <li className="nav-item">
                                             <a href="/articles" className="nav-link">
@@ -305,7 +306,9 @@ export const Header = () => {
                                                 </div>
                                                 <div className="nav-link--content">
                                                     <div className="nav-link--title">Articles</div>
-                                                    <div className="nav-link--description"><h3>Articles description</h3></div>
+                                                    <div className="nav-link--description">
+                                                        <h3>Articles description</h3>
+                                                    </div>
                                                 </div>
                                             </a>
                                         </li>
@@ -322,7 +325,9 @@ export const Header = () => {
                                                 </div>
                                                 <div className="nav-link--content">
                                                     <div className="nav-link--title">Tax Problem Guides</div>
-                                                    <div className="nav-link--description"><h3>Guide description</h3></div>
+                                                    <div className="nav-link--description">
+                                                        <h3>Guide description</h3>
+                                                    </div>
                                                 </div>
                                             </a>
                                         </li>
@@ -339,11 +344,12 @@ export const Header = () => {
                                                 </div>
                                                 <div className="nav-link--content">
                                                     <div className="nav-link--title">FAQS</div>
-                                                    <div className="nav-link--description"><h3>FAQS descriptiom</h3></div>
+                                                    <div className="nav-link--description">
+                                                        <h3>FAQS descriptiom</h3>
+                                                    </div>
                                                 </div>
                                             </a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </DropDownItem>
