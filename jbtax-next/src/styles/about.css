@@ -11,7 +11,6 @@
     background-color: #022e49;
     color: white;
     padding: 40px;
-
 }
 
 .about-content {
@@ -53,4 +52,163 @@
 .part-text p {
     font-size: 16px;
     color: #555;
+}
+
+.meet-our-professionals {
+    padding: 50px 0;
+    background-color: #ffffff;
+}
+
+.meet-our-professionals h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    background-color: #022e49;
+    color: white;
+    padding: 40px;
+}
+
+.professionals-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+.professional {
+    display: flex;
+    align-items: flex-start;
+    max-width: 500px;
+}
+
+.professional-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.professional-details h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.professional-details p {
+    font-size: 14px;
+    color: #777;
+    line-height: 1.4;
+}
+
+/* Add this to your CSS file */
+
+.partners {
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 2000px;
+    margin: 0 auto;
+}
+.container  h1{
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    background-color: #022e49;
+    color: white;
+    padding: 40px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.partner-card {
+    text-align: center;
+}
+
+.partner-card img {
+    width: 100%;
+    height: auto;
+    max-width: 400px; /* Adjust as needed */
+    border-radius: 20px; /* Optional: for rounded corners */
+}
+
+.partner-card p {
+    margin-top: 10px;
+    font-size: 1rem; /* Adjust as needed */
+    color: #333; /* Adjust text color as needed */
+}
+
+/* Add this to your CSS file */
+
+/* Updated CSS for smaller hero image */
+/* Updated CSS for hero image with a centered title card */
+
+/* Hero section */
+.hero-newsroom {
+    position: relative;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    height: 400px; /* Adjust height as needed */
+}
+
+.hero-newsroom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the hero section */
+    display: block;
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 0; /* Position text at the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Adjust width as needed */
+    max-width: 1000px; /* Optional: Set a max width */
+    background-color: #022e49; /* Dark blue background */
+    color: white;
+    padding: 20px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.hero-text h1 {
+    margin: 0;
+    font-size: 3.5rem; /* Adjust font size as needed */
+}
+
+
+/* Articles section */
+.articles {
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.article {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.article h2 {
+    margin-top: 0;
+    font-size: 1.5rem; /* Adjust as needed */
+}
+
+.article p {
+    margin: 10px 0;
+    font-size: 1rem; /* Adjust as needed */
+    color: #333;
 }

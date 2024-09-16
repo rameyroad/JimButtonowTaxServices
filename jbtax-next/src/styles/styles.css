@@ -196,7 +196,6 @@ nav ul li a {
 
 .nav-link--content {
     margin-left: 5px; /* Reduced space between image and text */
-    text-decoration: solid;
 }
 
 .nav-link--title {
@@ -698,4 +697,10 @@ footer {
     margin-bottom: 20px;
     color: #555;
     /* Adjust the color */
+}
+
+/* Add this to your CSS file */
+.spacer {
+    height: 50px; /* Adjust height as needed */
+    background-color: #f8f9fa; /* Optional: background color to blend with the footer */
 }
