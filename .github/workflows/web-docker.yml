@@ -1,8 +1,8 @@
 name: JB_Tax_Web
 
 env:
-  AZURE_WEBAPP_NAME: jb-tax-web # the web app name
-  AZURE_RESOURCE_GROUP: RameyRoad-PPM # the resource group name
+  AZURE_WEBAPP_NAME: rameyroad-jbtax-eus-01 # the web app name
+  AZURE_RESOURCE_GROUP: jbtax # the resource group name
   CONTAINER_NAME: clients/jbtax-web # the container name
   SLOT_NAME: staging
   BRANCH_NAME: ${GITHUB_REF##*/}
