@@ -10,7 +10,7 @@ const OurPartnersPage = () => {
     const partners = [
         { name: "Partner One", imageSrc: "/images/wolterskluwerlogo.jpg" },
         { name: "Partner Two", imageSrc: "/images/Home_-_woman_eiffel-3.webp" },
-        { name: "Partner Three", imageSrc: "/images/Home_-_father_son.jpeg" },
+        { name: "Partner Three", imageSrc: "/images/Home_-_father_son.webp" },
     ];
 
     return (
