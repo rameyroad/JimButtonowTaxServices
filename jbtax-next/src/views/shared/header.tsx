@@ -17,7 +17,7 @@ const DropDownItem = ({
         setOpen(!open);
     };
 
-    const name = title.replace(" ", "_").toLowerCase();
+    var name = title.replace(" ", "_").toLowerCase();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -92,7 +92,7 @@ export const Header = () => {
                                     <ul className="dropdown-submenu-icons--nav">
                                         {/* Main Service */}
                                         <li className="nav-item main-service">
-                                            <a href="/#" className="nav-link">
+                                            <a href="/service_main" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
@@ -158,13 +158,13 @@ export const Header = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="/service/3" className="nav-link">
+                                                <a href="/service/4" className="nav-link">
                                                     <div className="nav-link--img">
                                                         <img
                                                             width="40"
                                                             height="40"
                                                             src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                            alt="Service 3"
+                                                            alt="Service 4"
                                                         />
                                                     </div>
                                                     <div className="nav-link--content">
@@ -173,13 +173,13 @@ export const Header = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="/service/3" className="nav-link">
+                                                <a href="/service/5" className="nav-link">
                                                     <div className="nav-link--img">
                                                         <img
                                                             width="40"
                                                             height="40"
                                                             src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                            alt="Service 3"
+                                                            alt="Service 5"
                                                         />
                                                     </div>
                                                     <div className="nav-link--content">
@@ -188,13 +188,13 @@ export const Header = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="/service/3" className="nav-link">
+                                                <a href="/service/6" className="nav-link">
                                                     <div className="nav-link--img">
                                                         <img
                                                             width="40"
                                                             height="40"
                                                             src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                            alt="Service 3"
+                                                            alt="Service 6"
                                                         />
                                                     </div>
                                                     <div className="nav-link--content">
@@ -203,13 +203,13 @@ export const Header = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="/service/3" className="nav-link">
+                                                <a href="/service/7" className="nav-link">
                                                     <div className="nav-link--img">
                                                         <img
                                                             width="40"
                                                             height="40"
                                                             src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                            alt="Service 3"
+                                                            alt="Service 7"
                                                         />
                                                     </div>
                                                     <div className="nav-link--content">
@@ -218,13 +218,13 @@ export const Header = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="/service/3" className="nav-link">
+                                                <a href="/service/8" className="nav-link">
                                                     <div className="nav-link--img">
                                                         <img
                                                             width="40"
                                                             height="40"
                                                             src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                            alt="Service 3"
+                                                            alt="Service 8"
                                                         />
                                                     </div>
                                                     <div className="nav-link--content">
@@ -233,13 +233,13 @@ export const Header = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="/service/3" className="nav-link">
+                                                <a href="/service/9" className="nav-link">
                                                     <div className="nav-link--img">
                                                         <img
                                                             width="40"
                                                             height="40"
                                                             src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                            alt="Service 3"
+                                                            alt="Service 9"
                                                         />
                                                     </div>
                                                     <div className="nav-link--content">
@@ -249,6 +249,7 @@ export const Header = () => {
                                             </li>
                                             {/* Repeat similar blocks for the remaining services */}
                                         </div>
+
                                     </ul>
                                 </div>
                             </DropDownItem>
@@ -256,103 +257,81 @@ export const Header = () => {
                             <DropDownItem title="Resources">
                                 <div className="dropdown-submenu-icons">
                                     <ul className="dropdown-submenu-icons--nav">
-                                        <li className="nav-item">
-                                            <a href="/blog" className="nav-link">
+                                        {/* Main Resource */}
+                                        <li className="nav-item main-resource">
+                                            <a href="/resource_main" className="nav-link">
                                                 <div className="nav-link--img">
-                                                    <img
-                                                        width="40"
-                                                        height="40"
-                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                        alt=""
-                                                    />
+                                                    <img width="40" height="40" src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg" alt="" />
                                                 </div>
                                                 <div className="nav-link--content">
-                                                    <div className="nav-link--title">Blog</div>
-                                                    <div className="nav-link--description">
-                                                        <h3>Blog description</h3>
-                                                    </div>
+                                                    <div className="nav-link--title">Resources</div>
+                                                    <div className="nav-link--description"><h5>Resources description</h5></div>
                                                 </div>
                                             </a>
                                         </li>
 
-                                        <li className="nav-item">
-                                            <a href="/knowledge_center" className="nav-link">
-                                                <div className="nav-link--img">
-                                                    <img
-                                                        width="40"
-                                                        height="40"
-                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="nav-link--content">
-                                                    <div className="nav-link--title">Knowledge Center</div>
-                                                    <div className="nav-link--description">
-                                                        <h3>Blog description</h3>
+                                        {/* Grid of 5 resource links */}
+                                        <div className="resources-grid">
+                                            <li className="nav-item">
+                                                <a href="/blog" className="nav-link">
+                                                    <div className="nav-link--img">
+                                                        <img width="40" height="40" src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg" alt="" />
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <a href="/articles" className="nav-link">
-                                                <div className="nav-link--img">
-                                                    <img
-                                                        width="40"
-                                                        height="40"
-                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="nav-link--content">
-                                                    <div className="nav-link--title">Articles</div>
-                                                    <div className="nav-link--description">
-                                                        <h3>Articles description</h3>
+                                                    <div className="nav-link--content">
+                                                        <div className="nav-link--title">Blog</div>
+                                                        <div className="nav-link--description"><p>Blog description</p></div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <a href="/tax_problem_guides" className="nav-link">
-                                                <div className="nav-link--img">
-                                                    <img
-                                                        width="40"
-                                                        height="40"
-                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="nav-link--content">
-                                                    <div className="nav-link--title">Tax Problem Guides</div>
-                                                    <div className="nav-link--description">
-                                                        <h3>Guide description</h3>
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a href="/knowledge_center" className="nav-link">
+                                                    <div className="nav-link--img">
+                                                        <img width="40" height="40" src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg" alt="" />
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <a href="/faqs" className="nav-link">
-                                                <div className="nav-link--img">
-                                                    <img
-                                                        width="40"
-                                                        height="40"
-                                                        src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg"
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="nav-link--content">
-                                                    <div className="nav-link--title">FAQS</div>
-                                                    <div className="nav-link--description">
-                                                        <h3>FAQS descriptiom</h3>
+                                                    <div className="nav-link--content">
+                                                        <div className="nav-link--title">Knowledge Center</div>
+                                                        <div className="nav-link--description"><p>Knowledge Center description</p></div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a href="/articles" className="nav-link">
+                                                    <div className="nav-link--img">
+                                                        <img width="40" height="40" src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg" alt="" />
+                                                    </div>
+                                                    <div className="nav-link--content">
+                                                        <div className="nav-link--title">Articles</div>
+                                                        <div className="nav-link--description"><p>Articles description</p></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a href="/tax_problem_guides" className="nav-link">
+                                                    <div className="nav-link--img">
+                                                        <img width="40" height="40" src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg" alt="" />
+                                                    </div>
+                                                    <div className="nav-link--content">
+                                                        <div className="nav-link--title">Tax Problem Guides</div>
+                                                        <div className="nav-link--description"><p>Guide description</p></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a href="/faqs" className="nav-link">
+                                                    <div className="nav-link--img">
+                                                        <img width="40" height="40" src="https://www.greenbacktaxservices.com/wp-content/uploads/2022/12/noun-knowledge-2176167-1.svg" alt="" />
+                                                    </div>
+                                                    <div className="nav-link--content">
+                                                        <div className="nav-link--title">FAQs</div>
+                                                        <div className="nav-link--description"><p>FAQs description</p></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div>
                                     </ul>
                                 </div>
                             </DropDownItem>
+
 
                             <DropDownItem title="About">
                                 <div className="dropdown-submenu-icons">
@@ -462,3 +441,4 @@ export const Header = () => {
         </header>
     );
 };
+

@@ -97,7 +97,7 @@ nav ul li a {
     display: block;
     padding: 10px 20px;
     background-color: #ffffff;
-    color: #00274d;
+    color: #000000;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
@@ -130,6 +130,7 @@ nav ul li a {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
     gap: 5px; /* Spacing between grid items */
+    padding: 10px; /* Padding around the grid */
     width: 100%; /* Full-width display */
 }
 
@@ -146,6 +147,48 @@ nav ul li a {
     background-color: transparent; /* Remove background color */
 }
 
+/* 3x2 Grid for Resources Dropdown - Clean Look */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns in the first row */
+    gap: 5px; /* Spacing between grid items */
+    padding: 10px; /* Padding around the grid */
+    width: 100%; /* Full-width display */
+}
+
+/* Center align text and adjust font size for each item */
+.resources-grid .nav-item {
+    text-align: center; /* Center align text */
+    font-size: 12px; /* Smaller font size */
+}
+
+/* Style for each link inside the grid */
+.resources-grid .nav-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333; /* Default text color */
+    background-color: transparent; /* No background color */
+}
+
+/* Optional: Style for image and text alignment */
+.resources-grid .nav-link--img {
+    margin-right: 10px; /* Spacing between the image and text */
+}
+
+.resources-grid .nav-link--content {
+    display: flex;
+    flex-direction: column; /* Stack title and description vertically */
+}
+
+.resources-grid .nav-link--title {
+    font-weight: bold; /* Bold titles */
+}
+
+.resources-grid .nav-link--description {
+    font-size: 0.9rem; /* Adjust description text size */
+}
+
 .nav-link--img img {
     width: 40px; /* Adjusted image size */
     height: 40px; /* Adjusted image size */
@@ -153,6 +196,7 @@ nav ul li a {
 
 .nav-link--content {
     margin-left: 5px; /* Reduced space between image and text */
+    text-decoration: solid;
 }
 
 .nav-link--title {
@@ -201,6 +245,8 @@ nav ul li a {
 }
 
 .header-images img {
+    position: absolute;
+    top: 0;
     width: 100%;
     /* Stretch to cover full width of container */
     height: 100%;
@@ -209,7 +255,7 @@ nav ul li a {
     /* Maintain aspect ratio */
     opacity: 0;
     /* Hidden by default */
-    transition: opacity 1s ease-in-out;
+    transition: opacity 2s ease-in-out;
     /* Smooth fade effect */
 }
 
