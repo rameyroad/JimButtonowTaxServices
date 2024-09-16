@@ -337,7 +337,7 @@ export const Header = () => {
                                 <div className="dropdown-submenu-icons">
                                     <ul className="dropdown-submenu-icons--nav">
                                         <li className="nav-item">
-                                            <a href="/about_firm" className="nav-link">
+                                            <a href="/about/our_firm" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
@@ -355,7 +355,7 @@ export const Header = () => {
 
 
                                         <li className="nav-item">
-                                            <a href="/contact_us" className="nav-link">
+                                            <a href="/contact" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
@@ -373,7 +373,7 @@ export const Header = () => {
 
 
                                         <li className="nav-item">
-                                            <a href="/our_partners" className="nav-link">
+                                            <a href="/about/partners" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
@@ -390,7 +390,7 @@ export const Header = () => {
                                         </li>
 
                                         <li className="nav-item">
-                                            <a href="/meet_our_tax_professionals" className="nav-link">
+                                            <a href="/about/meet_tax_professionals" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
@@ -407,7 +407,7 @@ export const Header = () => {
                                         </li>
 
                                         <li className="nav-item">
-                                            <a href="/newsroom" className="nav-link">
+                                            <a href="/about/newsroom" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"

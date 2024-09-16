@@ -14,12 +14,6 @@ body {
     background: #f4f4f4;
 }
 
-
-/* Main Content Styles */
-main {
-    padding: 80px 20px 20px; /* Adjust top padding to account for fixed header */
-}
-
 /* Blog Header with Background Image */
 .blog-header {
     text-align: center;
@@ -64,109 +58,90 @@ main {
     margin-top: 15px;
 }
 
-/* Blog Posts Container */
-.blog-posts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+/* Blog Post Content Styles */
+main {
+    padding: 40px 20px; /* Ensure spacing */
 }
 
-/* Individual Blog Post */
-.blog-post {
+/* Related Articles Section */
+.related-articles {
+    margin-top: 40px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.related-articles h3 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* Flexbox Grid for Related Articles */
+.article-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between articles */
+    justify-content: space-between; /* Distribute articles evenly */
+}
+
+/* Individual Related Article */
+.related-article {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    width: calc(33.333% - 20px); /* Three posts per row */
-    margin: 10px 0;
+    width: calc(33.333% - 20px); /* Three articles per row */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.blog-post:hover {
+.related-article:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.blog-post img {
+.related-article img {
     width: 100%;
     height: auto;
     border-bottom: 1px solid #ddd;
-    border-radius: 8px 8px 0 0;
 }
 
-.blog-post-content {
-    padding: 20px;
+.related-article-content {
+    padding: 15px;
 }
 
-.blog-post-content h3 {
-    margin: 0 0 10px;
-    font-size: 1.4em;
-}
-
-.blog-post-content h3 a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.blog-post-content h3 a:hover {
-    color: #28a745;
-    text-decoration: underline;
-}
-
-.blog-post-content .date {
-    color: #888;
-    font-size: 0.9em;
+.related-article-content h4 {
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
-.blog-post-content p {
-    margin: 0 0 10px;
-    color: #555;
-}
-
-.blog-post-content .read-more {
-    color: #28a745;
+.related-article-content h4 a {
+    color: #333;
     text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 10px;
     transition: color 0.3s ease;
 }
 
-.blog-post-content .read-more:hover {
-    color: #1c7430;
+.related-article-content h4 a:hover {
+    color: #28a745;
     text-decoration: underline;
 }
 
-/* Pagination */
-.pagination {
-    text-align: center;
-    margin-top: 40px;
+.related-article-content p {
+    color: #555;
+    margin: 0;
 }
 
-.pagination a {
-    margin: 0 5px;
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: background 0.3s ease, color 0.3s ease;
+/* Responsive Design for smaller screens */
+@media screen and (max-width: 768px) {
+    .related-article {
+        width: calc(50% - 20px); /* Two articles per row on tablet */
+    }
 }
 
-.pagination a:hover {
-    background: #28a745;
-    color: #fff;
-    border-color: #28a745;
+@media screen and (max-width: 480px) {
+    .related-article {
+        width: 100%; /* One article per row on mobile */
+    }
 }
-
-.pagination a.active {
-    background: #28a745;
-    color: #fff;
-    border-color: #28a745;
-}
-
