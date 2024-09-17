@@ -1,5 +1,4 @@
 .about-our-firm {
-    padding: 50px 0;
     background-color: #f9f9f9;
 
 }
@@ -55,8 +54,7 @@
 }
 
 .meet-our-professionals {
-    padding: 50px 0;
-    background-color: #ffffff;
+    background-color: #faf9f6;
 }
 
 .meet-our-professionals h2 {
@@ -105,7 +103,6 @@
 /* Add this to your CSS file */
 
 .partners {
-    padding: 20px;
     text-align: center;
 }
 
