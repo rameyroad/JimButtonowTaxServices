@@ -396,26 +396,28 @@ footer {
 .partner-section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Space between text and images */
     max-width: 1200px;
     margin: 0 auto;
+    padding: 20px; /* Add some padding for better spacing */
 }
 
 .partner-section span {
-    margin-left: 20px;
+    font-size: 1.5rem; /* Make the text bigger */
     font-weight: bold;
 }
 
 .partner-images {
     display: flex;
     align-items: center;
+    gap: 20px; /* Even spacing between images */
 }
 
 .partner-images img {
-    height: 40px;
-    /* Adjust size as needed */
-    margin-right: 20px;
+    height: 80px; /* Adjust size as needed */
 }
+
+
 
 .footer-content {
     color: black;
@@ -703,4 +705,143 @@ footer {
 .spacer {
     height: 50px; /* Adjust height as needed */
     background-color: #f8f9fa; /* Optional: background color to blend with the footer */
+}
+
+.reviews-section {
+    padding: 40px 20px;
+    background-color: #faf9f6;
+    margin-top: 20px;
+}
+
+.reviews-wrapper {
+    display: flex;
+    justify-content: center; /* Align content closer together */
+    align-items: flex-start;
+    gap: 20px; /* Reduced gap for better alignment */
+    width: 100%; /* Ensure full width */
+}
+
+.testimonial-intro {
+    flex: 1;
+    background: #022e49;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 250px;
+    height: 300px;
+}
+
+.individual-reviews {
+    flex: 3; /* Make more space for reviews */
+    display: flex;
+    gap: 20px; /* Reduced gap for tighter layout */
+    width: 100%;
+    max-width: 600px;
+}
+
+.review {
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 45%; /* Ensures two reviews fit side by side */
+}
+
+.review span {
+    display: block;
+    text-align: right;
+    color: #6BBDD1;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .reviews-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .testimonial-intro {
+        font-size: 1.2em;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .individual-reviews {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+}
+
+.what-we-deliver {
+    padding: 40px 20px;
+    background-color: #fafafa;
+    margin-top: 40px;
+}
+
+.what-we-deliver h1 {
+    font-size: 4em;
+    text-align: center;
+    margin-bottom: 40px;
+    text-decoration: solid;
+}
+
+.deliver-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.deliver-left {
+    flex: 1;
+}
+
+.deliver-item {
+    margin-bottom: 30px;
+}
+
+.deliver-item h3 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.deliver-item p {
+    font-size: 1.2em;
+    color: #000000;
+    margin-left: 20px;
+}
+
+.deliver-right {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #faf9f6;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.deliver-right img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .deliver-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .deliver-right {
+        margin-top: 20px;
+        width: 100%;
+    }
 }

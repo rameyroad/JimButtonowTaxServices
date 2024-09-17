@@ -6,11 +6,10 @@ export const Footer = () => {
                 <div className="partner-section">
                     <span>Featured In:</span>
                     <div className="partner-images">
-                        <img src="https://placehold.co/64x64" alt="Partner 1" />
-                        <img src="https://placehold.co/64x64" alt="Partner 2" />
-                        <img src="https://placehold.co/64x64" alt="Partner 3" />
-                        {/* <!-- Add more partner images as needed --> */}
-                        <img src="https://placehold.co/64x64" alt="Blank Image" />
+                        <img src="/images/accounttoday.png" alt="Partner 1" />
+                        <img src="/images/taxhandbook.png" alt="Partner 2" />
+                        <img src="/images/wolterskluwerlogo.jpg" alt="Partner 3" />
+                        <img src="/images/JacksonHewitt.png" alt="Blank Image" />
                     </div>
                 </div>
             </div>

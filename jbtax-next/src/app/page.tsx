@@ -149,6 +149,67 @@ const DifferenceContent = () => {
 
 };
 
+// ReviewSection Component
+const ReviewSection = () => {
+    return (
+        <section className="reviews-section">
+            <div className="reviews-wrapper">
+                {/* Text Bubble */}
+                <div className="testimonial-intro">
+                    <p>Well take of your problems and make your life stressless.</p>
+                </div>
+
+                {/* Customer Reviews */}
+                <div className="individual-reviews">
+                    <div className="review">
+                        <span>- Susan L. (Germany)</span>
+                        <p>“Samuel was a huge help with our complicated tax situation. Highly recommend!”</p>
+
+                    </div>
+                    <div className="review">
+                        <span>- Michael K. (UK)</span>
+                        <p>“Great service and attention to detail. The best tax services for expats!”</p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const WhatWeDeliver = () => {
+    return (
+
+        <section className="what-we-deliver">
+            <h1>What We Deliver</h1>
+            <div className="deliver-content">
+                <div className="deliver-left">
+                    <ul className="deliver-list">
+                        <li className="deliver-item">
+                            <h3>Expert Guidance</h3>
+                            <p>We provide detailed tax advice tailored for expats.</p>
+                        </li>
+                        <li className="deliver-item">
+                            <h3>Global Coverage</h3>
+                            <p>Serving clients in over 100 countries around the world.</p>
+                        </li>
+                        <li className="deliver-item">
+                            <h3>Client Satisfaction</h3>
+                            <p>Our services are trusted by thousands of expats worldwide.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div className="deliver-right">
+                    <img src="/images/JL Buttonow CPA logo 2.png" alt="What We Deliver Image" />
+                </div>
+            </div>
+        </section>
+
+
+
+
+    );
+};
 
 
 // Main Component
@@ -159,6 +220,8 @@ export default function Home() {
             <BusinessStats />
             <HomeContent />
             <DifferenceContent />
+            <ReviewSection />
+            <WhatWeDeliver />
         </Fragment>
     );
 }
