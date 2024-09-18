@@ -65,7 +65,11 @@ export const Header = () => {
             <nav className="navbar navbar-expand-lg">
                 <div className="container-fluid">
                     <a className="navbar-brand d-flex align-items-center" href="/">
-                        <img src="/images/JL Buttonow banner logo.png" alt="JL Buttonow CPA PLLC Logo" />
+                        <img
+                            src="/images/JL Buttonow banner logo.png"
+                            alt="JL Buttonow CPA PLLC Logo"
+                            style={{ width: '250px', height: 'auto' }} // Adjust size as needed
+                        />
                     </a>
 
                     <button
