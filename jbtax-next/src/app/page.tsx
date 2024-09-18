@@ -64,29 +64,29 @@ const HomeContent = () => {
                         <form method="post" encType="multipart/form-data" noValidate>
                             <div className="gform-body">
                                 <ul className="gform_fields">
-                                    <li className="gfield">
+                                    <ul className="gfield">
                                         <label htmlFor="first-name">First Name *</label>
                                         <input type="text" id="first-name" name="first-name" required />
-                                    </li>
-                                    <li className="gfield">
+                                    </ul>
+                                    <ul className="gfield">
                                         <label htmlFor="last-name">Last Name *</label>
                                         <input type="text" id="last-name" name="last-name" required />
-                                    </li>
-                                    <li className="gfield">
+                                    </ul>
+                                    <ul className="gfield">
                                         <label htmlFor="email">Email Address *</label>
                                         <input type="email" id="email" name="email" required />
-                                    </li>
-                                    <li className="gfield">
+                                    </ul>
+                                    <ul className="gfield">
                                         <label htmlFor="country">Country You Currently Live In *</label>
                                         <select id="country" name="country" required>
                                             <option value="">--Select Country--</option>
                                             {/* Add more countries as options */}
                                         </select>
-                                    </li>
-                                    <li className="gfield">
+                                    </ul>
+                                    <ul className="gfield">
                                         <label htmlFor="comments">Questions or Comments</label>
                                         <textarea id="comments" name="comments" rows={4}></textarea>
-                                    </li>
+                                    </ul>
                                 </ul>
                                 <div className="gform_footer">
                                     <input type="submit" className="gform_button" value="Get Started Now" />
