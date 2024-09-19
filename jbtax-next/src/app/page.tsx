@@ -72,6 +72,30 @@ const HomeContent = () => {
             {/* Button Bar above Sidebar */}
             <aside className="sidebar">
                 <Content pageSlug="home-section" />
+                {/* <div className="consultation-bar">
+                    <a className="consultation-button" href="../../../contact">
+                        Free 30 Minute Consultation With Our Firm
+                    </a>
+                </div>
+                <h1>Bigger Title</h1>
+                <ul>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                    <li>
+                        <h3>Title</h3>
+                        <p>subtext</p>
+                    </li>
+                </ul> */}
             </aside>
 
             <main>
