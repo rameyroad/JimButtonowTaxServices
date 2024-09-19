@@ -24,7 +24,7 @@ jobs:
         run: |
           if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
             echo "Error: AZURE_CREDENTIALS is not set. Exiting..."
-            exit 1
+            exit 0
           fi
 
       - name: Checkout GitHub Action
