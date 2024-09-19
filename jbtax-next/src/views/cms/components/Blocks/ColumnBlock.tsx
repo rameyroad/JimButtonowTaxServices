@@ -1,7 +1,10 @@
 import React, { Fragment } from "react";
 
-import { ItemHtmlBlock, ItemImageBlock, ItemPageBlock, QuoteBlock } from ".";
-import { Block, Item } from "../types/dynamicPage";
+import { Block, Item } from "../../types/dynamicPage";
+import { ItemHtmlBlock } from "./ItemHtmlBlock";
+import { ItemImageBlock } from "./ItemImageBlock";
+import { ItemPageBlock } from "./ItemPageBlock";
+import { QuoteBlock } from "./QuoteBlock";
 
 export interface BlockProps {
     block: Block;
@@ -59,25 +62,21 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
     };
 
     return (
-        <div>
-            <div className="container">
-                <div className="row">
-                    {block.items?.map((item: Item, key: number) => {
-                        return (
-                            <div
-                                key={key}
-                                className={`col col-sm-${getColumWidth(
-                                    "sm",
-                                    block.items?.length ?? 0
-                                )} col-md-${getColumWidth("md", block.items?.length ?? 0)}`}
-                                style={{ padding: "10px" }}
-                            >
-                                {renderItem(item)}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
+        <div className="row">
+            {block.items?.map((item: Item, key: number) => {
+                return (
+                    <div
+                        key={key}
+                        className={`col col-sm-${getColumWidth("sm", block.items?.length ?? 0)} col-md-${getColumWidth(
+                            "md",
+                            block.items?.length ?? 0
+                        )}`}
+                        style={{ padding: "10px" }}
+                    >
+                        {renderItem(item)}
+                    </div>
+                );
+            })}
         </div>
     );
 };

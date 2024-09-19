@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { Item } from "../types/dynamicPage";
+import { Item } from "../../types/dynamicPage";
 
 export interface ItemProps {
     item: Item;

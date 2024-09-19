@@ -31,7 +31,6 @@ body {
     height: auto; /* Maintain aspect ratio */
 }
 
-
 .logo {
     display: flex;
     align-items: center;
@@ -430,7 +429,6 @@ form textarea {
     background-color: #005b96;
 }
 
-
 /* General form styling stays the same */
 .issue-options {
     display: flex;
@@ -490,7 +488,7 @@ form textarea {
     /* Hide the default radio button */
 }
 
-.issue-label input[type="radio"]:checked+.custom-bubble {
+.issue-label input[type="radio"]:checked + .custom-bubble {
     background-color: #00274d;
     /* Change color when checked */
 }
@@ -518,7 +516,6 @@ form textarea {
     background-color: #e65c00; /* Darker color on hover */
 }
 
-
 /* Footer Styles */
 footer {
     background-color: #faf9f6;
@@ -530,7 +527,7 @@ footer {
 }
 
 .footer-top {
-    background-color: #6BBDD1;
+    background-color: #6bbdd1;
     padding: 10px 0;
 }
 
@@ -558,7 +555,6 @@ footer {
     height: 60px;
     /* Ensure image sizes are consistent */
 }
-
 
 .footer-content {
     color: black;
@@ -651,7 +647,6 @@ footer {
 .footer-bottom p {
     margin: 5px 0;
 }
-
 
 /* Business Stats Section */
 .business-stats {
@@ -801,7 +796,7 @@ footer {
     margin-top: 10px;
     font-size: 1.2rem;
 }
-.target-item p{
+.target-item p {
     font-size: 1rem;
     margin-left: 30px;
 }
@@ -814,7 +809,6 @@ footer {
 .target-item a:hover {
     text-decoration: underline;
 }
-
 
 .difference-section {
     display: flex;
@@ -924,7 +918,7 @@ footer {
 .review span {
     display: block;
     text-align: right;
-    color: #6BBDD1;
+    color: #6bbdd1;
     margin-top: 10px;
     font-weight: bold;
 }
@@ -1013,4 +1007,12 @@ footer {
         margin-top: 20px;
         width: 100%;
     }
+}
+
+.main-content {
+    padding: 40px 0;
+}
+
+.main-content .block img {
+    padding: 15px;
 }
