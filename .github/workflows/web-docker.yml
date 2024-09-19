@@ -23,27 +23,19 @@ jobs:
       - name: Check if secret is set
         run: |
           if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
-            echo "AZURE_CREDENTIALS is not set. Stopping the build gracefully..."
-            echo "SECRET_PRESENT=false" >> $GITHUB_ENV
-          else
-            echo "SECRET_PRESENT=true" >> $GITHUB_ENV
+            echo "MY_SECRET is not set. Stopping the build gracefully..."
+            exit 0  # Exit the build gracefully
           fi
 
       - name: Checkout GitHub Action
-        if: env.SECRET_PRESENT == 'true'
-
         uses: actions/checkout@v3
 
       - name: Login via Azure CLI
-        if: env.SECRET_PRESENT == 'true'
-
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Build and push image
-        if: env.SECRET_PRESENT == 'true'
-
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
@@ -51,7 +43,6 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          if: env.SECRET_PRESENT == 'true'
           docker build ./jbtax-next -f jbtax-next/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ env.BRANCH_NAME }}-${{ github.run_id }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ env.BRANCH_NAME }}-${{ github.run_id }}
 
@@ -62,8 +53,6 @@ jobs:
 
     steps:
       - name: Deploy to Azure Web App
-        if: env.SECRET_PRESENT == 'true'
-
         id: deploy-to-webapp
         uses: azure/webapps-deploy@0b651ed7546ecfc75024011f76944cb9b381ef1e
 
@@ -73,8 +62,6 @@ jobs:
           images: "${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:main-${{ github.run_id }}"
 
       - name: Run Azure PowerShell script
-        if: env.SECRET_PRESENT == 'true'
-
         uses: azure/powershell@v1
         with:
           inlineScript: |
