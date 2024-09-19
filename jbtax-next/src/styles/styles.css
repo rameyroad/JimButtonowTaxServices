@@ -26,6 +26,12 @@ body {
     z-index: 1000;
 }
 
+.fixed-header .navbar-brand img {
+    width: 150px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
 .logo {
     display: flex;
     align-items: center;
@@ -348,6 +354,9 @@ nav ul li a {
     /* Set a maximum width if desired */
     border-radius: 15px;
 }
+.container-form-home h2 {
+    text-align: center;
+}
 
 main {
     flex: 3;
@@ -528,31 +537,28 @@ footer {
 .partner-section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    /* Space between text and images */
-    max-width: 1200px;
+    justify-content: center; /* Center text and images horizontally */
+    max-width: auto;
     margin: 0 auto;
     padding: 0 20px;
-    /* Adjusted padding */
 }
 
 .partner-section span {
     font-size: 1rem;
-    /* Smaller text size */
     font-weight: bold;
 }
 
 .partner-images {
     display: flex;
     align-items: center;
-    gap: 10px;
-    /* Reduced spacing between images */
+    gap: 40px; /* Spacing between images */
 }
 
 .partner-images img {
     height: 60px;
-    /* Smaller image size */
+    /* Ensure image sizes are consistent */
 }
+
 
 .footer-content {
     color: black;
@@ -574,9 +580,10 @@ footer {
 }
 
 .footer-logo {
-    width: 150px;
+    width: 300px;
     /* Smaller logo size */
     margin-bottom: 10px;
+    padding-right: 40px;
 }
 
 .social-media a {
@@ -779,7 +786,7 @@ footer {
 }
 
 .target-item {
-    text-align: center;
+    text-align: left;
     max-width: 350px;
     /* Smaller containers */
 }
@@ -793,6 +800,10 @@ footer {
 .target-item h2 {
     margin-top: 10px;
     font-size: 1.2rem;
+}
+.target-item p{
+    font-size: 1rem;
+    margin-left: 30px;
 }
 
 .target-item a {
