@@ -1,12 +1,17 @@
 "use client";
 
+import Content from "@/views/cms/components/Content";
 import { useEffect, useState, Fragment } from "react";
 
 // Hero Component
 const Hero = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const images = ["/images/Home_-_father_son.webp", "/images/Home_-_backpacking_couple.webp", "/images/Home_-_woman_eiffel-3.webp"];
+    const images = [
+        "/images/Home_-_father_son.webp",
+        "/images/Home_-_backpacking_couple.webp",
+        "/images/Home_-_woman_eiffel-3.webp",
+    ];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -21,12 +26,20 @@ const Hero = () => {
             <div className="hero-content">
                 <div className="header-images">
                     {images.map((src, index) => (
-                        <img key={index} src={src} alt={`Tax Services Image ${index + 1}`} className={currentImageIndex === index ? "active" : ""} />
+                        <img
+                            key={index}
+                            src={src}
+                            alt={`Tax Services Image ${index + 1}`}
+                            className={currentImageIndex === index ? "active" : ""}
+                        />
                     ))}
                 </div>
                 <div className="text-content">
                     <h1>US Expat tax services and preparation done right.</h1>
-                    <p>We take the hassle out of filing your American Expat taxes so you can get back to your adventure abroad.</p>
+                    <p>
+                        We take the hassle out of filing your American Expat taxes so you can get back to your adventure
+                        abroad.
+                    </p>
                 </div>
             </div>
         </section>
@@ -58,31 +71,7 @@ const HomeContent = () => {
         <div className="content-sidebar-wrapper">
             {/* Button Bar above Sidebar */}
             <aside className="sidebar">
-                <div className="consultation-bar">
-                    <a href="/contact" className="consultation-button">
-                        Free 30 Minute Consultation With Our Firm
-                    </a>
-                </div>
-
-                <h1>Bigger Title</h1>
-                <ul>
-                    <li>
-                        <h3>Title</h3>
-                        <p>subtext</p>
-                    </li>
-                    <li>
-                        <h3>Title</h3>
-                        <p>subtext</p>
-                    </li>
-                    <li>
-                        <h3>Title</h3>
-                        <p>subtext</p>
-                    </li>
-                    <li>
-                        <h3>Title</h3>
-                        <p>subtext</p>
-                    </li>
-                </ul>
+                <Content pageSlug="home-section" />
             </aside>
 
             <main>
@@ -154,8 +143,6 @@ const HomeContent = () => {
     );
 };
 
-
-
 const DifferenceContent = () => {
     return (
         <div className="difference-section">
@@ -178,9 +165,7 @@ const DifferenceContent = () => {
                 </div>
             </div>
         </div>
-
     );
-
 };
 
 // ReviewSection Component
@@ -198,12 +183,10 @@ const ReviewSection = () => {
                     <div className="review">
                         <span>- Susan L. (Germany)</span>
                         <p>“Samuel was a huge help with our complicated tax situation. Highly recommend!”</p>
-
                     </div>
                     <div className="review">
                         <span>- Michael K. (UK)</span>
                         <p>“Great service and attention to detail. The best tax services for expats!”</p>
-
                     </div>
                 </div>
             </div>
@@ -213,7 +196,6 @@ const ReviewSection = () => {
 
 const WhatWeDeliver = () => {
     return (
-
         <section className="what-we-deliver">
             <h1>What We Deliver</h1>
             <div className="deliver-content">
@@ -238,13 +220,8 @@ const WhatWeDeliver = () => {
                 </div>
             </div>
         </section>
-
-
-
-
     );
 };
-
 
 // Main Component
 export default function Home() {

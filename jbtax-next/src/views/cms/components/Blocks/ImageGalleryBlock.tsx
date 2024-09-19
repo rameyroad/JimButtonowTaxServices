@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Block } from "../types/dynamicPage";
+import { Block } from "../../types/dynamicPage";
 
 export interface BlockProps {
     block: Block;

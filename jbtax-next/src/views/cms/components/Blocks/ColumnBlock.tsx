@@ -1,7 +1,10 @@
 import React, { Fragment } from "react";
 
-import { ItemHtmlBlock, ItemImageBlock, ItemPageBlock, QuoteBlock } from ".";
-import { Block, Item } from "../types/dynamicPage";
+import { Block, Item } from "../../types/dynamicPage";
+import { ItemHtmlBlock } from "./ItemHtmlBlock";
+import { ItemImageBlock } from "./ItemImageBlock";
+import { ItemPageBlock } from "./ItemPageBlock";
+import { QuoteBlock } from "./QuoteBlock";
 
 export interface BlockProps {
     block: Block;

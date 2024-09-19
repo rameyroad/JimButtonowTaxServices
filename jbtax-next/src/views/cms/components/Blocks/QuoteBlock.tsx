@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Block, Item } from "../types/dynamicPage";
+import { Block, Item } from "../../types/dynamicPage";
 
 export interface QuoteBlockProps {
     block?: Block;
