@@ -43,36 +43,62 @@ const HomeContent = () => {
     return (
         <div className="content-sidebar-wrapper">
             <main>
-                <div className="main-content">
+            <div className="main-content">
                     <div className="container-form-home" style={{ minHeight: "736px" }}>
                         <h2>Start Your US Expat Tax Return</h2>
                         <form method="post" encType="multipart/form-data" noValidate>
                             <div className="gform-body">
-                                <ul className="gform_fields">
-                                    <li className="gfield">
-                                        <label htmlFor="first-name">First Name *</label>
+                                <div className="gform_fields">
+                                    <div className="gfield">
+                                        <label htmlFor="first-name">First Name</label>
                                         <input type="text" id="first-name" name="first-name" required />
-                                    </li>
-                                    <li className="gfield">
-                                        <label htmlFor="last-name">Last Name *</label>
+                                    </div>
+                                    <div className="gfield">
+                                        <label htmlFor="last-name">Last Name</label>
                                         <input type="text" id="last-name" name="last-name" required />
-                                    </li>
-                                    <li className="gfield">
-                                        <label htmlFor="email">Email Address *</label>
+                                    </div>
+                                    <div className="gfield">
+                                        <label htmlFor="email">Email Address</label>
                                         <input type="email" id="email" name="email" required />
-                                    </li>
-                                    <li className="gfield">
-                                        <label htmlFor="country">Country You Currently Live In *</label>
-                                        <select id="country" name="country" required>
-                                            <option value="">--Select Country--</option>
-                                            {/* Add more countries as options */}
-                                        </select>
-                                    </li>
-                                    <li className="gfield">
-                                        <label htmlFor="comments">Questions or Comments</label>
-                                        <textarea id="comments" name="comments" rows={4}></textarea>
-                                    </li>
-                                </ul>
+                                    </div>
+
+                                    <div className="gfield issue-options">
+                                        <p>Please select an issue:</p>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="owe-back-taxes" />
+                                            <span className="custom-bubble"></span> Owe Back Taxes
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="irs-audits" />
+                                            <span className="custom-bubble"></span> IRS Audits
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="unified-returns" />
+                                            <span className="custom-bubble"></span> Unified Returns
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="payroll-issues" />
+                                            <span className="custom-bubble"></span> Payroll Issues
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="penalties" />
+                                            <span className="custom-bubble"></span> Penalties
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="state-issues" />
+                                            <span className="custom-bubble"></span> State Issues
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="small-business-issues" />
+                                            <span className="custom-bubble"></span> Small Business Issues
+                                        </label>
+                                        <label className="issue-label">
+                                            <input type="radio" name="issue" value="other" />
+                                            <span className="custom-bubble"></span> Other
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div className="gform_footer">
                                     <input type="submit" className="gform_button" value="Get Started Now" />
                                 </div>
