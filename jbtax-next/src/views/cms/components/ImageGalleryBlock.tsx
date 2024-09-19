@@ -30,9 +30,7 @@ export const ImageGalleryBlock: React.FC<BlockProps> = ({ block }) => {
 
     return (
         <div className="block image-gallery-block">
-            <div className="container">
-                {/* <ImageGallery items={images} showFullscreenButton={false} autoPlay={true} /> */}
-            </div>
+            {/* <ImageGallery items={images} showFullscreenButton={false} autoPlay={true} /> */}
         </div>
     );
 };

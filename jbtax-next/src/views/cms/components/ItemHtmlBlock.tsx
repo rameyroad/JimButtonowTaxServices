@@ -13,13 +13,11 @@ export interface ItemProps {
 export const ItemHtmlBlock: React.FC<ItemProps> = ({ item }) => {
     return (
         <div className="block html-block">
-            <div className="container">
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: item?.body?.value ?? "",
-                    }}
-                />
-            </div>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: item?.body?.value ?? "",
+                }}
+            />
         </div>
     );
 };

@@ -59,25 +59,21 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
     };
 
     return (
-        <div>
-            <div className="container">
-                <div className="row">
-                    {block.items?.map((item: Item, key: number) => {
-                        return (
-                            <div
-                                key={key}
-                                className={`col col-sm-${getColumWidth(
-                                    "sm",
-                                    block.items?.length ?? 0
-                                )} col-md-${getColumWidth("md", block.items?.length ?? 0)}`}
-                                style={{ padding: "10px" }}
-                            >
-                                {renderItem(item)}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
+        <div className="row">
+            {block.items?.map((item: Item, key: number) => {
+                return (
+                    <div
+                        key={key}
+                        className={`col col-sm-${getColumWidth("sm", block.items?.length ?? 0)} col-md-${getColumWidth(
+                            "md",
+                            block.items?.length ?? 0
+                        )}`}
+                        style={{ padding: "10px" }}
+                    >
+                        {renderItem(item)}
+                    </div>
+                );
+            })}
         </div>
     );
 };
