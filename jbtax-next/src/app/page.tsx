@@ -50,7 +50,8 @@ const Hero = () => {
 const BusinessStats = () => {
     return (
         <section className="business-stats">
-            <div className="stats-item">
+            <Content pageSlug="business-stats" />
+            {/* <div className="stats-item">
                 <h3>10+ Years</h3>
                 <p>Experience in Expat Tax Services</p>
             </div>
@@ -61,7 +62,7 @@ const BusinessStats = () => {
             <div className="stats-item">
                 <h3>99%</h3>
                 <p>Client Satisfaction Rate</p>
-            </div>
+            </div> */}
         </section>
     );
 };
@@ -169,11 +170,13 @@ const HomeContent = () => {
 
 const DifferenceContent = () => {
     return (
+        // <Content pageSlug="Jim_Buttonow_Difference" />
         <div className="difference-section">
             <div className="difference-image">
                 <img src="/images/JL Buttonow CPA Difference logo.png" alt="JL Buttonow CPA Difference logo" />
             </div>
-            <div className="difference-content">
+            <Content pageSlug="Jim_Buttonow_Difference" />
+            {/* <div className="difference-content">
                 <h1>The JL Buttonow Difference</h1>
                 <div className="difference-item">
                     <h4>Bold Text Title</h4>
@@ -187,7 +190,7 @@ const DifferenceContent = () => {
                     <h4>Bold Text Title</h4>
                     <p>Smaller Descriptive non bold text</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -1,0 +1,93 @@
+/* Hero Section Styles */
+.hero-section {
+    position: relative;
+    text-align: center;
+    margin-bottom: 5rem;
+    padding: 0;
+  }
+  
+  .hero-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  /* Hero Title Styles */
+  .hero-title {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: #022e49;
+    padding: 20px 30px;
+    font-size: 2.5rem;
+    width: 60%;
+    text-align: center;
+    margin-bottom: -40px;
+  }
+  
+  /* Resource List Styles */
+  .resource-list {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  /* Resource Item Styles */
+  .resource-item {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    height: 150px; /* Set a height to ensure consistent layout */
+  }
+  
+  /* Text Content Container */
+  .resource-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: right;
+    padding-right: 20px;
+    flex-grow: 1;
+  }
+  
+  .resource-title {
+    font-size: 1.5rem;
+    margin: 0;
+    text-align: right;
+  }
+  
+  .resource-description {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: right;
+    color: #555;
+  }
+  
+  /* Get Started Button */
+  .get-started-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Align button vertically in the middle */
+  }
+  
+  .get-started-button:hover {
+    background-color: #0056b3;
+  }
+  

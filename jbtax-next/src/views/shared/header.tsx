@@ -96,7 +96,7 @@ export const Header = () => {
                                     <ul className="dropdown-submenu-icons--nav">
                                         {/* Main Service */}
                                         <li className="nav-item main-service">
-                                            <a href="/service_main" className="nav-link">
+                                            <a href="/services/services_main" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
@@ -262,7 +262,7 @@ export const Header = () => {
                                     <ul className="dropdown-submenu-icons--nav">
                                         {/* Main Resource */}
                                         <li className="nav-item main-resource">
-                                            <a href="/resource_main" className="nav-link">
+                                            <a href="/resources/resources_main/" className="nav-link">
                                                 <div className="nav-link--img">
                                                     <img
                                                         width="40"
