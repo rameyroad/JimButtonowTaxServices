@@ -12,23 +12,25 @@
 
 .hero-title {
     flex: 2;
-    padding-left: 10px; /* Reduced padding for closeness */
-    font-size: 2.5rem;
+    padding-left: 150px; /* Reduced padding to bring title closer to image */
+    font-size: 2rem;
     font-weight: bold;
+    text-align: left;
 }
 
 .hero-image {
-    flex: 1;
+    flex: 3;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .hero-image img {
-    width: 400px; /* Increased width */
-    height: 300px; /* Increased height */
+    width: 650px; /* Increased width */
+    height: 400px; /* Increased height */
     object-fit: cover;
     border-radius: 8px;
 }
+
 
 /* Author Section */
 .author-section {
