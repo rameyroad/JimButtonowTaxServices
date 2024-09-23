@@ -52,7 +52,7 @@ const BusinessStats = () => {
         <section className="business-stats">
             <Content pageSlug="business-stats" />
             {/* <div className="stats-item">
-                <h3>10+ Years</h3>
+                <h3>15+ Years</h3>
                 <p>Experience in Expat Tax Services</p>
             </div>
             <div className="stats-item">

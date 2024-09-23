@@ -1,0 +1,121 @@
+/* Hero Section */
+.hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #022e49; /* Dark blue background */
+    color: white;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    gap: 10px; /* Reduced gap between title and image */
+}
+
+.hero-title {
+    flex: 2;
+    padding-left: 10px; /* Reduced padding for closeness */
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero-image img {
+    width: 400px; /* Increased width */
+    height: 300px; /* Increased height */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Author Section */
+.author-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 20px;
+}
+
+.author-section .article-image {
+    width: 50px;
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+.author-section .author-name {
+    font-size: 1rem;
+    color: #555;
+    margin-left: 10px; /* Add space between image and author's name */
+}
+
+/* Wrapper for content */
+.content-wrapper {
+    display: flex;
+    max-width: 1000px; /* Limit width for content */
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Main article content */
+.article-content {
+    flex: 2.5;
+    text-align: left;
+    margin-right: 40px;
+}
+
+.article-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.article-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.article-content section {
+    margin: 2rem 0;
+}
+
+/* Table of contents */
+.table-of-contents {
+    flex: 1;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    margin-left: 40px; /* Adjust margin to move it further right */
+}
+
+.table-of-contents h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.table-of-contents ul {
+    list-style: none;
+    padding: 0;
+}
+
+.table-of-contents ul li {
+    margin: 10px 0;
+}
+
+.table-of-contents ul li a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.table-of-contents ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 200px; /* Adjust this value for more or less spacing */
+}

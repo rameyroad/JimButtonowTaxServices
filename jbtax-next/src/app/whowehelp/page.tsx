@@ -15,7 +15,7 @@ export default function Page() {
             <section className="target-images">
                 <div className="target-container">
                     <div className="target-item">
-                        <a href="whowehelp/target1">
+                        <a href="whowehelp/IRS_audits">
                             <img src="/images/Home_-_father_son.webp" alt="Target 1" width={200} height={100} />
                             <h2>IRS Audits</h2>
                             <p>Small text</p>
