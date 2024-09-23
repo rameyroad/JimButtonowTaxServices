@@ -1,19 +1,20 @@
 ﻿import React from "react";
 
-import { Block } from "../../types/dynamicPage";
+import { Block, Item } from "../../types/dynamicPage";
 
 export interface BlockProps {
-    block: Block;
+    block?: Block;
+    item?: Item;
 }
+export const HtmlBlock: React.FC<BlockProps> = ({ block, item }) => {
+    const htmlContent = block?.body?.value ?? item?.body?.value ?? "No Content";
 
-export const HtmlBlock: React.FC<BlockProps> = ({ block }) => {
     return (
-        <div className="block html-block">
-            <div
-                dangerouslySetInnerHTML={{
-                    __html: block?.body?.value ?? "",
-                }}
-            />
-        </div>
+        <div
+            className="block html-block"
+            dangerouslySetInnerHTML={{
+                __html: htmlContent,
+            }}
+        />
     );
 };

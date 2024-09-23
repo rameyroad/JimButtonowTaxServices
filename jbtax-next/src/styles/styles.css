@@ -667,6 +667,8 @@ footer {
 
 /* Style for each stats item */
 .stats-item {
+    display: inline-block; /* RameyRoad */
+    /* Displays each item inline horizontally */
     flex: 0 1 auto;
     /* Allow items to shrink and grow as needed */
     margin-right: 20px;

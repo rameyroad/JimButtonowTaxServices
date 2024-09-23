@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 
 import { Block, Item } from "../../types/dynamicPage";
-import { ItemHtmlBlock } from "./ItemHtmlBlock";
-import { ItemImageBlock } from "./ItemImageBlock";
+import { HtmlBlock } from "./HtmlBlock";
+import { ImageBlock } from "./ImageBlock";
 import { ItemPageBlock } from "./ItemPageBlock";
 import { QuoteBlock } from "./QuoteBlock";
 
@@ -18,9 +18,9 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
     const renderItem = (item: Item) => {
         switch (item.$type) {
             case "Ramey.Cms.Content.Blocks.HtmlBlock":
-                return <ItemHtmlBlock item={item} />;
+                return <HtmlBlock item={item} />;
             case "Ramey.Cms.Content.Blocks.ImageBlock":
-                return <ItemImageBlock item={item} />;
+                return <ImageBlock item={item} />;
             case "Ramey.Cms.Content.Blocks.PageBlock":
                 return <ItemPageBlock item={item} />;
             case "Ramey.Cms.Content.Blocks.QuoteBlock":

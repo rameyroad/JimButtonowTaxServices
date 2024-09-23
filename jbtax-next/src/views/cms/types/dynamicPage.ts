@@ -148,6 +148,7 @@ export interface Aspect {
 }
 
 export interface BlockBody {
+    media?: Media;
     value: string;
 }
 
