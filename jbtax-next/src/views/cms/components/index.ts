@@ -3,7 +3,6 @@ export { Hero } from "./Hero";
 export { HtmlBlock } from "./Blocks/HtmlBlock";
 export { ImageBlock } from "./Blocks/ImageBlock";
 export { ImageGalleryBlock } from "./Blocks/ImageGalleryBlock";
-export { ItemHtmlBlock } from "./Blocks/ItemHtmlBlock";
 export { ItemImageBlock } from "./Blocks/ItemImageBlock";
 export { ItemPageBlock } from "./Blocks/ItemPageBlock";
 export { QuoteBlock } from "./Blocks/QuoteBlock";
