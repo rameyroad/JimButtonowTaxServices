@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-import DOMPurify from "dompurify";
+import DOMPurify from 'dompurify';
 
 import { Block, Item } from "../../types/dynamicPage";
 

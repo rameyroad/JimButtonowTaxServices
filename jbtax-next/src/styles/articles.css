@@ -1,5 +1,6 @@
 /* Hero Section */
 .hero-section {
+    position: relative; /* This is needed for positioning the breadcrumb */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,6 +32,28 @@
     border-radius: 8px;
 }
 
+/* Breadcrumb Section */
+.breadcrumb-section {
+    position: absolute; /* This makes it float within the hero section */
+    top: 10px; /* Adjusts vertical distance from the top */
+    left: 20px; /* Adjusts horizontal distance from the left */
+    z-index: 10; /* Ensures it stays on top of the hero image */
+}
+
+.breadcrumb {
+    background: #022e49; /* Semi-transparent background */
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.breadcrumb a {
+    color: #007bff; /* Adjust link color if needed */
+    text-decoration: none;
+}
+
+.breadcrumb .breadcrumb-item.active {
+    color: #0088ff; /* Adjust active breadcrumb color */
+}
 
 /* Author Section */
 .author-section {
@@ -121,3 +144,4 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 200px; /* Adjust this value for more or less spacing */
 }
+
