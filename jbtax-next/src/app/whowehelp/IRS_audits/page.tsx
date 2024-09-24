@@ -61,7 +61,13 @@ import "../../../styles/articles.css"; // Assuming styles are in this file
 export default function Page() {
     return (
         <Fragment>
-            <CmsPage pageSlug="IRS_Audits" showHero={true} />
+            <CmsPage
+                pageSlug="IRS_Audits"
+                showHero={true}
+                heroClassName="hero"
+                containerClassName="container"
+                containerStyle={{}}
+            />
         </Fragment>
     );
 }

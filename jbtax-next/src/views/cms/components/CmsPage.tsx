@@ -7,7 +7,19 @@ import { getPageBySlug } from "@/views/cms/services/contentApi";
 
 import { CmsBlocks } from "@/views/cms/components/CmsBlocks";
 
-export const CmsPage = ({ pageSlug, showHero }: { pageSlug: string; showHero: boolean }) => {
+export const CmsPage = ({
+    pageSlug,
+    showHero,
+    heroClassName,
+    containerClassName,
+    containerStyle,
+}: {
+    pageSlug: string;
+    showHero: boolean;
+    heroClassName: string;
+    containerClassName: string;
+    containerStyle: React.CSSProperties;
+}) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [activePage, setActivePage] = useState<DynamicPage | null>(null);
 
@@ -34,23 +46,19 @@ export const CmsPage = ({ pageSlug, showHero }: { pageSlug: string; showHero: bo
     return (
         <Fragment>
             {showHero && (
-                <div className="hero-section">
-                    <div className="hero-title">
+                <div className={`${heroClassName}-section`}>
+                    <div className={`${heroClassName}-title`}>
                         <h1>{activePage?.title}</h1>
                     </div>
-                    <div className="hero-image">
+                    <div className={`${heroClassName}-image`}>
                         {activePage?.primaryImage?.media?.publicUrl != null && (
                             <img src={activePage?.primaryImage?.media?.publicUrl} alt="Hero" />
                         )}
                     </div>
                 </div>
             )}
-            <div className="container">
-                <div className="content-wrapper">
-                    <div className="article-content">
-                        {!isLoading && <CmsBlocks page={activePage as DynamicPage} />}
-                    </div>
-                </div>
+            <div className={containerClassName} style={containerStyle}>
+                {!isLoading && <CmsBlocks page={activePage as DynamicPage} />}
             </div>
         </Fragment>
     );
