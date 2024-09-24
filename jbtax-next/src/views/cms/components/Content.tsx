@@ -18,7 +18,7 @@ const Content = ({ pageSlug }: Props): JSX.Element => {
     const getContent = async () => {
         setIsLoading(true);
         try {
-            const pc = await getPageBySlug(pageSlug, "MainSite");
+            const pc = await getPageBySlug(pageSlug, "");
             if (pc == null) {
                 router.push("/not-found");
             } else {
