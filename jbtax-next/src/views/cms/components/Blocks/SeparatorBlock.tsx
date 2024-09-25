@@ -7,5 +7,5 @@ export interface BlockProps {
 }
 
 export const SeparatorBlock: React.FC<BlockProps> = () => {
-    return <div style={{ margin: "5px 10px;" }} />;
+    return <hr style={{ margin: "5px 10px;" }} />;
 };

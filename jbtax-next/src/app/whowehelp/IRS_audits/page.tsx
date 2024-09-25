@@ -1,9 +1,8 @@
 "use client";
 
 import Content from "@/views/cms/components/Content";
-import { useEffect, useState, Fragment } from "react";
+import { Fragment } from "react";
 import "../../../styles/articles.css"; // Assuming styles are in this file
-
 
 export default function Page() {
     return (
@@ -31,7 +30,6 @@ export default function Page() {
                     <img src="/images/peru-scaled.jpeg" alt="Hero" />
                 </div>
             </div>
-
 
             <div className="author-section">
                 <img src="/images/madisonwhitfieldphotoshot.jpg" alt="Article Image" className="article-image" />

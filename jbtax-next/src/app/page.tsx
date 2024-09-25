@@ -1,5 +1,6 @@
 "use client";
 
+import { CmsPage } from "@/views/cms/components/CmsPage";
 import Content from "@/views/cms/components/Content";
 import { useEffect, useState, Fragment } from "react";
 
@@ -35,7 +36,7 @@ const Hero = () => {
                     ))}
                 </div>
                 <div className="text-content">
-                <Content pageSlug="Title-Page" />
+                    <Content pageSlug="Title-Page" />
 
                     {/* <h1>US Expat tax services and preparation done right.</h1>
                     <p>
@@ -72,9 +73,80 @@ const BusinessStats = () => {
 const HomeContent = () => {
     return (
         <div className="content-sidebar-wrapper">
+            <div className="row">
+                <div className="col-12 col-md-6">
+                    <Content pageSlug="home-section" />
+                </div>
+                <div className="col-12 col-md-6">
+                    <div className="main-content">
+                        <div className="container-form-home" style={{ minHeight: "736px" }}>
+                            <h2>Start Your US Expat Tax Return</h2>
+                            <form method="post" encType="multipart/form-data" noValidate target="">
+                                <div className="gform-body">
+                                    <div className="gform_fields">
+                                        <div className="gfield">
+                                            <label htmlFor="first-name">First Name</label>
+                                            <input type="text" id="first-name" name="first-name" required />
+                                        </div>
+                                        <div className="gfield">
+                                            <label htmlFor="last-name">Last Name</label>
+                                            <input type="text" id="last-name" name="last-name" required />
+                                        </div>
+                                        <div className="gfield">
+                                            <label htmlFor="email">Email Address</label>
+                                            <input type="email" id="email" name="email" required />
+                                        </div>
+
+                                        <div className="gfield issue-options">
+                                            <p>Please select an issue:</p>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="owe-back-taxes" />
+                                                <span className="custom-bubble"></span> Owe Back Taxes
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="irs-audits" />
+                                                <span className="custom-bubble"></span> IRS Audits
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="unified-returns" />
+                                                <span className="custom-bubble"></span> Unified Returns
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="payroll-issues" />
+                                                <span className="custom-bubble"></span> Payroll Issues
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="penalties" />
+                                                <span className="custom-bubble"></span> Penalties
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="state-issues" />
+                                                <span className="custom-bubble"></span> State Issues
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="small-business-issues" />
+                                                <span className="custom-bubble"></span> Small Business Issues
+                                            </label>
+                                            <label className="issue-label">
+                                                <input type="radio" name="issue" value="other" />
+                                                <span className="custom-bubble"></span> Other
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className="gform_footer">
+                                        <input type="submit" className="gform_button" value="Get Started Now" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {/* Button Bar above Sidebar */}
             <aside className="sidebar">
-                <Content pageSlug="home-section" />
+                {/* <Content pageSlug="home-section" /> */}
                 {/* <div className="consultation-bar">
                     <a className="consultation-button" href="../../../contact">
                         Free 30 Minute Consultation With Our Firm
@@ -101,7 +173,7 @@ const HomeContent = () => {
                 </ul> */}
             </aside>
 
-            <main>
+            {/* <main>
                 <div className="main-content">
                     <div className="container-form-home" style={{ minHeight: "736px" }}>
                         <h2>Start Your US Expat Tax Return</h2>
@@ -165,7 +237,7 @@ const HomeContent = () => {
                         </form>
                     </div>
                 </div>
-            </main>
+            </main> */}
         </div>
     );
 };
@@ -208,7 +280,6 @@ const ReviewSection = () => {
                     <p>Well take of your problems and make your life stressless.</p>
                 </div>
 
-                
                 <div className="individual-reviews">
                     <div className="review">
                         <span>- Susan L. (Germany)</span>
@@ -259,10 +330,17 @@ export default function Home() {
         <Fragment>
             <Hero />
             <BusinessStats />
-            <HomeContent />
+            <CmsPage
+                showHero={false}
+                pageSlug="home-page"
+                heroClassName={""}
+                containerClassName={""}
+                containerStyle={{ margin: "15px auto", width: "90%" }}
+            />
+            {/* <HomeContent />
             <DifferenceContent />
             <ReviewSection />
-            <WhatWeDeliver />
+            <WhatWeDeliver /> */}
         </Fragment>
     );
 }
