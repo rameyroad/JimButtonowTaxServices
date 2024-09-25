@@ -9,7 +9,7 @@ env:
 
 on:
   push:
-    branches: ["dev", "main"]
+    branches: ["staging"]
     paths:
       - ".github/workflows/web-docker.yml" # when this script changes
       - "jbtax-next/**" # when the Web app changes
