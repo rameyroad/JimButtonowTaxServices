@@ -17,7 +17,7 @@ export const Footer = () => {
             <div className="footer-content">
                 {/* <!-- Left Side: Logo, Name, Social Media Links --> */}
                 <div className="footer-left">
-                    <img src="/images/JL Buttonow banner logo.png"  alt="Company Logo" className="footer-logo" />
+                    <img src="/images/JL Buttonow banner logo.png" alt="Company Logo" className="footer-logo" />
                     <h4>We Resolve Problems</h4>
                     <div className="social-media">
                         <a href="#">Facebook</a>
@@ -32,10 +32,16 @@ export const Footer = () => {
                         <h3>Helpful Links</h3>
                         <ul>
                             <li>
-                                <a href="#">Link 1</a>
+                                <a href="#">Tax Problem Guides</a>
                             </li>
                             <li>
-                                <a href="#">Link 2</a>
+                                <a href="#">Articles</a>
+                            </li>
+                            <li>
+                                <a href="#">Blog</a>
+                            </li>
+                            <li>
+                                <a href="/about/partners">Partners</a>
                             </li>
                             {/* <!-- Add more links as needed --> */}
                         </ul>
@@ -44,10 +50,10 @@ export const Footer = () => {
                         <h3>Our Firm</h3>
                         <ul>
                             <li>
-                                <a href="#">About Us</a>
+                                <a href="/about/our_firm">About Us</a>
                             </li>
                             <li>
-                                <a href="#">Careers</a>
+                                <a href="/about/meet_tax_professionals">Our Team</a>
                             </li>
                             {/* <!-- Add more links as needed --> */}
                         </ul>
@@ -56,10 +62,16 @@ export const Footer = () => {
                         <h3>SERVICES</h3>
                         <ul>
                             <li>
-                                <a href="#">Service 1</a>
+                                <a href="/services/services_main">Our Services</a>
                             </li>
                             <li>
-                                <a href="#">Service 2</a>
+                                <a href="#">Audit Representation</a>
+                            </li>
+                            <li>
+                                <a href="#">Tax Debt Services</a>
+                            </li>
+                            <li>
+                                <a href="#">Tax Firm Consultations</a>
                             </li>
                             {/* <!-- Add more links as needed --> */}
                         </ul>
@@ -68,7 +80,7 @@ export const Footer = () => {
                         <h3>SUPPORT</h3>
                         <ul>
                             <li>
-                                <a href="#">Contact Us</a>
+                                <a href="/contact">Contact Us</a>
                             </li>
                             <li>
                                 <a href="#">FAQs</a>
@@ -80,10 +92,16 @@ export const Footer = () => {
                         <h3>POPULAR PAGES</h3>
                         <ul>
                             <li>
-                                <a href="#">Page 1</a>
+                                <a href="#">TBD</a>
                             </li>
                             <li>
-                                <a href="#">Page 2</a>
+                                <a href="#">TBD</a>
+                            </li>
+                            <li>
+                                <a href="#">TBD</a>
+                            </li>
+                            <li>
+                                <a href="#">TBD</a>
                             </li>
                             {/* <!-- Add more links as needed --> */}
                         </ul>
@@ -91,8 +109,10 @@ export const Footer = () => {
                 </div>
                 {/* <!-- Bottom: Phone Number and Location --> */}
                 <div className="footer-bottom">
-                    <p>Phone: (123) 456-7890</p>
-                    <p>Location: XYZ</p>
+                    <p>Email: jim@buttonowcpa.com</p>
+                    <p>Phone: (336) 256-8266 </p>
+                    <p>User Agreement: <a href="#">TBD</a> </p>
+                    <p>Privacy Policy: <a href="#">TBD</a> </p>
                 </div>
             </div>
         </footer>
