@@ -5,7 +5,7 @@ env:
   AZURE_RESOURCE_GROUP: jbtax # the resource group name
   CONTAINER_NAME: clients/jbtax-web # the container name
   SLOT_NAME: staging
-  BRANCH_NAME: ${GITHUB_REF##*/}
+  BRANCH_NAME: ${{ github.ref_name }}
 
 on:
   push:
