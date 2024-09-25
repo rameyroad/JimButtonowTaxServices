@@ -35,11 +35,13 @@ const Hero = () => {
                     ))}
                 </div>
                 <div className="text-content">
-                    <h1>US Expat tax services and preparation done right.</h1>
+                <Content pageSlug="Title-Page" />
+
+                    {/* <h1>US Expat tax services and preparation done right.</h1>
                     <p>
                         We take the hassle out of filing your American Expat taxes so you can get back to your adventure
                         abroad.
-                    </p>
+                    </p> */}
                 </div>
             </div>
         </section>
@@ -201,11 +203,12 @@ const ReviewSection = () => {
         <section className="reviews-section">
             <div className="reviews-wrapper">
                 {/* Text Bubble */}
+                <Content pageSlug="Reviews" />
                 <div className="testimonial-intro">
                     <p>Well take of your problems and make your life stressless.</p>
                 </div>
 
-                {/* Customer Reviews */}
+                
                 <div className="individual-reviews">
                     <div className="review">
                         <span>- Susan L. (Germany)</span>
