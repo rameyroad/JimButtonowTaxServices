@@ -332,12 +332,16 @@ nav ul li a {
     margin-bottom: 120px;
 }
 
+.container-home {
+    min-height: 600px;
+}
+
 /* Style the form container to overlap the hero and stats */
 .container-form-home {
     position: absolute;
     left: 50%;
     /* Center the container horizontally */
-    transform: translate(10%, -50%);
+    transform: translate(30%, -30%);
     /* Move it to the right */
     z-index: 2;
     /* Ensure it's above the hero and stats sections */
@@ -353,6 +357,7 @@ nav ul li a {
     /* Set a maximum width if desired */
     border-radius: 15px;
 }
+
 .container-form-home h2 {
     text-align: center;
 }

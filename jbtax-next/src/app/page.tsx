@@ -1,5 +1,6 @@
 "use client";
 
+import { CmsPage } from "@/views/cms/components/CmsPage";
 import Content from "@/views/cms/components/Content";
 import { useEffect, useState, Fragment } from "react";
 
@@ -329,10 +330,17 @@ export default function Home() {
         <Fragment>
             <Hero />
             <BusinessStats />
-            <HomeContent />
+            <CmsPage
+                showHero={false}
+                pageSlug="home-page"
+                heroClassName={""}
+                containerClassName={""}
+                containerStyle={{ margin: "15px auto", width: "90%" }}
+            />
+            {/* <HomeContent />
             <DifferenceContent />
             <ReviewSection />
-            <WhatWeDeliver />
+            <WhatWeDeliver /> */}
         </Fragment>
     );
 }
