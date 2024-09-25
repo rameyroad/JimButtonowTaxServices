@@ -80,7 +80,7 @@ const HomeContent = () => {
                     <div className="main-content">
                         <div className="container-form-home" style={{ minHeight: "736px" }}>
                             <h2>Start Your US Expat Tax Return</h2>
-                            <form method="post" encType="multipart/form-data" noValidate>
+                            <form method="post" encType="multipart/form-data" noValidate target="">
                                 <div className="gform-body">
                                     <div className="gform_fields">
                                         <div className="gfield">
