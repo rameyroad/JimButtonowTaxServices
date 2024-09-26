@@ -34,29 +34,30 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
         }
     };
 
-    const getColumWidth = (size: string, length: number) => {
+    const getColumnStyle = (size: string, length: number) => {
         switch (size) {
             case "xs":
             case "sm":
-                return 12;
+                return `col-${size}-12`;
 
             case "md":
             case "lg":
                 switch (length % 12) {
                     case 1:
-                        return 12;
+                        return `col-${size}-12`;
                     case 2:
-                        return 6;
+                        return `col-${size}-6`;
                     case 3:
+                        return `col-${size}-4`;
                         return 4;
                     case 4:
-                        return 3;
+                        return `col-${size}-3`;
                     case 5:
                     case 6:
                     case 7:
-                        return 2;
+                        return `col-${size}-2`;
                     default:
-                        return 1;
+                        return `col-${size}-1`;
                 }
         }
     };
@@ -64,15 +65,14 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
     return (
         <div className="row">
             {block.items?.map((item: Item, key: number) => {
+                const numCols = block.items?.length ?? 0;
+                // const xs = getColumWidth("xs", numCols);
+                // const sm = getColumWidth("sm", numCols);
+                const md = getColumnStyle("md", numCols);
+                const lg = getColumnStyle("lg", numCols);
+                const xl = getColumnStyle("xl", numCols);
                 return (
-                    <div
-                        key={key}
-                        className={`col col-sm-${getColumWidth("sm", block.items?.length ?? 0)} col-md-${getColumWidth(
-                            "md",
-                            block.items?.length ?? 0
-                        )}`}
-                        style={{ padding: "10px" }}
-                    >
+                    <div key={key} className={`col-12 ${md} ${lg} ${xl}`}>
                         {renderItem(item)}
                     </div>
                 );

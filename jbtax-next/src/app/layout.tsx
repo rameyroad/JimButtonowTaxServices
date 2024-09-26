@@ -7,6 +7,7 @@ import { Footer } from "../views/shared/footer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/styles.css";
+import "../styles/media-updates.css";
 
 // const geistSans = localFont({
 //     src: "../fonts/GeistVF.woff",
