@@ -8,11 +8,7 @@ import { useEffect, useState, Fragment } from "react";
 const Hero = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const images = [
-        "/images/Home_-_father_son.webp",
-        "/images/Home_-_backpacking_couple.webp",
-        "/images/Home_-_woman_eiffel-3.webp",
-    ];
+    const images = ["/images/Home_-_father_son.webp", "/images/Home_-_backpacking_couple.webp", "/images/Home_-_woman_eiffel-3.webp"];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -27,12 +23,7 @@ const Hero = () => {
             <div className="hero-content">
                 <div className="header-images">
                     {images.map((src, index) => (
-                        <img
-                            key={index}
-                            src={src}
-                            alt={`Tax Services Image ${index + 1}`}
-                            className={currentImageIndex === index ? "active" : ""}
-                        />
+                        <img key={index} src={src} alt={`Tax Services Image ${index + 1}`} className={currentImageIndex === index ? "active" : ""} />
                     ))}
                 </div>
                 <div className="text-content">

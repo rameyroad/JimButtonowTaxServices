@@ -1,3 +1,6 @@
+/* RameyRoad */
+/* These are the 6 different screen sizes for the bootstrap library. You can put your specific rules in these sections as you want */
+
 /* X-Small devices (landscape phones, 576px and up) */
 @media (max-width: 575px) {
     .container-home {
@@ -74,6 +77,5 @@
 /* XX-Large devices (larger desktops, 1400px and up) */
 @media (min-width: 1400px) {
     .container-form-home {
-        background-color: #fff;
     }
 }
