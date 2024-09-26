@@ -1,0 +1,81 @@
+/* RameyRoad */
+/* These are the 6 different screen sizes for the bootstrap library. You can put your specific rules in these sections as you want */
+
+/* X-Small devices (landscape phones, 576px and up) */
+@media (max-width: 575px) {
+    .container-home {
+        min-height: unset;
+    }
+    .container-form-home {
+        position: inherit;
+        transform: none;
+        width: 100%;
+        max-width: unset;
+        margin: 20px 0;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .container-home {
+        min-height: unset;
+    }
+    .container-form-home {
+        position: inherit;
+        transform: none;
+        width: 100%;
+        max-width: unset;
+        margin: 20px 0;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .container-home {
+        min-height: unset;
+    }
+    .container-form-home {
+        position: inherit;
+        transform: none;
+        width: 100%;
+        max-width: unset;
+        margin: 20px 0;
+    }
+    .issue-label {
+        width: 100%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .container-home {
+        min-height: unset;
+    }
+    .container-form-home {
+        position: inherit;
+        transform: none;
+        width: 100%;
+        max-width: unset;
+        margin: 20px 0;
+    }
+    .issue-label input[type="radio"] {
+        width: 100%;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .container-home {
+        min-height: 700px;
+    }
+    .container-form-home {
+        left: 40%;
+        transform: translate(25%, -20%);
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    .container-form-home {
+    }
+}

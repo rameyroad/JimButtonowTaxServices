@@ -333,7 +333,7 @@ nav ul li a {
 }
 
 .container-home {
-    min-height: 600px;
+    min-height: 650px;
 }
 
 /* Style the form container to overlap the hero and stats */
@@ -341,7 +341,7 @@ nav ul li a {
     position: absolute;
     left: 50%;
     /* Center the container horizontally */
-    transform: translate(30%, -30%);
+    transform: translate(20%, -25%);
     /* Move it to the right */
     z-index: 2;
     /* Ensure it's above the hero and stats sections */
@@ -356,10 +356,6 @@ nav ul li a {
     max-width: 600px;
     /* Set a maximum width if desired */
     border-radius: 15px;
-}
-
-.container-form-home h2 {
-    text-align: center;
 }
 
 main {
