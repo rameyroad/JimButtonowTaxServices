@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 
 // import localFont from "next/font/local";
 
-import { Header } from "../views/shared/header";
-import { Footer } from "../views/shared/footer";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/styles.css";
 import "../styles/media-updates.css";
+
+import { ReduxProvider } from "@/store/ReduxProvider";
+import { MainLayout } from "@/views/mainLayout";
 
 // const geistSans = localFont({
 //     src: "../fonts/GeistVF.woff",
@@ -37,9 +37,9 @@ export default function RootLayout({
                 <title>Jim Buttonow Tax Services</title>
             </head>
             <body>
-                <Header />
-                <main className="main-content">{children}</main>
-                <Footer />
+                <ReduxProvider>
+                    <MainLayout>{children}</MainLayout>
+                </ReduxProvider>
             </body>
         </html>
     );
