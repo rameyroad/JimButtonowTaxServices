@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 // import localFont from "next/font/local";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/styles.css";
-import "../styles/media-updates.css";
+import "../styles/styles2.css";
+// import "../styles/media-updates.css";
 
 import { ReduxProvider } from "@/store/ReduxProvider";
 import { MainLayout } from "@/views/mainLayout";
@@ -35,6 +35,7 @@ export default function RootLayout({
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <title>Jim Buttonow Tax Services</title>
+                <link rel="stylesheet" href="https://rameycms-api-jbtax-eus-01.azurewebsites.net/api/content/sites/jbtax-services/site_styles.css" />
             </head>
             <body>
                 <ReduxProvider>
