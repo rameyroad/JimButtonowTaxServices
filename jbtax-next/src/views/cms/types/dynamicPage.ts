@@ -13,6 +13,7 @@ export interface Item {
     aspect?: Aspect;
     id: string;
     type: string;
+    cssStyles: StringField;
 }
 
 export interface Block {
@@ -21,6 +22,7 @@ export interface Block {
     body?: BlockBody;
     id: string;
     type: string;
+    cssStyles: StringField;
     items?: Item[];
 }
 
@@ -175,5 +177,9 @@ export interface AuthorInfo {
 
 export interface Name {
     $type: string;
+    value: string;
+}
+
+export interface StringField {
     value: string;
 }

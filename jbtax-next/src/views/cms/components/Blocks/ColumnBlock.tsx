@@ -42,6 +42,7 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
 
             case "md":
             case "lg":
+            case "xl":
                 switch (length % 12) {
                     case 1:
                         return `col-${size}-12`;

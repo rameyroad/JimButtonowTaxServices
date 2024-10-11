@@ -1,3 +1,20 @@
+export const getSiteData = async () => {
+    const myHeaders = new Headers({
+        Authorization: `Basic ${process.env.NEXT_PUBLIC_RAMEY_API_AUTH}`,
+    });
+
+    const url = `${process.env.NEXT_PUBLIC_RAMEY_API_URL}/api/content/sites/${process.env.NEXT_PUBLIC_RAMEY_API_SITE_ID}`;
+    const resp = await fetch(url, {
+        headers: myHeaders,
+        next: { revalidate: 300 },
+    });
+    if (resp.ok) {
+        const m = await resp.json();
+        return m;
+    }
+    return null;
+};
+
 export const getSiteMap = async (siteId: string) => {
     const myHeaders = new Headers({
         Authorization: `Basic ${process.env.NEXT_PUBLIC_RAMEY_API_AUTH}`,
