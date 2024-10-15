@@ -12,7 +12,7 @@ export const ImageBlock: React.FC<BlockProps> = ({ block, item }) => {
     const altText = block?.body?.media?.altText ?? item?.body?.media?.altText ?? "";
 
     return (
-        <div className="block image-block">
+        <div className={`block image-block ${block?.slug?.value}`} id={block?.slug?.value}>
             <img src={publicUrl} alt={altText} style={{ maxWidth: "100%" }} />
         </div>
     );

@@ -2,14 +2,7 @@ import { Fragment } from "react";
 
 import { Block, DynamicPage } from "@/views/cms/types/dynamicPage";
 
-import {
-    ColumnBlock,
-    HtmlBlock,
-    ImageBlock,
-    ImageGalleryBlock,
-    QuoteBlock,
-    SeparatorBlock,
-} from "@/views/cms/components";
+import { ColumnBlock, HtmlBlock, ImageBlock, ImageGalleryBlock, QuoteBlock, SeparatorBlock } from "@/views/cms/components";
 
 export const CmsBlocks = ({ page }: { page: DynamicPage }) => {
     const renderBlock = (block: Block) => {
@@ -37,16 +30,7 @@ export const CmsBlocks = ({ page }: { page: DynamicPage }) => {
     };
 
     return (
-        <div
-            style={{
-                width: "100%",
-                height: "100%",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "stretch",
-            }}
-        >
+        <div className={`cms-blocks`} id={page?.slug}>
             {page?.blocks.map((block: Block, index: number) => {
                 return <Fragment key={index}>{renderBlock(block)}</Fragment>;
             })}
