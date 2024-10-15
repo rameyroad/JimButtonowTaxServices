@@ -20,6 +20,8 @@ export interface Block {
     $type: string;
     author: QuoteBody;
     body?: BlockBody;
+    title: string;
+    slug: StringField;
     id: string;
     type: string;
     cssStyles: StringField;

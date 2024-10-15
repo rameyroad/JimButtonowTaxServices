@@ -12,10 +12,14 @@ export const NavSlice = createSlice({
     name: "NavSlice",
     initialState: {
         currentSite: {} as any,
+        isLoading: false,
     },
     reducers: {
         setCurrentSite(state, action: PayloadAction<any>) {
             state.currentSite = action.payload;
+        },
+        setIsLoading(state, action: PayloadAction<boolean>) {
+            state.isLoading = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -29,6 +33,6 @@ export const NavSlice = createSlice({
     },
 });
 
-export const { setCurrentSite } = NavSlice.actions;
+export const { setCurrentSite, setIsLoading } = NavSlice.actions;
 
 export default NavSlice.reducer;
