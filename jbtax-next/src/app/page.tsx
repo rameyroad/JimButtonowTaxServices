@@ -27,7 +27,7 @@ const Hero = () => {
                     ))}
                 </div>
                 <div className="text-content">
-                    <Content pageSlug="Title-Page" />
+                    <Content pageSlug="Title-Page" className="" />
 
                     {/* <h1>US Expat tax services and preparation done right.</h1>
                     <p>
@@ -44,7 +44,7 @@ const Hero = () => {
 const BusinessStats = () => {
     return (
         <section className="business-stats">
-            <Content pageSlug="business-stats" />
+            <Content pageSlug="business-stats" className="" />
             {/* <div className="stats-item">
                 <h3>15+ Years</h3>
                 <p>Experience in Expat Tax Services</p>
@@ -66,7 +66,7 @@ const HomeContent = () => {
         <div className="content-sidebar-wrapper">
             <div className="row">
                 <div className="col-12 col-md-6">
-                    <Content pageSlug="home-section" />
+                    <Content pageSlug="home-section" className="" />
                 </div>
                 <div className="col-12 col-md-6">
                     <div className="main-content">
@@ -137,7 +137,7 @@ const HomeContent = () => {
 
             {/* Button Bar above Sidebar */}
             <aside className="sidebar">
-                {/* <Content pageSlug="home-section" /> */}
+                {/* <Content pageSlug="home-section" className="" /> */}
                 {/* <div className="consultation-bar">
                     <a className="consultation-button" href="../../../contact">
                         Free 30 Minute Consultation With Our Firm
@@ -235,12 +235,11 @@ const HomeContent = () => {
 
 const DifferenceContent = () => {
     return (
-        // <Content pageSlug="Jim_Buttonow_Difference" />
         <div className="difference-section">
             <div className="difference-image">
                 <img src="/images/JL Buttonow CPA Difference logo.png" alt="JL Buttonow CPA Difference logo" />
             </div>
-            <Content pageSlug="Jim_Buttonow_Difference" />
+            <Content pageSlug="Jim_Buttonow_Difference" className="" />
             {/* <div className="difference-content">
                 <h1>The JL Buttonow Difference</h1>
                 <div className="difference-item">
@@ -266,7 +265,7 @@ const ReviewSection = () => {
         <section className="reviews-section">
             <div className="reviews-wrapper">
                 {/* Text Bubble */}
-                <Content pageSlug="Reviews" />
+                <Content pageSlug="Reviews" className="" />
                 <div className="testimonial-intro">
                     <p>Well take of your problems and make your life stressless.</p>
                 </div>
