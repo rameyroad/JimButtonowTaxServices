@@ -38,7 +38,7 @@ export default function Page() {
 
             <div className="content-wrapper">
                 <div className="article-content">
-                    <Content pageSlug="IRS_Audits" />
+                    <Content pageSlug="IRS_Audits" className="" />
                     {/* <section id="section1">
                         <h2>Section 1</h2>
                         <p>Content for section 1...</p>
