@@ -1,12 +1,12 @@
 /* Styles used for testing the article page - moved to CMS */
 
 /* Articles */
-/* .article-header {
+.article-main .header {
     height: 400px;
     background-color: #032d48;
 }
 
-.article-title {
+.article-main .article-title {
     position: relative;
     left: 15%;
     top: 70%;
@@ -14,17 +14,18 @@
     color: white;
 }
 
-.article-hero {
+.article-main .article-hero {
     position: relative;
     right: -10%;
     top: 10%;
 }
 
-.article-hero img {
+.article-main .article-hero img {
     border-radius: 40px;
+    max-height: 450px;
 }
 
-.article-byline {
+.article-main .article-byline {
     position: relative;
     left: 15%;
     top: 70%;
@@ -35,32 +36,34 @@
     text-align: center;
 }
 
-.article-byline .author-headshot img {
+.article-main .article-byline .author-headshot img {
     border-radius: 50%;
 }
 
-.article-byline .author-name {
+.article-main .article-byline .author-name {
     font-size: 18pt;
 }
 
-.article-byline .article-updated {
+.article-main .article-byline .article-updated {
     font-size: 14pt;
     color: #032d48;
 }
 
-.article-facts,
-.article-cta,
-.article-solutions {
-    margin: 25px auto;
-    padding: 25px;
+.article-main .author,
+.article-main .facts,
+.article-main .call-to-action,
+.article-main .solutions {
+    margin: 10px auto;
+    padding: 10px;
     width: 90%;
+    max-width: 1200px;
 }
 
-.article-cta {
+.article-main .article-cta {
     text-align: center;
 }
 
-.article-cta button {
+.article-main .article-cta button {
     background-color: #6bbdd1;
     color: white;
     border: none;
@@ -69,5 +72,5 @@
     padding: 25px 50px;
     width: 300px;
     font-size: 16pt;
-} */
+}
 /* End of articles */
