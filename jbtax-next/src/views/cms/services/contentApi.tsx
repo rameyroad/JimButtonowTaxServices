@@ -93,3 +93,23 @@ export const getBlogPostBySlug = async (slug: string) => {
     }
     return null;
 };
+
+export const getBlogPostsByTag = async (tags: Array<string>) => {
+    const myHeaders = new Headers({
+        Authorization: `Basic ${process.env.NEXT_PUBLIC_RAMEY_API_AUTH}`,
+    });
+    const url = `${process.env.NEXT_PUBLIC_RAMEY_API_URL}/api/content/posts/tags/${tags.join(",")}`;
+    const resp = await fetch(url, {
+        headers: myHeaders,
+        next: { revalidate: 300 },
+    });
+    if (resp.ok) {
+        try {
+            const m = await resp.json();
+            return m;
+        } catch (err) {
+            console.log("error", err);
+        }
+    }
+    return null;
+};

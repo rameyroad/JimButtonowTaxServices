@@ -1,6 +1,12 @@
 /* Styles used for testing the article page - moved to CMS */
 
 /* Who We Help */
+
+.who-we-help-main img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .who-we-help-hero {
     padding: 0 0 20px 0;
 }

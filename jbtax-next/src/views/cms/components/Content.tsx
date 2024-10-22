@@ -12,9 +12,10 @@ interface Props {
     className: string;
     blockClassName?: string;
     renderHero?: (activePage: DynamicPage) => JSX.Element;
+    renderContent?: (activePage: DynamicPage) => JSX.Element;
 }
 
-const Content = ({ pageSlug, className, blockClassName, renderHero }: Props): JSX.Element => {
+const Content = ({ pageSlug, className, blockClassName, renderHero, renderContent }: Props): JSX.Element => {
     const [activePage, setActivePage] = useState<DynamicPage | null>(null);
 
     const router = useRouter();
@@ -45,9 +46,7 @@ const Content = ({ pageSlug, className, blockClassName, renderHero }: Props): JS
     return (
         <div className={className}>
             {renderHero ? renderHero(activePage) : <Fragment />}
-            <div className={blockClassName}>
-                <CmsBlocks page={activePage} />
-            </div>
+            <div className={blockClassName}>{renderContent ? renderContent(activePage) : <CmsBlocks page={activePage} />}</div>
         </div>
     );
 };
