@@ -1,7 +1,7 @@
 /* Styles used for testing the article page - moved to CMS */
 
 /* Who We Help */
-.who-we-help-hero {
+.blog-home-hero {
     padding: 0 0 20px 0;
 }
 
@@ -11,7 +11,7 @@
     object-fit: cover;
 }
 
-.who-we-help-title {
+.blog-home-title {
     font-size: 3.5rem;
     font-weight: 700;
     margin: 0 auto;

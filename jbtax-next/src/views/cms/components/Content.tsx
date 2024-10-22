@@ -10,10 +10,11 @@ import { getPageBySlug } from "../services/contentApi";
 interface Props {
     pageSlug: string;
     className: string;
+    blockClassName?: string;
     renderHero?: (activePage: DynamicPage) => JSX.Element;
 }
 
-const Content = ({ pageSlug, className, renderHero }: Props): JSX.Element => {
+const Content = ({ pageSlug, className, blockClassName, renderHero }: Props): JSX.Element => {
     const [activePage, setActivePage] = useState<DynamicPage | null>(null);
 
     const router = useRouter();
@@ -44,7 +45,9 @@ const Content = ({ pageSlug, className, renderHero }: Props): JSX.Element => {
     return (
         <div className={className}>
             {renderHero ? renderHero(activePage) : <Fragment />}
-            <CmsBlocks page={activePage} />
+            <div className={blockClassName}>
+                <CmsBlocks page={activePage} />
+            </div>
         </div>
     );
 };

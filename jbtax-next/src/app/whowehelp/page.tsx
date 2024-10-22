@@ -12,6 +12,7 @@ export default function Page({ params }: { params: { pageSlug: string } }) {
         <Content
             pageSlug={"who-we-help"}
             className="who-we-help-main"
+            blockClassName="container-xl"
             renderHero={(activePage: DynamicPage) => (
                 <Fragment>
                     {activePage?.primaryImage?.media?.publicUrl != null && (
