@@ -1,69 +1,69 @@
-import { Fragment } from "react";
+"use client";
 
-import "../../styles/blogpage.css";
-import "../../styles/styles.css";
+import Link from "next/link";
 
+import Content from "@/views/cms/components/Content";
 
-export default function Blog() {
+import { DynamicPage } from "@/views/cms/types/dynamicPage";
+import { Fragment, useEffect, useState } from "react";
+
+import { getBlogPostsByTag } from "@/views/cms/services/contentApi";
+
+import "./blog.css"; // Import the CSS file for testing purposes
+
+export default function Page({ params }: { params: { pageSlug: string } }) {
+    const [featuredPosts, setFeaturedPosts] = useState<Array<DynamicPage>>([]);
+
+    const getContent = async () => {
+        try {
+            const posts = await getBlogPostsByTag(["Featured"]);
+            if (posts != null) {
+                setFeaturedPosts(posts);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+        }
+    };
+
+    useEffect(() => {
+        getContent();
+    }, []);
+
     return (
-        <Fragment>
-            <section className="blog-header">
-                <div className="header-content">
-                    <div className="blog-post-title">
-                        <h2>Understanding Expat Tax Requirements for 2024</h2>
-                    </div>
-                    <div className="blog-post-image">
-                        <img src="css/images/foreign-trusts-600x400.jpeg" alt="Understanding Expat Tax Requirements for 2024" />
-                    </div>
+        <Content
+            slugName={"blog-home"}
+            className="blog-home-main"
+            renderHero={(activePage: DynamicPage) => (
+                <Fragment>
+                    {activePage?.primaryImage?.media?.publicUrl != null && (
+                        <Fragment>
+                            <div className="blog-home-hero" style={{ paddingBottom: "200px;" }}>
+                                <img alt={activePage?.title} src={activePage?.primaryImage?.media?.publicUrl} />
+                            </div>
+                            <div className="blog-home-title">{activePage.title}</div>
+                        </Fragment>
+                    )}
+                </Fragment>
+            )}
+            renderContent={(activePage: DynamicPage) => (
+                <div className="container-lg blog-home-content">
+                    {featuredPosts.map((post, index) => (
+                        <Link key={index} href={`/blog/${post.slug}`} className="blog-link">
+                            <div key={index} className="blog-home-post row" style={{ margin: "0 0 50px 0" }}>
+                                <div className="col-4">
+                                    <img alt={post.title} src={post.primaryImage?.media?.publicUrl} style={{ width: "100%" }} />
+                                </div>
+                                <div className="col-8" style={{ margin: "50px 0" }}>
+                                    <div className="blog-home-post-title">{post.title}</div>
+                                    <div className="blog-home-post-author">by {post.author?.value ?? ""}</div>
+                                    <div className="blog-home-post-excerpt">{post.excerpt}</div>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
-            </section>
-
-            <main>
-                <section className="blog-post-content">
-                    <p className="date">September 4, 2024</p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec est nec sapien bibendum fringilla. Proin sit amet semper
-                        sapien...
-                    </p>
-                    <p>Vivamus accumsan, mi at aliquet feugiat, ligula arcu tincidunt est...</p>
-                    <p>Suspendisse potenti. In at libero eu ligula dictum tincidunt...</p>
-                </section>
-
-                <section className="related-articles">
-                    <h3>Related Articles</h3>
-                    <div className="article-grid">
-                        <article className="related-article">
-                            <img src="/images/foreign-trusts-600x400.jpeg" alt="Top 5 Tips for Filing Expat Taxes" />
-                            <div className="related-article-content">
-                                <h4>
-                                    <a href="blog-post2.html">Top 5 Tips for Filing Expat Taxes</a>
-                                </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                            </div>
-                        </article>
-
-                        <article className="related-article">
-                            <img src="https://via.placeholder.com/300x200" alt="How to Save on Expat Taxes: A Guide" />
-                            <div className="related-article-content">
-                                <h4>
-                                    <a href="blog-post3.html">How to Save on Expat Taxes: A Guide</a>
-                                </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                            </div>
-                        </article>
-
-                        <article className="related-article">
-                            <img src="https://via.placeholder.com/300x200" alt="Understanding Expat Tax Benefits" />
-                            <div className="related-article-content">
-                                <h4>
-                                    <a href="blog-post4.html">Understanding Expat Tax Benefits</a>
-                                </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                            </div>
-                        </article>
-                    </div>
-                </section>
-            </main>
-        </Fragment>
+            )}
+        />
     );
 }

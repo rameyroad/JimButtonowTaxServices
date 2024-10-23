@@ -1,0 +1,33 @@
+/* Styles used for testing the article page - moved to CMS */
+
+/* Who We Help */
+
+.who-we-help-main img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.who-we-help-hero {
+    padding: 0 0 20px 0;
+}
+
+.blog-home-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.who-we-help-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0 auto;
+    width: 500px;
+    background-color: #032d48;
+    color: white;
+
+    position: relative;
+    top: -70px;
+
+    text-align: center;
+}
+/* End of Who We Help */

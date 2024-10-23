@@ -51,6 +51,8 @@ export interface DynamicPage {
     ogDescription: null;
     ogImage: Image;
     primaryImage: Image;
+    author: StringField;
+    authorImage: Image;
     excerpt: string;
     route: null;
     redirectUrl: null | string;
