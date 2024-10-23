@@ -10,7 +10,7 @@ import { Fragment } from "react";
 export default function Page({ params }: { params: { pageSlug: string } }) {
     return (
         <Content
-            pageSlug={params.pageSlug}
+            slugName={params.pageSlug}
             className="article-main"
             renderHero={(activePage: DynamicPage) => (
                 <Fragment>

@@ -5,24 +5,30 @@ import React, { Fragment, useEffect, useState } from "react";
 import { CmsBlocks } from "./CmsBlocks";
 
 import { DynamicPage } from "../types/dynamicPage";
-import { getPageBySlug } from "../services/contentApi";
+import { getPageBySlug, getPostBySlug } from "../services/contentApi";
 
 interface Props {
-    pageSlug: string;
+    entityName?: string;
+    slugName: string;
     className: string;
     blockClassName?: string;
     renderHero?: (activePage: DynamicPage) => JSX.Element;
     renderContent?: (activePage: DynamicPage) => JSX.Element;
 }
 
-const Content = ({ pageSlug, className, blockClassName, renderHero, renderContent }: Props): JSX.Element => {
+const Content = ({ entityName = "page", slugName, className, blockClassName, renderHero, renderContent }: Props): JSX.Element => {
     const [activePage, setActivePage] = useState<DynamicPage | null>(null);
 
     const router = useRouter();
 
     const getContent = async () => {
         try {
-            const pc = await getPageBySlug(pageSlug, "");
+            let pc: any | null = null;
+            if (entityName === "page") {
+                pc = await getPageBySlug(slugName, "");
+            } else {
+                pc = await getPostBySlug(slugName);
+            }
             if (pc == null) {
                 router.push("/not-found");
             } else {
@@ -36,10 +42,10 @@ const Content = ({ pageSlug, className, blockClassName, renderHero, renderConten
     };
 
     useEffect(() => {
-        if (pageSlug) {
+        if (slugName) {
             getContent();
         }
-    }, [pageSlug]);
+    }, [slugName]);
 
     if (activePage == null) return <Fragment />;
 

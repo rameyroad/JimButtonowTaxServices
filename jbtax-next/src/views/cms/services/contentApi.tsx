@@ -58,7 +58,7 @@ export const getAllBlogPosts = async () => {
     const myHeaders = new Headers({
         Authorization: `Basic ${process.env.NEXT_PUBLIC_RAMEY_API_AUTH}`,
     });
-    const url = `${process.env.NEXT_PUBLIC_RAMEY_API_URL}/api/content/blog`;
+    const url = `${process.env.NEXT_PUBLIC_RAMEY_API_URL}/api/content/posts`;
     const resp = await fetch(url, {
         headers: myHeaders,
         next: { revalidate: 300 },
@@ -74,11 +74,11 @@ export const getAllBlogPosts = async () => {
     return null;
 };
 
-export const getBlogPostBySlug = async (slug: string) => {
+export const getPostBySlug = async (slug: string) => {
     const myHeaders = new Headers({
         Authorization: `Basic ${process.env.NEXT_PUBLIC_RAMEY_API_AUTH}`,
     });
-    const url = `${process.env.NEXT_PUBLIC_RAMEY_API_URL}/api/content/blog/${slug}`;
+    const url = `${process.env.NEXT_PUBLIC_RAMEY_API_URL}/api/content/posts/${slug}`;
     const resp = await fetch(url, {
         headers: myHeaders,
         next: { revalidate: 300 },
