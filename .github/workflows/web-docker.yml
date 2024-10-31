@@ -37,15 +37,23 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Build and push image
+      - name: Login to docker container
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - run: |
-          docker build ./jbtax-next -f jbtax-next/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ env.BRANCH_NAME }}-${{ github.run_id }}
+      - name: Build Docker image
+        run: |
+          docker build ./jbtax-next \
+            --build-arg CMS_API_KEY=${{ secrets.CMS_API_KEY }} \
+            --build-arg EMAIL_API_KEY=${{ secrets.EMAIL_API_KEY }} \
+            -f jbtax-next/Dockerfile \
+            -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ env.BRANCH_NAME }}-${{ github.run_id }} \
+
+      - name: Push Docker image
+        run: |
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ env.BRANCH_NAME }}-${{ github.run_id }}
 
   deploy:
