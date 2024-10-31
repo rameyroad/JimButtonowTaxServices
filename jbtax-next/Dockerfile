@@ -1,5 +1,15 @@
 FROM node:18-alpine AS base
 
+# Accept the API keys as build arguments
+ARG CMS_API_KEY
+ARG CSRF_SECRET
+ARG EMAIL_API_KEY
+
+# Set environment variables
+ENV CMS_API_KEY=${CMS_API_KEY}
+ENV CSRF_SECRET=${CSRF_SECRET}
+ENV EMAIL_API_KEY=${EMAIL_API_KEY}
+
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
