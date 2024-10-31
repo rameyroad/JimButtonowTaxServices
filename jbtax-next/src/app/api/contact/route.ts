@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
 
     // Process form data here (e.g., data.name, data.message, etc.)
-    let jsonBody = createApiBody(data);
+    const jsonBody = createApiBody(data);
     console.log("process.env.EMAIL_API_KEY", process.env.EMAIL_API_KEY);
 
     // Send email using an API post to https://api.postmarkapp.com/email
@@ -67,7 +67,7 @@ const createApiBody = (data: any) => {
     htmlBody += `Issue: ${data.issue}<br/>`;
     htmlBody += `Question: ${data.questionText}<br/>`;
 
-    let emailJson = {
+    const emailJson = {
         From: "jason@rameyroad.com",
         To: "jason@rameyroad.com",
         Subject: "A new question has been submitted",

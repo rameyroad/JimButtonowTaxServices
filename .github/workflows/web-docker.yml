@@ -49,7 +49,7 @@ jobs:
           docker build ./jbtax-next \
             --build-arg CMS_API_KEY=${{ secrets.CMS_API_KEY }} \
             --build-arg EMAIL_API_KEY=${{ secrets.EMAIL_API_KEY }} \
-            --build-art CSRF_SECRET=${{ secrets.CSRF_SECRET }} \
+            --build-arg CSRF_SECRET=${{ secrets.CSRF_SECRET }} \
             -f jbtax-next/Dockerfile \
             -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ env.BRANCH_NAME }}-${{ github.run_id }} \
 

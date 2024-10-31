@@ -54,7 +54,7 @@ export default function ContactForm() {
                     onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(true);
 
-                        let formValues = JSON.stringify(values, null, 2);
+                        const formValues = JSON.stringify(values, null, 2);
                         submitForm(formValues).then(() => {
                             setSubmitting(false);
                         });
