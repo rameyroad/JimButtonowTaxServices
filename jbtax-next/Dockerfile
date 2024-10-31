@@ -2,10 +2,12 @@ FROM node:18-alpine AS base
 
 # Accept the API keys as build arguments
 ARG CMS_API_KEY
+ARG CSRF_SECRET
 ARG EMAIL_API_KEY
 
 # Set environment variables
 ENV CMS_API_KEY=${CMS_API_KEY}
+ENV CSRF_SECRET=${CSRF_SECRET}
 ENV EMAIL_API_KEY=${EMAIL_API_KEY}
 
 # Install dependencies only when needed
