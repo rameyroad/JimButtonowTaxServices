@@ -1,4 +1,5 @@
 export { ColumnBlock } from "./Blocks/ColumnBlock";
+export { ComponentBlock } from "./Blocks/ComponentBlock";
 export { Hero } from "./Hero";
 export { HtmlBlock } from "./Blocks/HtmlBlock";
 export { ImageBlock } from "./Blocks/ImageBlock";

@@ -2,15 +2,17 @@ import { Fragment } from "react";
 
 import { Block, DynamicPage } from "@/views/cms/types/dynamicPage";
 
-import { ColumnBlock, HtmlBlock, ImageBlock, ImageGalleryBlock, QuoteBlock, SeparatorBlock } from "@/views/cms/components";
+import { ColumnBlock, ComponentBlock, HtmlBlock, ImageBlock, ImageGalleryBlock, QuoteBlock, SeparatorBlock } from "@/views/cms/components";
 
 export const CmsBlocks = ({ page }: { page: DynamicPage }) => {
     const renderBlock = (block: Block) => {
         switch (block.$type) {
-            case "Ramey.Cms.Content.Blocks.HtmlBlock":
-                return <HtmlBlock block={block} />;
             case "Ramey.Cms.Content.Blocks.ColumnBlock":
                 return <ColumnBlock block={block} />;
+            case "Ramey.Cms.Content.Blocks.ComponentBlock":
+                return <ComponentBlock block={block} />;
+            case "Ramey.Cms.Content.Blocks.HtmlBlock":
+                return <HtmlBlock block={block} />;
             case "Ramey.Cms.Content.Blocks.ImageGalleryBlock":
                 return <ImageGalleryBlock block={block} />;
             case "Ramey.Cms.Content.Blocks.ImageBlock":

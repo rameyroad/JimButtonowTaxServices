@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: "Too many requests, please try again later." }, { status: 429 });
     }
 
+    // Validate the incoming CSRF token
     const csrfTokenFromClient = req.headers.get("x-csrf-token");
     const csrfTokenFromCookie = cookies().get("csrfToken")?.value;
 
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
 
     // Process form data here (e.g., data.name, data.message, etc.)
-    const jsonBody = createApiBody(data);
+    const jsonBody = createEmailBody(data);
     console.log("process.env.EMAIL_API_KEY", process.env.EMAIL_API_KEY);
 
     // Send email using an API post to https://api.postmarkapp.com/email
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Question submitted successfully" });
 }
 
-const createApiBody = (data: any) => {
+const createEmailBody = (data: any) => {
     let htmlBody = `A new webform has been submitted with the following details: <br/><br/>`;
     htmlBody += `First Name: ${data.firstName}<br/>`;
     htmlBody += `Last Name: ${data.lastName}<br/>`;
@@ -68,12 +69,13 @@ const createApiBody = (data: any) => {
     htmlBody += `Question: ${data.questionText}<br/>`;
 
     const emailJson = {
-        From: "jason@rameyroad.com",
+        From: "no-reply@rameycms.com",
         To: "jason@rameyroad.com",
+        Bcc: "jason@rameyroad.com",
         Subject: "A new question has been submitted",
         Tag: "Email webform",
         HtmlBody: htmlBody,
-        ReplyTo: "jason@rameyroad.com",
+        ReplyTo: data.email,
         MessageStream: "outbound",
     };
     return emailJson;

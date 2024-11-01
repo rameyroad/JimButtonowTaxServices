@@ -10,6 +10,8 @@ export interface Item {
     $type: string;
     author: QuoteBody;
     body: ItemBody;
+    componentName: StringField;
+    componentProps: StringField;
     aspect?: Aspect;
     id: string;
     type: string;
@@ -20,6 +22,8 @@ export interface Block {
     $type: string;
     author: QuoteBody;
     body?: BlockBody;
+    componentName: StringField;
+    componentProps: StringField;
     title: string;
     slug: StringField;
     id: string;
