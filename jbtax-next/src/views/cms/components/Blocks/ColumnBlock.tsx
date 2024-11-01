@@ -15,7 +15,7 @@ export const ColumnBlock: React.FC<BlockProps> = ({ block }) => {
     const renderItem = (item: Item) => {
         switch (item.$type) {
             case "Ramey.Cms.Content.Blocks.ComponentBlock":
-                return <ComponentBlock block={item} />;
+                return <ComponentBlock item={item} />;
             case "Ramey.Cms.Content.Blocks.HtmlBlock":
                 return <HtmlBlock item={item} />;
             case "Ramey.Cms.Content.Blocks.ImageBlock":
