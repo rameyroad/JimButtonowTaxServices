@@ -1,0 +1,498 @@
+openapi: 3.0.3
+info:
+  title: Organizations API
+  description: API for managing organizations and settings
+  version: 1.0.0
+
+servers:
+  - url: /api/v1
+
+paths:
+  /organizations/current:
+    get:
+      summary: Get current user's organization
+      operationId: getCurrentOrganization
+      tags: [Organizations]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      summary: Update organization details
+      operationId: updateOrganization
+      tags: [Organizations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationRequest'
+      responses:
+        '200':
+          description: Updated organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /organizations/current/settings:
+    get:
+      summary: Get organization settings
+      operationId: getOrganizationSettings
+      tags: [Organizations]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Organization settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSettingsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      summary: Update organization settings
+      operationId: updateOrganizationSettings
+      tags: [Organizations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationSettingsRequest'
+      responses:
+        '200':
+          description: Updated settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSettingsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /organizations/current/users:
+    get:
+      summary: List organization users
+      operationId: listOrganizationUsers
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/UserStatus'
+      responses:
+        '200':
+          description: Paginated user list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Invite a new user
+      operationId: inviteUser
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteUserRequest'
+      responses:
+        '201':
+          description: User invited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Email already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /organizations/current/users/{userId}:
+    get:
+      summary: Get user details
+      operationId: getUser
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Update user role or status
+      operationId: updateUser
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Remove user from organization
+      operationId: removeUser
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: User removed
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    PageNumber:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    OrganizationResponse:
+      type: object
+      required: [id, name, slug, contactEmail, subscriptionStatus, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Acme Tax Services"
+        slug:
+          type: string
+          example: "acme-tax"
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        subscriptionStatus:
+          $ref: '#/components/schemas/SubscriptionStatus'
+        subscriptionPlan:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UpdateOrganizationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+          maxLength: 20
+        address:
+          $ref: '#/components/schemas/Address'
+
+    OrganizationSettingsResponse:
+      type: object
+      required: [id, eSignatureProvider, authLinkExpirationDays]
+      properties:
+        id:
+          type: string
+          format: uuid
+        eSignatureProvider:
+          $ref: '#/components/schemas/ESignatureProvider'
+        authLinkExpirationDays:
+          type: integer
+          minimum: 1
+          maximum: 30
+        notificationEmailEnabled:
+          type: boolean
+        notificationInAppEnabled:
+          type: boolean
+        notificationSmsEnabled:
+          type: boolean
+        defaultTaxYearsCount:
+          type: integer
+          minimum: 1
+          maximum: 4
+        timezone:
+          type: string
+          example: "America/New_York"
+
+    UpdateOrganizationSettingsRequest:
+      type: object
+      properties:
+        eSignatureProvider:
+          $ref: '#/components/schemas/ESignatureProvider'
+        authLinkExpirationDays:
+          type: integer
+          minimum: 1
+          maximum: 30
+        notificationEmailEnabled:
+          type: boolean
+        notificationInAppEnabled:
+          type: boolean
+        defaultTaxYearsCount:
+          type: integer
+          minimum: 1
+          maximum: 4
+        timezone:
+          type: string
+
+    UserResponse:
+      type: object
+      required: [id, email, firstName, lastName, role, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+        invitedAt:
+          type: string
+          format: date-time
+        lastLoginAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    UserListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    InviteUserRequest:
+      type: object
+      required: [email, firstName, lastName, role]
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        role:
+          $ref: '#/components/schemas/UserRole'
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/UserRole'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+
+    Address:
+      type: object
+      required: [street1, city, state, postalCode, country]
+      properties:
+        street1:
+          type: string
+          maxLength: 200
+        street2:
+          type: string
+          maxLength: 200
+        city:
+          type: string
+          maxLength: 100
+        state:
+          type: string
+          maxLength: 50
+        postalCode:
+          type: string
+          maxLength: 20
+        country:
+          type: string
+          maxLength: 50
+          default: "US"
+
+    SubscriptionStatus:
+      type: string
+      enum: [Trial, Active, Suspended, Cancelled]
+
+    ESignatureProvider:
+      type: string
+      enum: [BuiltIn, DocuSign, AdobeSign]
+
+    UserRole:
+      type: string
+      enum: [Admin, TaxProfessional, ReadOnly]
+
+    UserStatus:
+      type: string
+      enum: [Invited, Active, Suspended]
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'

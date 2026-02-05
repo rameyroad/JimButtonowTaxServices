@@ -1,0 +1,644 @@
+openapi: 3.0.3
+info:
+  title: Authorizations API
+  description: API for managing IRS Form 8821 authorizations
+  version: 1.0.0
+
+servers:
+  - url: /api/v1
+
+paths:
+  /authorizations:
+    get:
+      summary: List authorizations
+      operationId: listAuthorizations
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/AuthorizationStatus'
+        - name: clientId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: expiringWithinDays
+          in: query
+          description: Filter authorizations expiring within N days
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 90
+      responses:
+        '200':
+          description: Paginated authorization list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Create a new authorization (8821)
+      operationId: createAuthorization
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAuthorizationRequest'
+      responses:
+        '201':
+          description: Authorization created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /authorizations/dashboard:
+    get:
+      summary: Get authorization dashboard summary
+      operationId: getAuthorizationDashboard
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationDashboardResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /authorizations/{authorizationId}:
+    get:
+      summary: Get authorization details
+      operationId: getAuthorization
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationId'
+      responses:
+        '200':
+          description: Authorization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationDetailResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete draft authorization
+      operationId: deleteAuthorization
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationId'
+      responses:
+        '204':
+          description: Authorization deleted
+        '400':
+          description: Cannot delete non-draft authorization
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /authorizations/{authorizationId}/send:
+    post:
+      summary: Send authorization request for signature
+      operationId: sendAuthorizationRequest
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendAuthorizationRequest'
+      responses:
+        '200':
+          description: Request sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Invalid state transition
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /authorizations/{authorizationId}/resend:
+    post:
+      summary: Resend authorization request
+      operationId: resendAuthorizationRequest
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationId'
+      responses:
+        '200':
+          description: Request resent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Cannot resend in current state
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /authorizations/{authorizationId}/revoke:
+    post:
+      summary: Revoke authorization
+      operationId: revokeAuthorization
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevokeAuthorizationRequest'
+      responses:
+        '200':
+          description: Authorization revoked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Cannot revoke in current state
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /authorizations/{authorizationId}/form:
+    get:
+      summary: Download signed 8821 form
+      operationId: downloadAuthorizationForm
+      tags: [Authorizations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AuthorizationId'
+      responses:
+        '200':
+          description: Signed form PDF
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Form not yet signed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /sign/{token}:
+    get:
+      summary: Get authorization for signing (public)
+      operationId: getSigningAuthorization
+      tags: [Signing]
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Authorization ready for signing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningAuthorizationResponse'
+        '400':
+          description: Link expired or already used
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      summary: Submit signature (public)
+      operationId: submitSignature
+      tags: [Signing]
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitSignatureRequest'
+      responses:
+        '200':
+          description: Signature recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignatureConfirmationResponse'
+        '400':
+          description: Invalid signature data or link expired
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    AuthorizationId:
+      name: authorizationId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PageNumber:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    AuthorizationResponse:
+      type: object
+      required: [id, clientId, status, taxYears, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        clientId:
+          type: string
+          format: uuid
+        clientName:
+          type: string
+        status:
+          $ref: '#/components/schemas/AuthorizationStatus'
+        taxYears:
+          type: array
+          items:
+            type: integer
+          minItems: 1
+          maxItems: 4
+        signatureRequestSentAt:
+          type: string
+          format: date-time
+        signatureRequestExpiresAt:
+          type: string
+          format: date-time
+        signedAt:
+          type: string
+          format: date-time
+        expirationDate:
+          type: string
+          format: date
+        daysUntilExpiration:
+          type: integer
+          description: Negative if expired
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          $ref: '#/components/schemas/UserSummary'
+
+    AuthorizationDetailResponse:
+      allOf:
+        - $ref: '#/components/schemas/AuthorizationResponse'
+        - type: object
+          properties:
+            client:
+              $ref: '#/components/schemas/ClientSummary'
+            signatureMethod:
+              $ref: '#/components/schemas/ESignatureProvider'
+            signedByIp:
+              type: string
+            cafSubmissionDate:
+              type: string
+              format: date
+            cafConfirmationDate:
+              type: string
+              format: date
+            cafReferenceNumber:
+              type: string
+            revokedAt:
+              type: string
+              format: date-time
+            revokedReason:
+              type: string
+            hasSignedForm:
+              type: boolean
+            transcriptCount:
+              type: integer
+
+    AuthorizationListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationResponse'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    AuthorizationDashboardResponse:
+      type: object
+      required: [statusCounts, expiringCount, totalActive]
+      properties:
+        statusCounts:
+          type: object
+          additionalProperties:
+            type: integer
+          example:
+            Draft: 5
+            PendingSignature: 12
+            Signed: 3
+            Active: 45
+            Expired: 8
+        expiringCount:
+          type: integer
+          description: Expiring within 30 days
+        totalActive:
+          type: integer
+        recentActivity:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationActivityItem'
+          maxItems: 10
+
+    AuthorizationActivityItem:
+      type: object
+      properties:
+        authorizationId:
+          type: string
+          format: uuid
+        clientName:
+          type: string
+        action:
+          type: string
+          enum: [Created, Sent, Signed, Expired]
+        timestamp:
+          type: string
+          format: date-time
+
+    CreateAuthorizationRequest:
+      type: object
+      required: [clientId, taxYears]
+      properties:
+        clientId:
+          type: string
+          format: uuid
+        taxYears:
+          type: array
+          items:
+            type: integer
+            minimum: 2000
+            maximum: 2030
+          minItems: 1
+          maxItems: 4
+          description: Up to 4 tax years per IRS rules
+        sendImmediately:
+          type: boolean
+          default: false
+          description: Send signature request immediately after creation
+
+    SendAuthorizationRequest:
+      type: object
+      properties:
+        customMessage:
+          type: string
+          maxLength: 500
+          description: Optional custom message to include in email
+
+    RevokeAuthorizationRequest:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          minLength: 10
+          maxLength: 500
+
+    SigningAuthorizationResponse:
+      type: object
+      required: [organizationName, taxYears, form8821Preview]
+      properties:
+        organizationName:
+          type: string
+        organizationAddress:
+          $ref: '#/components/schemas/Address'
+        taxpayerName:
+          type: string
+        taxpayerAddress:
+          $ref: '#/components/schemas/Address'
+        taxYears:
+          type: array
+          items:
+            type: integer
+        form8821Preview:
+          type: string
+          format: uri
+          description: URL to preview PDF
+        signatureMethod:
+          $ref: '#/components/schemas/ESignatureProvider'
+        expiresAt:
+          type: string
+          format: date-time
+
+    SubmitSignatureRequest:
+      type: object
+      required: [typedName, consentAcknowledged]
+      properties:
+        typedName:
+          type: string
+          minLength: 2
+          maxLength: 200
+          description: Full legal name as signature
+        consentAcknowledged:
+          type: boolean
+          description: Must be true to proceed
+        consentText:
+          type: string
+          description: Consent text that was displayed
+
+    SignatureConfirmationResponse:
+      type: object
+      required: [signedAt, downloadUrl]
+      properties:
+        signedAt:
+          type: string
+          format: date-time
+        downloadUrl:
+          type: string
+          format: uri
+          description: Time-limited URL to download signed form
+        expirationDate:
+          type: string
+          format: date
+          description: When this authorization expires
+
+    AuthorizationStatus:
+      type: string
+      enum: [Draft, PendingSignature, Signed, SubmittedToCaf, Active, Expired, Revoked]
+
+    ESignatureProvider:
+      type: string
+      enum: [BuiltIn, DocuSign, AdobeSign]
+
+    ClientSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        taxIdentifierLast4:
+          type: string
+        clientType:
+          type: string
+
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'

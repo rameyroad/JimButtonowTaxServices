@@ -1,0 +1,548 @@
+openapi: 3.0.3
+info:
+  title: Clients API
+  description: API for managing client (taxpayer) records
+  version: 1.0.0
+
+servers:
+  - url: /api/v1
+
+paths:
+  /clients:
+    get:
+      summary: List clients
+      operationId: listClients
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: search
+          in: query
+          description: Search by name or last 4 digits of SSN/EIN
+          schema:
+            type: string
+        - name: clientType
+          in: query
+          schema:
+            $ref: '#/components/schemas/ClientType'
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [name, createdAt, updatedAt]
+            default: name
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+      responses:
+        '200':
+          description: Paginated client list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Create a new client
+      operationId: createClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClientRequest'
+      responses:
+        '201':
+          description: Client created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Duplicate SSN/EIN in organization
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /clients/{clientId}:
+    get:
+      summary: Get client details
+      operationId: getClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      responses:
+        '200':
+          description: Client details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDetailResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Update client
+      operationId: updateClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClientRequest'
+      responses:
+        '200':
+          description: Updated client
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Concurrent modification conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      summary: Delete client (soft delete)
+      operationId: deleteClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      responses:
+        '204':
+          description: Client deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /clients/{clientId}/authorizations:
+    get:
+      summary: List client's authorizations
+      operationId: listClientAuthorizations
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Client's authorizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /clients/{clientId}/transcripts:
+    get:
+      summary: List client's transcripts
+      operationId: listClientTranscripts
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: taxYear
+          in: query
+          schema:
+            type: integer
+        - name: transcriptType
+          in: query
+          schema:
+            $ref: '#/components/schemas/TranscriptType'
+      responses:
+        '200':
+          description: Client's transcripts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscriptListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    ClientId:
+      name: clientId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PageNumber:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    ClientResponse:
+      type: object
+      required: [id, clientType, displayName, taxIdentifierLast4, email, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        clientType:
+          $ref: '#/components/schemas/ClientType'
+        displayName:
+          type: string
+          description: Full name (individual) or business name
+          example: "John Doe"
+        firstName:
+          type: string
+        lastName:
+          type: string
+        businessName:
+          type: string
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        responsibleParty:
+          type: string
+        taxIdentifierLast4:
+          type: string
+          description: Last 4 digits of SSN/EIN (masked)
+          example: "1234"
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        activeAuthorizationCount:
+          type: integer
+        transcriptCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ClientDetailResponse:
+      allOf:
+        - $ref: '#/components/schemas/ClientResponse'
+        - type: object
+          properties:
+            notes:
+              type: string
+            createdBy:
+              $ref: '#/components/schemas/UserSummary'
+            recentAuthorizations:
+              type: array
+              items:
+                $ref: '#/components/schemas/AuthorizationSummary'
+              maxItems: 5
+            recentTranscripts:
+              type: array
+              items:
+                $ref: '#/components/schemas/TranscriptSummary'
+              maxItems: 5
+
+    ClientListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientResponse'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    CreateClientRequest:
+      type: object
+      required: [clientType, email, address]
+      properties:
+        clientType:
+          $ref: '#/components/schemas/ClientType'
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Required for Individual
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Required for Individual
+        businessName:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Required for Business
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        responsibleParty:
+          type: string
+          maxLength: 200
+        taxIdentifier:
+          type: string
+          description: SSN (XXX-XX-XXXX) or EIN (XX-XXXXXXX)
+          pattern: '^\d{3}-\d{2}-\d{4}$|^\d{2}-\d{7}$'
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          maxLength: 20
+        address:
+          $ref: '#/components/schemas/Address'
+        notes:
+          type: string
+          maxLength: 2000
+
+    UpdateClientRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        businessName:
+          type: string
+          minLength: 1
+          maxLength: 200
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        responsibleParty:
+          type: string
+          maxLength: 200
+        taxIdentifier:
+          type: string
+          description: Can be updated with audit trail
+          pattern: '^\d{3}-\d{2}-\d{4}$|^\d{2}-\d{7}$'
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          maxLength: 20
+        address:
+          $ref: '#/components/schemas/Address'
+        notes:
+          type: string
+          maxLength: 2000
+        version:
+          type: integer
+          description: Optimistic concurrency version
+
+    ClientType:
+      type: string
+      enum: [Individual, Business]
+
+    EntityType:
+      type: string
+      enum: [LLC, SCorp, CCorp, Partnership, SoleProprietor]
+
+    Address:
+      type: object
+      required: [street1, city, state, postalCode, country]
+      properties:
+        street1:
+          type: string
+          maxLength: 200
+        street2:
+          type: string
+          maxLength: 200
+        city:
+          type: string
+          maxLength: 100
+        state:
+          type: string
+          maxLength: 50
+        postalCode:
+          type: string
+          maxLength: 20
+        country:
+          type: string
+          maxLength: 50
+          default: "US"
+
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+
+    AuthorizationSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/AuthorizationStatus'
+        taxYears:
+          type: array
+          items:
+            type: integer
+        expirationDate:
+          type: string
+          format: date
+
+    AuthorizationListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationSummary'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    TranscriptSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        transcriptType:
+          $ref: '#/components/schemas/TranscriptType'
+        taxYear:
+          type: integer
+        uploadedAt:
+          type: string
+          format: date-time
+
+    TranscriptListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranscriptSummary'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    AuthorizationStatus:
+      type: string
+      enum: [Draft, PendingSignature, Signed, SubmittedToCaf, Active, Expired, Revoked]
+
+    TranscriptType:
+      type: string
+      enum: [AccountTranscript, ReturnTranscript, RecordOfAccount, WageAndIncome]
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'

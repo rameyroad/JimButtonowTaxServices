@@ -1,0 +1,430 @@
+openapi: 3.0.3
+info:
+  title: Transcripts API
+  description: API for managing IRS transcript uploads and downloads
+  version: 1.0.0
+
+servers:
+  - url: /api/v1
+
+paths:
+  /transcripts:
+    get:
+      summary: List transcripts
+      operationId: listTranscripts
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: clientId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: taxYear
+          in: query
+          schema:
+            type: integer
+        - name: transcriptType
+          in: query
+          schema:
+            $ref: '#/components/schemas/TranscriptType'
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [uploadedAt, taxYear, clientName]
+            default: uploadedAt
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+      responses:
+        '200':
+          description: Paginated transcript list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscriptListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Upload a transcript
+      operationId: uploadTranscript
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadTranscriptRequest'
+      responses:
+        '201':
+          description: Transcript uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscriptResponse'
+        '400':
+          description: Invalid file or missing authorization
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /transcripts/{transcriptId}:
+    get:
+      summary: Get transcript details
+      operationId: getTranscript
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TranscriptId'
+      responses:
+        '200':
+          description: Transcript details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscriptDetailResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete transcript
+      operationId: deleteTranscript
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TranscriptId'
+      responses:
+        '204':
+          description: Transcript deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /transcripts/{transcriptId}/download:
+    get:
+      summary: Download transcript file
+      operationId: downloadTranscript
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TranscriptId'
+      responses:
+        '200':
+          description: Transcript file
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            application/xml:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /transcripts/{transcriptId}/download-url:
+    get:
+      summary: Get time-limited download URL
+      operationId: getTranscriptDownloadUrl
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TranscriptId'
+        - name: expiresInMinutes
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 60
+            default: 15
+      responses:
+        '200':
+          description: Download URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadUrlResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /transcripts/validate:
+    post:
+      summary: Validate transcript file before upload
+      operationId: validateTranscript
+      tags: [Transcripts]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResultResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    TranscriptId:
+      name: transcriptId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PageNumber:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    TranscriptResponse:
+      type: object
+      required: [id, clientId, transcriptType, taxYear, fileName, uploadedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        clientId:
+          type: string
+          format: uuid
+        clientName:
+          type: string
+        authorizationId:
+          type: string
+          format: uuid
+        transcriptType:
+          $ref: '#/components/schemas/TranscriptType'
+        taxYear:
+          type: integer
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+          description: Size in bytes
+        contentType:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+        uploadedBy:
+          $ref: '#/components/schemas/UserSummary'
+
+    TranscriptDetailResponse:
+      allOf:
+        - $ref: '#/components/schemas/TranscriptResponse'
+        - type: object
+          properties:
+            client:
+              $ref: '#/components/schemas/ClientSummary'
+            authorization:
+              $ref: '#/components/schemas/AuthorizationSummary'
+            lastAccessedAt:
+              type: string
+              format: date-time
+            lastAccessedBy:
+              $ref: '#/components/schemas/UserSummary'
+            accessCount:
+              type: integer
+
+    TranscriptListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranscriptResponse'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    UploadTranscriptRequest:
+      type: object
+      required: [file, clientId, authorizationId, transcriptType, taxYear]
+      properties:
+        file:
+          type: string
+          format: binary
+          description: PDF or XML file
+        clientId:
+          type: string
+          format: uuid
+        authorizationId:
+          type: string
+          format: uuid
+          description: Must be an active authorization for this client
+        transcriptType:
+          $ref: '#/components/schemas/TranscriptType'
+        taxYear:
+          type: integer
+          minimum: 2000
+          maximum: 2030
+
+    DownloadUrlResponse:
+      type: object
+      required: [url, expiresAt]
+      properties:
+        url:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+
+    ValidationResultResponse:
+      type: object
+      required: [valid]
+      properties:
+        valid:
+          type: boolean
+        errors:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        detectedType:
+          $ref: '#/components/schemas/TranscriptType'
+        detectedTaxYear:
+          type: integer
+        fileSizeBytes:
+          type: integer
+
+    TranscriptType:
+      type: string
+      enum: [AccountTranscript, ReturnTranscript, RecordOfAccount, WageAndIncome]
+
+    ClientSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        taxIdentifierLast4:
+          type: string
+
+    AuthorizationSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+        taxYears:
+          type: array
+          items:
+            type: integer
+
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
