@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <!-- Domain layer has zero external dependencies per Clean Architecture -->
     <NoWarn>$(NoWarn);CA1308;CA1720</NoWarn>
   </PropertyGroup>
