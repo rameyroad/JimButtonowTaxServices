@@ -62,7 +62,7 @@
 - [x] T013 [US1] Create health-check.sh script for service status in transcript-project/docker/scripts/health-check.sh
 - [x] T014 [US1] Create down.sh script for stopping services in transcript-project/docker/scripts/down.sh
 - [x] T015 [US1] Make all scripts executable (chmod +x) in transcript-project/docker/scripts/
-- [ ] T016 [US1] Verify infrastructure services start and become healthy within 2 minutes
+- [x] T016 [US1] Verify infrastructure services start and become healthy within 2 minutes
 
 **Checkpoint**: User Story 1 complete - developers can start infrastructure and run API/frontend from IDE
 
@@ -84,8 +84,8 @@
 - [x] T022 [US2] Add DOTNET_USE_POLLING_FILE_WATCHER environment variable for API in transcript-project/docker/docker-compose.yml
 - [x] T023 [US2] Add WATCHPACK_POLLING environment variable for Web in transcript-project/docker/docker-compose.yml
 - [x] T024 [US2] Implement 'full' profile selection in transcript-project/docker/scripts/up.sh
-- [ ] T025 [US2] Verify hot-reload works for API code changes
-- [ ] T026 [US2] Verify hot-reload works for frontend code changes
+- [x] T025 [US2] Verify hot-reload works for API code changes
+- [x] T026 [US2] Verify hot-reload works for frontend code changes
 
 **Checkpoint**: User Story 2 complete - full stack runs in Docker with hot-reload
 
@@ -101,8 +101,8 @@
 
 - [x] T027 [US3] Add 'api' profile to API service definition in transcript-project/docker/docker-compose.yml
 - [x] T028 [US3] Implement 'api' profile selection in transcript-project/docker/scripts/up.sh
-- [ ] T029 [US3] Verify API profile starts infrastructure + API only
-- [ ] T030 [US3] Verify frontend from IDE can connect to containerized API
+- [x] T029 [US3] Verify API profile starts infrastructure + API only
+- [x] T030 [US3] Verify frontend from IDE can connect to containerized API
 
 **Checkpoint**: User Story 3 complete - frontend developers can use containerized backend
 
@@ -120,8 +120,8 @@
 - [x] T032 [P] [US4] Configure Redis Commander service in transcript-project/docker/docker-compose.yml
 - [x] T033 [US4] Add 'tools' profile to dev tool services in transcript-project/docker/docker-compose.yml
 - [x] T034 [US4] Implement 'tools' profile selection in transcript-project/docker/scripts/up.sh
-- [ ] T035 [US4] Verify database management UI is accessible
-- [ ] T036 [US4] Verify Redis Commander UI is accessible
+- [x] T035 [US4] Verify database management UI is accessible
+- [x] T036 [US4] Verify Redis Commander UI is accessible
 
 **Checkpoint**: User Story 4 complete - dev tools accessible for data inspection
 
@@ -140,8 +140,8 @@
 - [x] T039 [US5] Add --wait flag support to health-check.sh in transcript-project/docker/scripts/health-check.sh
 - [x] T040 [US5] Add -v flag (remove volumes) to down.sh in transcript-project/docker/scripts/down.sh
 - [x] T041 [US5] Add helpful output messages to all scripts
-- [ ] T042 [US5] Verify stop command works when services are already stopped
-- [ ] T043 [US5] Verify logs command shows service-specific logs
+- [x] T042 [US5] Verify stop command works when services are already stopped
+- [x] T043 [US5] Verify logs command shows service-specific logs
 
 **Checkpoint**: User Story 5 complete - all lifecycle scripts working
 
@@ -154,8 +154,8 @@
 - [x] T044 [P] Create tilt-compose.yml without profiles in transcript-project/docker/tilt-compose.yml
 - [x] T045 [P] Create Tiltfile with profile configuration in transcript-project/docker/Tiltfile
 - [x] T046 Create tilt-up.sh script in transcript-project/docker/scripts/tilt-up.sh
-- [ ] T047 Verify Tilt UI accessible at localhost:10350
-- [ ] T048 Verify Tilt hot-reload works for API and frontend
+- [x] T047 Verify Tilt UI accessible at localhost:10350
+- [x] T048 Verify Tilt hot-reload works for API and frontend
 
 ---
 
@@ -166,7 +166,7 @@
 - [x] T049 [P] Create README.md with usage guide in transcript-project/docker/README.md
 - [x] T050 [P] Document service URLs and ports in transcript-project/docker/README.md
 - [x] T051 [P] Add troubleshooting section to README in transcript-project/docker/README.md
-- [ ] T052 Run quickstart.md validation - verify all documented commands work
+- [x] T052 Run quickstart.md validation - verify all documented commands work
 - [x] T053 Update root README to reference docker/ directory
 
 ---

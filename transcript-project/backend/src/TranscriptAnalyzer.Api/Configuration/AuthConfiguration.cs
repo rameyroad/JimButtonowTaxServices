@@ -5,7 +5,48 @@ namespace TranscriptAnalyzer.Api.Configuration;
 
 public static class AuthConfiguration
 {
-    public static IServiceCollection AddAuth0Authentication(
+    public static IServiceCollection AddAuthenticationServices(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var useDevAuth = configuration.GetValue<bool>("Auth:UseDevAuth");
+
+        if (useDevAuth)
+        {
+            return services.AddDevAuthentication();
+        }
+
+        return services.AddAuth0Authentication(configuration);
+    }
+
+    private static IServiceCollection AddDevAuthentication(this IServiceCollection services)
+    {
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = false,
+                    RequireSignedTokens = false
+                };
+            });
+
+        services.AddAuthorization(options =>
+        {
+            options.DefaultPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+                .RequireAssertion(_ => true)
+                .Build();
+        });
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuth0Authentication(
         this IServiceCollection services,
         IConfiguration configuration)
     {

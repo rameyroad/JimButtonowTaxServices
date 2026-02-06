@@ -13,7 +13,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddOpenApi();
 
 // Authentication & Authorization
-builder.Services.AddAuth0Authentication(builder.Configuration);
+builder.Services.AddAuthenticationServices(builder.Configuration);
 
 // CORS
 builder.Services.AddCorsConfiguration(builder.Configuration, builder.Environment);
