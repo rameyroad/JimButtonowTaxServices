@@ -62,4 +62,4 @@ echo "Tilt UI will be available at: http://localhost:10350"
 echo ""
 
 # Start Tilt with the selected profile
-tilt up -- --profile="$PROFILE"
+tilt up -- "$PROFILE"

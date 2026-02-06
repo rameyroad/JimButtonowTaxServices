@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Suppress overly strict rules -->
+    <!-- CA1031: Global exception handler must catch all exceptions -->
+    <!-- CA1062: Middleware params are framework-called, always non-null -->
+    <!-- CA1515: API project types don't need to be internal -->
+    <!-- CA1848: LoggerMessage delegates add complexity without significant benefit here -->
+    <!-- CA1869: JsonSerializerOptions can be new in middleware (infrequent path) -->
+    <!-- CA2007: ConfigureAwait not needed in ASP.NET Core -->
+    <NoWarn>$(NoWarn);CA1031;CA1062;CA1515;CA1848;CA1869;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TranscriptAnalyzer.Application\TranscriptAnalyzer.Application.csproj" />
+    <ProjectReference Include="..\TranscriptAnalyzer.Infrastructure\TranscriptAnalyzer.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

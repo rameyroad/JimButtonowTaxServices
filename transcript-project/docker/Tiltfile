@@ -3,9 +3,9 @@
 #
 # Usage:
 #   tilt up                        # Start all services (default: full profile)
-#   tilt up -- --profile=api       # API only (run web from IDE)
-#   tilt up -- --profile=web       # Web only (connect to remote API)
-#   tilt up -- --profile=infra     # Infrastructure only (run API/web from IDE)
+#   tilt up -- api                 # API only (run web from IDE)
+#   tilt up -- web                 # Web only (connect to remote API)
+#   tilt up -- infra               # Infrastructure only (run API/web from IDE)
 #
 # Profiles:
 #   full    - All services (default)
@@ -30,9 +30,11 @@ PROFILES = {
 }
 
 # Parse command line arguments for profile selection
-config.define_string('profile', args=True)
+# Usage: tilt up -- full | tilt up -- api | tilt up (defaults to 'full')
+config.define_string_list('args', args=True)
 cfg = config.parse()
-selected_profile = cfg.get('profile', 'full')
+args_list = cfg.get('args', [])
+selected_profile = args_list[0] if args_list else 'full'
 
 if selected_profile not in PROFILES:
     fail('Unknown profile: %s. Available: %s' % (selected_profile, ', '.join(PROFILES.keys())))
