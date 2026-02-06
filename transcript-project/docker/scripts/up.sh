@@ -2,10 +2,10 @@
 # Start Transcript Analyzer services
 #
 # Usage:
-#   ./up.sh              # Start infrastructure only (SQL Server, Redis, Azurite, Seq)
+#   ./up.sh              # Start infrastructure only (PostgreSQL, Redis, Azurite, Seq)
 #   ./up.sh api          # Start API + infrastructure
 #   ./up.sh full         # Start all services
-#   ./up.sh tools        # Start all + dev tools (Adminer, Redis Commander)
+#   ./up.sh tools        # Start all + dev tools (pgAdmin, Redis Commander)
 #   ./up.sh --build      # Force rebuild images
 #   ./up.sh --follow     # Follow logs after starting
 
@@ -27,7 +27,7 @@ fi
 case "$PROFILE" in
     "")
         COMPOSE_PROFILES=""
-        PROFILE_DESC="infrastructure only (SQL Server, Redis, Azurite, Seq)"
+        PROFILE_DESC="infrastructure only (PostgreSQL, Redis, Azurite, Seq)"
         ;;
     api|backend)
         COMPOSE_PROFILES="api"
@@ -43,13 +43,13 @@ case "$PROFILE" in
         ;;
     tools|all)
         COMPOSE_PROFILES="tools"
-        PROFILE_DESC="full stack + dev tools (Adminer, Redis Commander)"
+        PROFILE_DESC="full stack + dev tools (pgAdmin, Redis Commander)"
         ;;
     *)
         echo "Unknown profile: $PROFILE"
         echo ""
         echo "Available profiles:"
-        echo "  (none)   - Infrastructure only (SQL Server, Redis, Azurite, Seq)"
+        echo "  (none)   - Infrastructure only (PostgreSQL, Redis, Azurite, Seq)"
         echo "  api      - API + infrastructure"
         echo "  full     - Full stack (API + Web + infrastructure)"
         echo "  tools    - Full stack + dev tools"
@@ -116,7 +116,7 @@ if [ -z "$FOLLOW" ] && [ -n "$DETACH" ]; then
     echo "  Seq (Logs):   http://localhost:${SEQ_UI_PORT:-8081}"
 
     if [[ "$COMPOSE_PROFILES" == "tools" ]]; then
-        echo "  Adminer:      http://localhost:${AZURE_DATA_STUDIO_PORT:-5050}"
+        echo "  pgAdmin:      http://localhost:${PGADMIN_PORT:-5050}"
         echo "  Redis Cmd:    http://localhost:${REDIS_COMMANDER_PORT:-8082}"
     fi
     echo ""

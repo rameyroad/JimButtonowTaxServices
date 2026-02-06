@@ -11,8 +11,8 @@
 #   full    - All services (default)
 #   api     - API + infrastructure
 #   web     - Web frontend + infrastructure
-#   infra   - Infrastructure only (SQL Server, Redis, Azurite, Seq)
-#   tools   - All services + dev tools (Adminer, Redis Commander)
+#   infra   - Infrastructure only (PostgreSQL, Redis, Azurite, Seq)
+#   tools   - All services + dev tools (pgAdmin, Redis Commander)
 
 version_settings(constraint='>=0.22.1')
 
@@ -22,11 +22,11 @@ version_settings(constraint='>=0.22.1')
 
 # Define which services belong to each profile
 PROFILES = {
-    'full': ['sqlserver', 'redis', 'azurite', 'seq', 'api', 'web'],
-    'api': ['sqlserver', 'redis', 'azurite', 'seq', 'api'],
-    'web': ['sqlserver', 'redis', 'azurite', 'seq', 'api', 'web'],
-    'infra': ['sqlserver', 'redis', 'azurite', 'seq'],
-    'tools': ['sqlserver', 'redis', 'azurite', 'seq', 'api', 'web', 'adminer', 'redis-commander'],
+    'full': ['postgres', 'redis', 'azurite', 'seq', 'api', 'web'],
+    'api': ['postgres', 'redis', 'azurite', 'seq', 'api'],
+    'web': ['postgres', 'redis', 'azurite', 'seq', 'api', 'web'],
+    'infra': ['postgres', 'redis', 'azurite', 'seq'],
+    'tools': ['postgres', 'redis', 'azurite', 'seq', 'api', 'web', 'pgadmin', 'redis-commander'],
 }
 
 # Parse command line arguments for profile selection
@@ -53,11 +53,11 @@ docker_compose('./tilt-compose.yml')
 # Service Configuration
 # =============================================================================
 
-# SQL Server Database
+# PostgreSQL Database
 dc_resource(
-    'sqlserver',
+    'postgres',
     labels=['infrastructure', 'database'],
-    auto_init='sqlserver' in enabled_services,
+    auto_init='postgres' in enabled_services,
 )
 
 # Redis Cache
@@ -86,7 +86,7 @@ dc_resource(
     'api',
     labels=['apps'],
     auto_init='api' in enabled_services,
-    resource_deps=['sqlserver', 'redis', 'azurite', 'seq'] if 'api' in enabled_services else [],
+    resource_deps=['postgres', 'redis', 'azurite', 'seq'] if 'api' in enabled_services else [],
 )
 
 # Next.js Web Frontend
@@ -97,12 +97,12 @@ dc_resource(
     resource_deps=['api'] if 'api' in enabled_services else [],
 )
 
-# Adminer (Database UI)
+# pgAdmin (Database UI)
 dc_resource(
-    'adminer',
+    'pgadmin',
     labels=['tools', 'database'],
-    auto_init='adminer' in enabled_services,
-    resource_deps=['sqlserver'] if 'sqlserver' in enabled_services else [],
+    auto_init='pgadmin' in enabled_services,
+    resource_deps=['postgres'] if 'postgres' in enabled_services else [],
 )
 
 # Redis Commander (Cache UI)

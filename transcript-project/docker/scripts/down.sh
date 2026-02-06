@@ -44,7 +44,7 @@ if [[ "$*" == *"-v"* ]]; then
     echo ""
     echo "================================================="
     echo "WARNING: Volumes were removed. All data deleted:"
-    echo "  - SQL Server database"
+    echo "  - PostgreSQL database"
     echo "  - Redis cache"
     echo "  - Azurite storage"
     echo "  - Seq logs"
