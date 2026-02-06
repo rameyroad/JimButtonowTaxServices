@@ -53,6 +53,19 @@ Process Modules:
    1. Different pending user access level, contractual requirements, etc.
    
 
+## Local Development
+
+For local development setup using Docker, see [docker/README.md](./docker/README.md).
+
+### Quick Start
+
+```bash
+cd docker
+cp .env.template .env
+./scripts/up.sh        # Start infrastructure
+./scripts/up.sh full   # Or start full stack
+```
+
 ## Architecture
 
 ### N-Tier Application Structure

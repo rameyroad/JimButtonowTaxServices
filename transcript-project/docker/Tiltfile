@@ -1,0 +1,125 @@
+# Transcript Analyzer - Tilt Configuration
+# Hot-reload development environment
+#
+# Usage:
+#   tilt up                        # Start all services (default: full profile)
+#   tilt up -- --profile=api       # API only (run web from IDE)
+#   tilt up -- --profile=web       # Web only (connect to remote API)
+#   tilt up -- --profile=infra     # Infrastructure only (run API/web from IDE)
+#
+# Profiles:
+#   full    - All services (default)
+#   api     - API + infrastructure
+#   web     - Web frontend + infrastructure
+#   infra   - Infrastructure only (SQL Server, Redis, Azurite, Seq)
+#   tools   - All services + dev tools (Adminer, Redis Commander)
+
+version_settings(constraint='>=0.22.1')
+
+# =============================================================================
+# Profile Configuration
+# =============================================================================
+
+# Define which services belong to each profile
+PROFILES = {
+    'full': ['sqlserver', 'redis', 'azurite', 'seq', 'api', 'web'],
+    'api': ['sqlserver', 'redis', 'azurite', 'seq', 'api'],
+    'web': ['sqlserver', 'redis', 'azurite', 'seq', 'api', 'web'],
+    'infra': ['sqlserver', 'redis', 'azurite', 'seq'],
+    'tools': ['sqlserver', 'redis', 'azurite', 'seq', 'api', 'web', 'adminer', 'redis-commander'],
+}
+
+# Parse command line arguments for profile selection
+config.define_string('profile', args=True)
+cfg = config.parse()
+selected_profile = cfg.get('profile', 'full')
+
+if selected_profile not in PROFILES:
+    fail('Unknown profile: %s. Available: %s' % (selected_profile, ', '.join(PROFILES.keys())))
+
+enabled_services = PROFILES[selected_profile]
+print('Starting with profile: %s (services: %s)' % (selected_profile, ', '.join(enabled_services)))
+
+# =============================================================================
+# Docker Compose Integration
+# =============================================================================
+
+# Load the tilt-compose.yml
+docker_compose('./tilt-compose.yml')
+
+# =============================================================================
+# Service Configuration
+# =============================================================================
+
+# SQL Server Database
+dc_resource(
+    'sqlserver',
+    labels=['infrastructure', 'database'],
+    auto_init='sqlserver' in enabled_services,
+)
+
+# Redis Cache
+dc_resource(
+    'redis',
+    labels=['infrastructure', 'cache'],
+    auto_init='redis' in enabled_services,
+)
+
+# Azure Storage Emulator
+dc_resource(
+    'azurite',
+    labels=['infrastructure', 'storage'],
+    auto_init='azurite' in enabled_services,
+)
+
+# Seq Logging
+dc_resource(
+    'seq',
+    labels=['infrastructure', 'observability'],
+    auto_init='seq' in enabled_services,
+)
+
+# .NET API
+dc_resource(
+    'api',
+    labels=['apps'],
+    auto_init='api' in enabled_services,
+    resource_deps=['sqlserver', 'redis', 'azurite', 'seq'] if 'api' in enabled_services else [],
+)
+
+# Next.js Web Frontend
+dc_resource(
+    'web',
+    labels=['apps'],
+    auto_init='web' in enabled_services,
+    resource_deps=['api'] if 'api' in enabled_services else [],
+)
+
+# Adminer (Database UI)
+dc_resource(
+    'adminer',
+    labels=['tools', 'database'],
+    auto_init='adminer' in enabled_services,
+    resource_deps=['sqlserver'] if 'sqlserver' in enabled_services else [],
+)
+
+# Redis Commander (Cache UI)
+dc_resource(
+    'redis-commander',
+    labels=['tools', 'cache'],
+    auto_init='redis-commander' in enabled_services,
+    resource_deps=['redis'] if 'redis' in enabled_services else [],
+)
+
+# =============================================================================
+# Local Resource Helpers
+# =============================================================================
+
+# Health check command
+local_resource(
+    'health-check',
+    cmd='./scripts/health-check.sh',
+    labels=['tools'],
+    auto_init=False,
+    trigger_mode=TRIGGER_MODE_MANUAL,
+)
