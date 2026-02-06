@@ -96,7 +96,7 @@ services:
     image: mcr.microsoft.com/dotnet/sdk:9.0
     container_name: transcript-api
     working_dir: /app
-    command: dotnet watch run --project TranscriptAnalyzer.Api/TranscriptAnalyzer.Api.csproj --urls http://+:8080
+    command: dotnet watch run --project src/TranscriptAnalyzer.Api/TranscriptAnalyzer.Api.csproj --urls http://+:8080
     ports:
       - "${API_PORT:-5100}:8080"
     environment:
@@ -115,7 +115,7 @@ services:
       - Email__TestMode=${EMAIL_TEST_MODE:-true}
       - PlatformAdmin__Email=${PLATFORM_ADMIN_EMAIL:-admin@local.dev}
     volumes:
-      - ../backend/src:/app
+      - ../backend:/app
       - api-nuget-cache:/root/.nuget/packages
     depends_on:
       sqlserver:

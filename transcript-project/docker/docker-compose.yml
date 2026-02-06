@@ -101,7 +101,7 @@ services:
     profiles: ["api", "backend", "full", "tools"]
     container_name: transcript-api
     working_dir: /app
-    command: dotnet watch run --project TranscriptAnalyzer.Api/TranscriptAnalyzer.Api.csproj --urls http://+:8080
+    command: dotnet watch run --project src/TranscriptAnalyzer.Api/TranscriptAnalyzer.Api.csproj --urls http://+:8080
     ports:
       - "${API_PORT:-5100}:8080"
     environment:
@@ -132,7 +132,7 @@ services:
       - PlatformAdmin__FirstName=${PLATFORM_ADMIN_FIRST_NAME:-Admin}
       - PlatformAdmin__LastName=${PLATFORM_ADMIN_LAST_NAME:-User}
     volumes:
-      - ../backend/src:/app
+      - ../backend:/app
       - api-nuget-cache:/root/.nuget/packages
     depends_on:
       sqlserver:
