@@ -110,8 +110,8 @@ if [ -z "$FOLLOW" ] && [ -n "$DETACH" ]; then
     echo "  ./scripts/down.sh         - Stop services"
     echo ""
     echo "Service URLs:"
-    echo "  API:          http://localhost:${API_PORT:-5000}"
-    echo "  API Health:   http://localhost:${API_PORT:-5000}/health"
+    echo "  API:          http://localhost:${API_PORT:-5100}"
+    echo "  API Health:   http://localhost:${API_PORT:-5100}/health"
     echo "  Web:          http://localhost:${WEB_PORT:-3000}"
     echo "  Seq (Logs):   http://localhost:${SEQ_UI_PORT:-8081}"
 

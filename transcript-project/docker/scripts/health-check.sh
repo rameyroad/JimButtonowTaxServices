@@ -13,7 +13,7 @@ if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
-API_PORT="${API_PORT:-5000}"
+API_PORT="${API_PORT:-5100}"
 WEB_PORT="${WEB_PORT:-3000}"
 SEQ_UI_PORT="${SEQ_UI_PORT:-8081}"
 REDIS_PORT="${REDIS_PORT:-6379}"

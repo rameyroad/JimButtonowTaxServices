@@ -29,7 +29,7 @@ cp .env.template .env
 | `redis` | Redis 7 cache | 6379 |
 | `azurite` | Azure Storage emulator | 10000-10002 |
 | `seq` | Centralized logging | 5341 (ingestion), 8081 (UI) |
-| `api` | .NET 9 Backend API | 5000 |
+| `api` | .NET 9 Backend API | 5100 |
 | `web` | Next.js Frontend | 3000 |
 | `adminer` | Database admin UI (optional) | 5050 |
 | `redis-commander` | Redis UI (optional) | 8082 |
@@ -93,7 +93,7 @@ Copy `.env.template` to `.env` and customize:
 
 ```bash
 # Ports
-API_PORT=5000
+API_PORT=5100
 WEB_PORT=3000
 SQL_PORT=1433
 REDIS_PORT=6379
@@ -121,8 +121,8 @@ When ready to test with Auth0:
 
 | Service | URL |
 |---------|-----|
-| API | http://localhost:5000 |
-| API Health | http://localhost:5000/health |
+| API | http://localhost:5100 |
+| API Health | http://localhost:5100/health |
 | Web | http://localhost:3000 |
 | Seq UI | http://localhost:8081 |
 | Adminer | http://localhost:5050 |
@@ -253,7 +253,7 @@ Ensure polling is enabled (should be automatic):
 │                         │                                    │
 │                    ┌────┴────┐                              │
 │                    │   api   │ (logs to seq)                │
-│                    │  :5000  │                              │
+│                    │  :5100  │                              │
 │                    └────┬────┘                              │
 │                         │                                    │
 │                    ┌────┴────┐                              │
