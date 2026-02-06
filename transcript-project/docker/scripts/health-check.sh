@@ -17,7 +17,7 @@ API_PORT="${API_PORT:-5100}"
 WEB_PORT="${WEB_PORT:-3000}"
 SEQ_UI_PORT="${SEQ_UI_PORT:-8081}"
 REDIS_PORT="${REDIS_PORT:-6379}"
-SQL_PORT="${SQL_PORT:-1433}"
+POSTGRES_PORT="${POSTGRES_PORT:-5432}"
 
 WAIT_MODE=false
 if [[ "$1" == "--wait" ]]; then
@@ -81,7 +81,7 @@ run_checks() {
     echo ""
     echo "Container Status:"
     echo "-----------------"
-    check_container "transcript-sqlserver" || all_healthy=false
+    check_container "transcript-postgres" || all_healthy=false
     check_container "transcript-redis" || all_healthy=false
     check_container "transcript-azurite" || true  # No healthcheck
     check_container "transcript-seq" || true       # No healthcheck
@@ -91,7 +91,7 @@ run_checks() {
     echo ""
     echo "Infrastructure Endpoints:"
     echo "-------------------------"
-    check_tcp "SQL Server" "localhost" "$SQL_PORT" || all_healthy=false
+    check_tcp "PostgreSQL" "localhost" "$POSTGRES_PORT" || all_healthy=false
     check_tcp "Redis" "localhost" "$REDIS_PORT" || all_healthy=false
     check_http "Seq UI" "http://localhost:$SEQ_UI_PORT" || all_healthy=false
 

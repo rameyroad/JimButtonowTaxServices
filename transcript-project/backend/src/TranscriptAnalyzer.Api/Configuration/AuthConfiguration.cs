@@ -19,6 +19,8 @@ public static class AuthConfiguration
         return services.AddAuth0Authentication(configuration);
     }
 
+    // Suppress security warnings for dev auth - this is intentionally insecure for local development
+#pragma warning disable CA5404
     private static IServiceCollection AddDevAuthentication(this IServiceCollection services)
     {
         services
@@ -35,6 +37,7 @@ public static class AuthConfiguration
                     RequireSignedTokens = false
                 };
             });
+#pragma warning restore CA5404
 
         services.AddAuthorization(options =>
         {

@@ -14,21 +14,43 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        // Database
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                sqlOptions =>
-                {
-                    sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
-                    sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 3,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null);
-                }));
-
-        // Multi-tenancy
+        // Multi-tenancy - register first so it's available for the interceptor
         services.AddScoped<ITenantContext, TenantContext>();
+
+        // Register the tenant connection interceptor
+        services.AddScoped<TenantConnectionInterceptor>();
+
+        // Database - PostgreSQL with snake_case naming convention and RLS support
+        services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+        {
+            var tenantInterceptor = serviceProvider.GetRequiredService<TenantConnectionInterceptor>();
+
+            options
+                .UseNpgsql(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    npgsqlOptions =>
+                    {
+                        npgsqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                        npgsqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 3,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorCodesToAdd: null);
+                    })
+                .UseSnakeCaseNamingConvention()
+                .AddInterceptors(tenantInterceptor);
+        });
+
+        // Admin DbContext factory for RLS bypass (maintenance operations)
+        // Uses AdminConnection which connects as app_admin role
+        var adminConnectionString = configuration.GetConnectionString("AdminConnection");
+        if (!string.IsNullOrEmpty(adminConnectionString))
+        {
+            services.AddDbContextFactory<ApplicationDbContext>(
+                options => options
+                    .UseNpgsql(adminConnectionString)
+                    .UseSnakeCaseNamingConvention(),
+                ServiceLifetime.Scoped);
+        }
 
         // Services
         services.AddSingleton<IEncryptionService, EncryptionService>();

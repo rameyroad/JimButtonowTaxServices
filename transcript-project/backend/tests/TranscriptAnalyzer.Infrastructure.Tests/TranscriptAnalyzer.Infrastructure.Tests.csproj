@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <!-- Suppress test-specific analyzer warnings -->
+    <!-- CA1707: Test method names use underscores for readability -->
+    <!-- CA2007: ConfigureAwait not needed in test code -->
+    <NoWarn>$(NoWarn);CA1707;CA2007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +15,7 @@
     <PackageReference Include="FluentAssertions" Version="8.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="NSubstitute" Version="5.3.0" />
-    <PackageReference Include="Testcontainers.MsSql" Version="4.10.0" />
+    <PackageReference Include="Testcontainers.PostgreSql" Version="4.10.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
   </ItemGroup>

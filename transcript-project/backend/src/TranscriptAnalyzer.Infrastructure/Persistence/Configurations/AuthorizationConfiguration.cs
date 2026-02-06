@@ -10,21 +10,19 @@ public class AuthorizationConfiguration : IEntityTypeConfiguration<Authorization
 {
     public void Configure(EntityTypeBuilder<Authorization> builder)
     {
-        builder.ToTable("Authorizations");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)
             .IsRequired();
 
         builder.HasIndex(e => e.OrganizationId)
-            .HasDatabaseName("IX_Authorizations_OrganizationId");
+            .HasDatabaseName("ix_authorizations_organization_id");
 
         builder.Property(e => e.ClientId)
             .IsRequired();
 
         builder.HasIndex(e => e.ClientId)
-            .HasDatabaseName("IX_Authorizations_ClientId");
+            .HasDatabaseName("ix_authorizations_client_id");
 
         builder.Property(e => e.CreatedByUserId)
             .IsRequired();
@@ -36,10 +34,10 @@ public class AuthorizationConfiguration : IEntityTypeConfiguration<Authorization
             .HasDefaultValue(AuthorizationStatus.Draft);
 
         builder.HasIndex(e => new { e.OrganizationId, e.Status })
-            .HasDatabaseName("IX_Authorizations_Status");
+            .HasDatabaseName("ix_authorizations_status");
 
         builder.Property<List<int>>("_taxYears")
-            .HasColumnName("TaxYears")
+            .HasColumnName("tax_years")
             .IsRequired()
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
@@ -69,8 +67,8 @@ public class AuthorizationConfiguration : IEntityTypeConfiguration<Authorization
         builder.Property(e => e.ExpirationDate);
 
         builder.HasIndex(e => e.ExpirationDate)
-            .HasDatabaseName("IX_Authorizations_ExpirationDate")
-            .HasFilter("[Status] = 'Active'");
+            .HasDatabaseName("ix_authorizations_expiration_date")
+            .HasFilter("status = 'Active'");
 
         builder.Property(e => e.CafSubmissionDate);
 

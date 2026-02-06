@@ -9,8 +9,6 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
 {
     public void Configure(EntityTypeBuilder<Organization> builder)
     {
-        builder.ToTable("Organizations");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Name)
@@ -35,32 +33,26 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
         {
             addressBuilder.Property(a => a.Street1)
                 .IsRequired()
-                .HasMaxLength(200)
-                .HasColumnName("Address_Street1");
+                .HasMaxLength(200);
 
             addressBuilder.Property(a => a.Street2)
-                .HasMaxLength(200)
-                .HasColumnName("Address_Street2");
+                .HasMaxLength(200);
 
             addressBuilder.Property(a => a.City)
                 .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("Address_City");
+                .HasMaxLength(100);
 
             addressBuilder.Property(a => a.State)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("Address_State");
+                .HasMaxLength(50);
 
             addressBuilder.Property(a => a.PostalCode)
                 .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnName("Address_PostalCode");
+                .HasMaxLength(20);
 
             addressBuilder.Property(a => a.Country)
                 .IsRequired()
-                .HasMaxLength(10)
-                .HasColumnName("Address_Country");
+                .HasMaxLength(10);
         });
 
         builder.Property(e => e.SubscriptionStatus)
@@ -93,8 +85,6 @@ public class OrganizationSettingsConfiguration : IEntityTypeConfiguration<Organi
 {
     public void Configure(EntityTypeBuilder<OrganizationSettings> builder)
     {
-        builder.ToTable("OrganizationSettings");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)

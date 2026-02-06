@@ -9,8 +9,6 @@ public class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
 {
     public void Configure(EntityTypeBuilder<AuditLog> builder)
     {
-        builder.ToTable("AuditLogs");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)
@@ -18,12 +16,12 @@ public class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
 
         builder.HasIndex(e => new { e.OrganizationId, e.Timestamp })
             .IsDescending(false, true)
-            .HasDatabaseName("IX_AuditLogs_OrganizationId_Timestamp");
+            .HasDatabaseName("ix_audit_logs_organization_id_timestamp");
 
         builder.Property(e => e.UserId);
 
         builder.HasIndex(e => e.UserId)
-            .HasDatabaseName("IX_AuditLogs_UserId");
+            .HasDatabaseName("ix_audit_logs_user_id");
 
         builder.Property(e => e.Action)
             .IsRequired()
@@ -32,7 +30,7 @@ public class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
 
         builder.HasIndex(e => new { e.Action, e.Timestamp })
             .IsDescending(false, true)
-            .HasDatabaseName("IX_AuditLogs_Action");
+            .HasDatabaseName("ix_audit_logs_action");
 
         builder.Property(e => e.EntityType)
             .IsRequired()
@@ -42,7 +40,7 @@ public class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
             .IsRequired();
 
         builder.HasIndex(e => new { e.EntityType, e.EntityId })
-            .HasDatabaseName("IX_AuditLogs_EntityType_EntityId");
+            .HasDatabaseName("ix_audit_logs_entity_type_entity_id");
 
         builder.Property(e => e.IpAddress)
             .HasMaxLength(45);

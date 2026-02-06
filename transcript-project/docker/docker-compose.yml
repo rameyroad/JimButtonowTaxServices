@@ -14,19 +14,19 @@ services:
   # Infrastructure - Database
   # =============================================================================
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: transcript-sqlserver
+  postgres:
+    image: postgres:16-alpine
+    container_name: transcript-postgres
     ports:
-      - "${SQL_PORT:-1433}:1433"
+      - "${POSTGRES_PORT:-5432}:5432"
     environment:
-      SA_PASSWORD: "${SA_PASSWORD:-YourStrong@Passw0rd}"
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: "Developer"
+      POSTGRES_USER: "${POSTGRES_USER:-postgres}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-YourStrong@Passw0rd}"
+      POSTGRES_DB: "${POSTGRES_DB:-transcript_analyzer}"
     volumes:
-      - sqlserver-data:/var/opt/mssql
+      - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" -C || exit 1
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-transcript_analyzer}"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -109,7 +109,7 @@ services:
       - DOTNET_USE_POLLING_FILE_WATCHER=1
       - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
       # Database
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TranscriptAnalyzer;User=sa;Password=${SA_PASSWORD:-YourStrong@Passw0rd};TrustServerCertificate=true
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB:-transcript_analyzer};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-YourStrong@Passw0rd}
       # Redis
       - ConnectionStrings__Redis=redis:6379
       # Seq Logging
@@ -135,7 +135,7 @@ services:
       - ../backend:/app
       - api-nuget-cache:/root/.nuget/packages
     depends_on:
-      sqlserver:
+      postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -194,16 +194,20 @@ services:
   # Development Tools (optional)
   # =============================================================================
 
-  adminer:
-    image: adminer:latest
+  pgadmin:
+    image: dpage/pgadmin4:latest
     profiles: ["tools"]
-    container_name: transcript-adminer
+    container_name: transcript-pgadmin
     ports:
-      - "${AZURE_DATA_STUDIO_PORT:-5050}:8080"
+      - "${PGADMIN_PORT:-5050}:80"
     environment:
-      ADMINER_DEFAULT_SERVER: sqlserver
+      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_EMAIL:-admin@local.dev}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_PASSWORD:-admin}"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     depends_on:
-      - sqlserver
+      - postgres
     networks:
       - transcript-network
     restart: unless-stopped
@@ -236,8 +240,8 @@ networks:
 # =============================================================================
 
 volumes:
-  sqlserver-data:
-    name: transcript-sqlserver-data
+  postgres-data:
+    name: transcript-postgres-data
   redis-data:
     name: transcript-redis-data
   azurite-data:
@@ -248,3 +252,5 @@ volumes:
     name: transcript-api-nuget-cache
   web-node-modules:
     name: transcript-web-node-modules
+  pgadmin-data:
+    name: transcript-pgadmin-data

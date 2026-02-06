@@ -10,8 +10,6 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
 {
     public void Configure(EntityTypeBuilder<Notification> builder)
     {
-        builder.ToTable("Notifications");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)
@@ -21,11 +19,11 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
             .IsRequired();
 
         builder.HasIndex(e => new { e.UserId, e.ReadAt })
-            .HasDatabaseName("IX_Notifications_UserId_ReadAt");
+            .HasDatabaseName("ix_notifications_user_id_read_at");
 
         builder.HasIndex(e => new { e.OrganizationId, e.CreatedAt })
             .IsDescending(false, true)
-            .HasDatabaseName("IX_Notifications_CreatedAt");
+            .HasDatabaseName("ix_notifications_created_at");
 
         builder.Property(e => e.Type)
             .IsRequired()
@@ -46,7 +44,7 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
         builder.Property(e => e.EntityId);
 
         builder.Property<List<NotificationChannel>>("_channels")
-            .HasColumnName("Channels")
+            .HasColumnName("channels")
             .IsRequired()
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),

@@ -10,15 +10,13 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
 {
     public void Configure(EntityTypeBuilder<Client> builder)
     {
-        builder.ToTable("Clients");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)
             .IsRequired();
 
         builder.HasIndex(e => e.OrganizationId)
-            .HasDatabaseName("IX_Clients_OrganizationId");
+            .HasDatabaseName("ix_clients_organization_id");
 
         builder.Property(e => e.ClientType)
             .IsRequired()
@@ -32,13 +30,13 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
             .HasMaxLength(100);
 
         builder.HasIndex(e => new { e.OrganizationId, e.LastName, e.FirstName })
-            .HasDatabaseName("IX_Clients_Name");
+            .HasDatabaseName("ix_clients_name");
 
         builder.Property(e => e.BusinessName)
             .HasMaxLength(200);
 
         builder.HasIndex(e => new { e.OrganizationId, e.BusinessName })
-            .HasDatabaseName("IX_Clients_BusinessName");
+            .HasDatabaseName("ix_clients_business_name");
 
         builder.Property(e => e.EntityType)
             .HasConversion<string>()
@@ -53,14 +51,14 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
                 v => v.EncryptedValue,
                 v => EncryptedString.FromEncrypted(v))
             .HasMaxLength(500)
-            .HasColumnName("TaxIdentifier_Encrypted");
+            .HasColumnName("tax_identifier_encrypted");
 
         builder.Property(e => e.TaxIdentifierLast4)
             .IsRequired()
             .HasMaxLength(4);
 
         builder.HasIndex(e => new { e.OrganizationId, e.TaxIdentifierLast4 })
-            .HasDatabaseName("IX_Clients_TaxIdentifierLast4");
+            .HasDatabaseName("ix_clients_tax_identifier_last4");
 
         builder.Property(e => e.Email)
             .IsRequired()
@@ -73,32 +71,26 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
         {
             addressBuilder.Property(a => a.Street1)
                 .IsRequired()
-                .HasMaxLength(200)
-                .HasColumnName("Address_Street1");
+                .HasMaxLength(200);
 
             addressBuilder.Property(a => a.Street2)
-                .HasMaxLength(200)
-                .HasColumnName("Address_Street2");
+                .HasMaxLength(200);
 
             addressBuilder.Property(a => a.City)
                 .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("Address_City");
+                .HasMaxLength(100);
 
             addressBuilder.Property(a => a.State)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("Address_State");
+                .HasMaxLength(50);
 
             addressBuilder.Property(a => a.PostalCode)
                 .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnName("Address_PostalCode");
+                .HasMaxLength(20);
 
             addressBuilder.Property(a => a.Country)
                 .IsRequired()
-                .HasMaxLength(10)
-                .HasColumnName("Address_Country");
+                .HasMaxLength(10);
         });
 
         builder.Property(e => e.Notes)

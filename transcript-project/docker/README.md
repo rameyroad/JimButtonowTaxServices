@@ -8,7 +8,7 @@ Local development environment with hot-reload support using Docker Compose and T
 # Copy environment template
 cp .env.template .env
 
-# Start infrastructure only (SQL Server, Redis, Azurite, Seq)
+# Start infrastructure only (PostgreSQL, Redis, Azurite, Seq)
 ./scripts/up.sh
 
 # Or start with API
@@ -25,13 +25,13 @@ cp .env.template .env
 
 | Service | Description | Default Port |
 |---------|-------------|--------------|
-| `sqlserver` | SQL Server 2022 database | 1433 |
+| `postgres` | PostgreSQL 16 database | 5432 |
 | `redis` | Redis 7 cache | 6379 |
 | `azurite` | Azure Storage emulator | 10000-10002 |
 | `seq` | Centralized logging | 5341 (ingestion), 8081 (UI) |
 | `api` | .NET 9 Backend API | 5100 |
 | `web` | Next.js Frontend | 3000 |
-| `adminer` | Database admin UI (optional) | 5050 |
+| `pgadmin` | PostgreSQL admin UI (optional) | 5050 |
 | `redis-commander` | Redis UI (optional) | 8082 |
 
 ## Profiles
@@ -43,7 +43,7 @@ Start only the services you need:
 | (none) | Infrastructure only | Run API/web from IDE with debugging |
 | `api` | API + infrastructure | Run web from IDE |
 | `full` | All services | Full stack development |
-| `tools` | All + dev tools | Full stack + Adminer, Redis Commander |
+| `tools` | All + dev tools | Full stack + pgAdmin, Redis Commander |
 
 ```bash
 # Examples
@@ -95,12 +95,14 @@ Copy `.env.template` to `.env` and customize:
 # Ports
 API_PORT=5100
 WEB_PORT=3000
-SQL_PORT=1433
+POSTGRES_PORT=5432
 REDIS_PORT=6379
 SEQ_UI_PORT=8081
 
 # Database
-SA_PASSWORD=YourStrong@Passw0rd
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=YourStrong@Passw0rd
+POSTGRES_DB=transcript_analyzer
 
 # Authentication
 USE_DEV_AUTH=true  # Set to false for Auth0
@@ -125,7 +127,7 @@ When ready to test with Auth0:
 | API Health | http://localhost:5100/health |
 | Web | http://localhost:3000 |
 | Seq UI | http://localhost:8081 |
-| Adminer | http://localhost:5050 |
+| pgAdmin | http://localhost:5050 |
 | Redis Commander | http://localhost:8082 |
 
 ## Tilt Usage
@@ -150,7 +152,7 @@ Access the Tilt UI at http://localhost:10350
 
 # Open backend in IDE (VS Code, Rider, Visual Studio)
 # Run/debug the API project
-# API connects to containerized SQL Server, Redis, Azurite
+# API connects to containerized PostgreSQL, Redis, Azurite
 ```
 
 ### Frontend Developer (Debug Frontend in IDE)
@@ -195,14 +197,34 @@ API_PORT=5001
 WEB_PORT=3001
 ```
 
-### SQL Server connection issues
+### PostgreSQL connection issues
 
 ```bash
-# Check if SQL Server is healthy
-docker logs transcript-sqlserver
+# Check if PostgreSQL is healthy
+docker logs transcript-postgres
 
 # Verify connectivity
-docker exec -it transcript-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -Q "SELECT 1" -C
+docker exec -it transcript-postgres psql -U postgres -d transcript_analyzer -c "SELECT 1"
+
+# Check RLS policies are enabled
+docker exec -it transcript-postgres psql -U postgres -d transcript_analyzer -c "\d users"
+# Should show rowsecurity=t in table info
+```
+
+### Row-Level Security (RLS) Testing
+
+```bash
+# Connect to PostgreSQL
+docker exec -it transcript-postgres psql -U postgres -d transcript_analyzer
+
+# Test RLS as app_user (enforced)
+SET ROLE app_user;
+SELECT set_config('app.current_tenant_id', 'org-id-here', false);
+SELECT * FROM users;  -- Only sees data for that tenant
+
+# Test RLS bypass as app_admin
+SET ROLE app_admin;
+SELECT * FROM users;  -- Sees all data (BYPASSRLS)
 ```
 
 ### Redis connection issues
@@ -244,12 +266,12 @@ Ensure polling is enabled (should be automatic):
 │                    Docker Network                            │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
-│  ┌───────────┐  ┌───────┐  ┌─────────┐  ┌─────┐            │
-│  │ sqlserver │  │ redis │  │ azurite │  │ seq │            │
-│  │  :1433    │  │ :6379 │  │ :10000+ │  │:8081│            │
-│  └─────┬─────┘  └───┬───┘  └────┬────┘  └──┬──┘            │
-│        │            │           │          │                │
-│        └────────────┴───────────┴──────────┘                │
+│  ┌──────────┐  ┌───────┐  ┌─────────┐  ┌─────┐             │
+│  │ postgres │  │ redis │  │ azurite │  │ seq │             │
+│  │  :5432   │  │ :6379 │  │ :10000+ │  │:8081│             │
+│  └─────┬────┘  └───┬───┘  └────┬────┘  └──┬──┘             │
+│        │           │           │          │                 │
+│        └───────────┴───────────┴──────────┘                 │
 │                         │                                    │
 │                    ┌────┴────┐                              │
 │                    │   api   │ (logs to seq)                │
@@ -263,7 +285,7 @@ Ensure polling is enabled (should be automatic):
 │                                                              │
 │  Optional (tools profile):                                   │
 │  ┌─────────┐   ┌─────────────────┐                         │
-│  │ adminer │   │ redis-commander │                         │
+│  │ pgadmin │   │ redis-commander │                         │
 │  │  :5050  │   │     :8082       │                         │
 │  └─────────┘   └─────────────────┘                         │
 │                                                              │

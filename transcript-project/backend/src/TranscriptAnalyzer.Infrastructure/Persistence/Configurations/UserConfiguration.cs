@@ -9,15 +9,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("Users");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)
             .IsRequired();
 
         builder.HasIndex(e => e.OrganizationId)
-            .HasDatabaseName("IX_Users_OrganizationId");
+            .HasDatabaseName("ix_users_organization_id");
 
         builder.Property(e => e.Auth0UserId)
             .IsRequired()
@@ -25,8 +23,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(e => e.Auth0UserId)
             .IsUnique()
-            .HasDatabaseName("IX_Users_Auth0UserId")
-            .HasFilter("[Auth0UserId] <> ''");
+            .HasDatabaseName("ix_users_auth0_user_id")
+            .HasFilter("auth0user_id <> ''");
 
         builder.Property(e => e.Email)
             .IsRequired()
@@ -34,7 +32,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(e => new { e.OrganizationId, e.Email })
             .IsUnique()
-            .HasDatabaseName("IX_Users_Email_OrganizationId");
+            .HasDatabaseName("ix_users_organization_id_email");
 
         builder.Property(e => e.FirstName)
             .IsRequired()

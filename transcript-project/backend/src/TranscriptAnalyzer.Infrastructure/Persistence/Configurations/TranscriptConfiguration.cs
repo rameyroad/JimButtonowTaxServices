@@ -9,27 +9,25 @@ public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
 {
     public void Configure(EntityTypeBuilder<Transcript> builder)
     {
-        builder.ToTable("Transcripts");
-
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.OrganizationId)
             .IsRequired();
 
         builder.HasIndex(e => e.OrganizationId)
-            .HasDatabaseName("IX_Transcripts_OrganizationId");
+            .HasDatabaseName("ix_transcripts_organization_id");
 
         builder.Property(e => e.ClientId)
             .IsRequired();
 
         builder.HasIndex(e => e.ClientId)
-            .HasDatabaseName("IX_Transcripts_ClientId");
+            .HasDatabaseName("ix_transcripts_client_id");
 
         builder.Property(e => e.AuthorizationId)
             .IsRequired();
 
         builder.HasIndex(e => e.AuthorizationId)
-            .HasDatabaseName("IX_Transcripts_AuthorizationId");
+            .HasDatabaseName("ix_transcripts_authorization_id");
 
         builder.Property(e => e.UploadedByUserId)
             .IsRequired();
@@ -43,7 +41,7 @@ public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
             .IsRequired();
 
         builder.HasIndex(e => new { e.OrganizationId, e.TaxYear })
-            .HasDatabaseName("IX_Transcripts_TaxYear");
+            .HasDatabaseName("ix_transcripts_tax_year");
 
         builder.Property(e => e.BlobPath)
             .IsRequired()
