@@ -1,9 +1,21 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
 using TranscriptAnalyzer.Api.Configuration;
+using TranscriptAnalyzer.Api.Endpoints;
 using TranscriptAnalyzer.Api.Middleware;
 using TranscriptAnalyzer.Application;
 using TranscriptAnalyzer.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure JSON serialization to use string enums (PascalCase for enum values)
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 // Add services to the container
 builder.Services.AddApplication();
@@ -46,6 +58,9 @@ app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = Dat
 
 // API version prefix group
 var apiV1 = app.MapGroup("/api/v1");
+
+// Register endpoints
+apiV1.MapClientsEndpoints();
 
 // Placeholder endpoints (to be implemented in user story tasks)
 apiV1.MapGet("/", () => Results.Ok(new { Version = "1.0", Status = "Ready" }))

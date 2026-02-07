@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using TranscriptAnalyzer.Application.Common;
 
 namespace TranscriptAnalyzer.Infrastructure.Persistence;
 
@@ -35,15 +36,5 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
     {
         public Guid? OrganizationId => null;
         public Guid? UserId => null;
-
-        public void SetTenant(Guid organizationId, Guid? userId = null)
-        {
-            // No-op for design time
-        }
-
-        public void Clear()
-        {
-            // No-op for design time
-        }
     }
 }

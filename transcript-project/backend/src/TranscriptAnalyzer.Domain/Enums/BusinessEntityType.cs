@@ -6,5 +6,8 @@ public enum BusinessEntityType
     LLC = 1,
     Partnership = 2,
     SCorp = 3,
-    CCorp = 4
+    CCorp = 4,
+    NonProfit = 5,
+    Trust = 6,
+    Estate = 7
 }

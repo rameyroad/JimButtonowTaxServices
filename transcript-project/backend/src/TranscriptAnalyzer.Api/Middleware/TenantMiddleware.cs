@@ -11,14 +11,22 @@ public class TenantMiddleware
     private const string OrganizationIdClaimType = "org_id";
     private const string UserIdClaimType = "sub";
 
+    // Header names for dev mode fallback
+    private const string OrganizationIdHeader = "X-Organization-Id";
+    private const string UserIdHeader = "X-User-Id";
+
     public TenantMiddleware(RequestDelegate next, ILogger<TenantMiddleware> logger)
     {
         _next = next;
         _logger = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context, ITenantContext tenantContext)
+    public async Task InvokeAsync(HttpContext context, IWritableTenantContext tenantContext)
     {
+        Guid? organizationId = null;
+        Guid? userId = null;
+
+        // Try to get tenant info from claims first (production auth)
         if (context.User.Identity?.IsAuthenticated == true)
         {
             var organizationIdClaim = context.User.FindFirst(OrganizationIdClaimType)
@@ -27,27 +35,41 @@ public class TenantMiddleware
             var userIdClaim = context.User.FindFirst(UserIdClaimType)
                 ?? context.User.FindFirst(ClaimTypes.NameIdentifier);
 
-            if (organizationIdClaim != null && Guid.TryParse(organizationIdClaim.Value, out var organizationId))
+            if (organizationIdClaim != null && Guid.TryParse(organizationIdClaim.Value, out var parsedOrgId))
             {
-                Guid? userId = null;
-                if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out var parsedUserId))
-                {
-                    userId = parsedUserId;
-                }
-
-                tenantContext.SetTenant(organizationId, userId);
-
-                _logger.LogDebug(
-                    "Tenant context set: OrganizationId={OrganizationId}, UserId={UserId}",
-                    organizationId,
-                    userId);
+                organizationId = parsedOrgId;
             }
-            else
+
+            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out var parsedUserId))
             {
-                _logger.LogWarning(
-                    "Authenticated user without organization claim: {Subject}",
-                    userIdClaim?.Value);
+                userId = parsedUserId;
             }
+        }
+
+        // Fallback to headers for dev mode testing
+        if (!organizationId.HasValue)
+        {
+            if (context.Request.Headers.TryGetValue(OrganizationIdHeader, out var orgHeader) &&
+                Guid.TryParse(orgHeader, out var headerOrgId))
+            {
+                organizationId = headerOrgId;
+            }
+
+            if (context.Request.Headers.TryGetValue(UserIdHeader, out var userHeader) &&
+                Guid.TryParse(userHeader, out var headerUserId))
+            {
+                userId = headerUserId;
+            }
+        }
+
+        if (organizationId.HasValue)
+        {
+            tenantContext.SetTenant(organizationId.Value, userId);
+
+            _logger.LogDebug(
+                "Tenant context set: OrganizationId={OrganizationId}, UserId={UserId}",
+                organizationId,
+                userId);
         }
 
         try

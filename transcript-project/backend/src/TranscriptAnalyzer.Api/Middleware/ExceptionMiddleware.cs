@@ -1,6 +1,7 @@
 using System.Text.Json;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using TranscriptAnalyzer.Application.Common.Exceptions;
 
 namespace TranscriptAnalyzer.Api.Middleware;
 
@@ -86,6 +87,24 @@ public class ExceptionMiddleware
                 Title = "Unauthorized",
                 Status = StatusCodes.Status401Unauthorized,
                 Detail = "Authentication is required to access this resource.",
+                Instance = context.Request.Path
+            },
+
+            DuplicateTaxIdentifierException => new ProblemDetails
+            {
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                Title = "Conflict",
+                Status = StatusCodes.Status409Conflict,
+                Detail = exception.Message,
+                Instance = context.Request.Path
+            },
+
+            ConcurrencyConflictException => new ProblemDetails
+            {
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                Title = "Conflict",
+                Status = StatusCodes.Status409Conflict,
+                Detail = exception.Message,
                 Instance = context.Request.Path
             },
 

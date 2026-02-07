@@ -1,0 +1,756 @@
+openapi: 3.0.3
+info:
+  title: Clients API
+  description: |
+    API for managing client (taxpayer) records with Individual and Business types.
+
+    **Security Features:**
+    - Tax identifiers (SSN/EIN) are encrypted at rest
+    - Only last 4 digits returned in API responses
+    - Role-based access control enforced
+    - Multi-tenant isolation via RLS
+
+    **Changes from 001-mvp-foundation:**
+    - Extended EntityType enum with NonProfit, Trust, Estate
+    - Added restore endpoint for archived clients
+    - Added includeArchived query parameter
+  version: 1.1.0
+
+servers:
+  - url: /api/v1
+
+paths:
+  /clients:
+    get:
+      summary: List clients
+      description: |
+        Returns paginated list of clients for the authenticated user's organization.
+        Supports search by name or last 4 digits of tax identifier.
+
+        **Role Requirements:**
+        - ReadOnly, TaxProfessional, Admin: Can list clients
+      operationId: listClients
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: search
+          in: query
+          description: Search by name, email, or last 4 digits of SSN/EIN
+          schema:
+            type: string
+            maxLength: 100
+        - name: clientType
+          in: query
+          description: Filter by client type
+          schema:
+            $ref: '#/components/schemas/ClientType'
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [name, email, createdAt, updatedAt]
+            default: name
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+        - name: includeArchived
+          in: query
+          description: Include archived (soft-deleted) clients. Admin only.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Paginated client list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    post:
+      summary: Create a new client
+      description: |
+        Creates a new Individual or Business client.
+
+        **Role Requirements:**
+        - TaxProfessional, Admin: Can create clients
+        - ReadOnly: Access denied
+
+        **Duplicate Detection:**
+        Returns 409 Conflict if a client with the same tax identifier
+        already exists in the organization.
+      operationId: createClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClientRequest'
+            examples:
+              individual:
+                summary: Individual client
+                value:
+                  clientType: Individual
+                  firstName: John
+                  lastName: Doe
+                  taxIdentifier: "123-45-6789"
+                  email: john.doe@example.com
+                  phone: "555-123-4567"
+                  address:
+                    street1: "123 Main St"
+                    city: Anytown
+                    state: CA
+                    postalCode: "90210"
+                    country: US
+              business:
+                summary: Business client
+                value:
+                  clientType: Business
+                  businessName: Acme Corporation
+                  entityType: CCorp
+                  responsibleParty: Jane Smith
+                  taxIdentifier: "12-3456789"
+                  email: contact@acme.com
+                  address:
+                    street1: "456 Corporate Blvd"
+                    city: Enterprise
+                    state: NY
+                    postalCode: "10001"
+                    country: US
+      responses:
+        '201':
+          description: Client created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Duplicate tax identifier in organization
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                type: "https://api.example.com/errors/duplicate-tax-identifier"
+                title: "Duplicate Tax Identifier"
+                status: 409
+                detail: "A client with tax identifier ending in 6789 already exists"
+                instance: "/api/v1/clients"
+
+  /clients/{clientId}:
+    get:
+      summary: Get client details
+      description: |
+        Returns full client details including recent authorizations and transcripts.
+
+        **Role Requirements:**
+        - ReadOnly, TaxProfessional, Admin: Can view client
+
+        **Security:**
+        - Only last 4 digits of tax identifier returned
+        - Returns 404 if client belongs to different organization (prevents enumeration)
+      operationId: getClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      responses:
+        '200':
+          description: Client details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDetailResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      summary: Update client
+      description: |
+        Updates client information. Uses optimistic concurrency - include
+        the current version number to detect concurrent modifications.
+
+        **Role Requirements:**
+        - TaxProfessional, Admin: Can update clients
+        - ReadOnly: Access denied
+
+        **PII Handling:**
+        - Tax identifier can be updated (will be re-encrypted)
+        - Changes are audit logged
+      operationId: updateClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClientRequest'
+      responses:
+        '200':
+          description: Updated client
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Concurrent modification conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                type: "https://api.example.com/errors/concurrency-conflict"
+                title: "Concurrency Conflict"
+                status: 409
+                detail: "Client was modified by another user. Please refresh and try again."
+
+    delete:
+      summary: Archive client (soft delete)
+      description: |
+        Soft-deletes a client. The client can be restored by an Admin.
+
+        **Role Requirements:**
+        - Admin: Can archive clients
+        - TaxProfessional, ReadOnly: Access denied
+      operationId: archiveClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      responses:
+        '204':
+          description: Client archived
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /clients/{clientId}/restore:
+    post:
+      summary: Restore archived client
+      description: |
+        Restores a soft-deleted client to active status.
+
+        **Role Requirements:**
+        - Admin: Can restore clients
+        - TaxProfessional, ReadOnly: Access denied
+      operationId: restoreClient
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+      responses:
+        '200':
+          description: Client restored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Client is not archived
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /clients/{clientId}/authorizations:
+    get:
+      summary: List client's authorizations
+      operationId: listClientAuthorizations
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Client's authorizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /clients/{clientId}/transcripts:
+    get:
+      summary: List client's transcripts
+      operationId: listClientTranscripts
+      tags: [Clients]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ClientId'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+        - name: taxYear
+          in: query
+          schema:
+            type: integer
+        - name: transcriptType
+          in: query
+          schema:
+            $ref: '#/components/schemas/TranscriptType'
+      responses:
+        '200':
+          description: Client's transcripts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscriptListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Auth0 JWT or dev token (when USE_DEV_AUTH=true)
+
+  parameters:
+    ClientId:
+      name: clientId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PageNumber:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    ClientResponse:
+      type: object
+      required: [id, clientType, displayName, taxIdentifierLast4, email, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        clientType:
+          $ref: '#/components/schemas/ClientType'
+        displayName:
+          type: string
+          description: "Last, First (individual) or business name"
+          example: "Doe, John"
+        firstName:
+          type: string
+          description: For Individual clients
+        lastName:
+          type: string
+          description: For Individual clients
+        businessName:
+          type: string
+          description: For Business clients
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        responsibleParty:
+          type: string
+          description: Business contact person
+        taxIdentifierLast4:
+          type: string
+          description: Last 4 digits of SSN/EIN
+          pattern: '^\d{4}$'
+          example: "6789"
+        taxIdentifierMasked:
+          type: string
+          description: Masked display format
+          example: "***-**-6789"
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        isArchived:
+          type: boolean
+          description: True if client is soft-deleted
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        version:
+          type: integer
+          description: Optimistic concurrency version
+
+    ClientDetailResponse:
+      allOf:
+        - $ref: '#/components/schemas/ClientResponse'
+        - type: object
+          properties:
+            notes:
+              type: string
+            createdBy:
+              $ref: '#/components/schemas/UserSummary'
+            recentAuthorizations:
+              type: array
+              items:
+                $ref: '#/components/schemas/AuthorizationSummary'
+              maxItems: 5
+            recentTranscripts:
+              type: array
+              items:
+                $ref: '#/components/schemas/TranscriptSummary'
+              maxItems: 5
+            activeAuthorizationCount:
+              type: integer
+            transcriptCount:
+              type: integer
+
+    ClientListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize, totalPages]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientResponse'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+
+    CreateClientRequest:
+      type: object
+      required: [clientType, email, address]
+      properties:
+        clientType:
+          $ref: '#/components/schemas/ClientType'
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Required for Individual clients
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Required for Individual clients
+        businessName:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Required for Business clients
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+          description: Required for Business clients
+        responsibleParty:
+          type: string
+          maxLength: 200
+          description: Optional contact person for Business clients
+        taxIdentifier:
+          type: string
+          description: |
+            SSN (XXX-XX-XXXX) for Individual or EIN (XX-XXXXXXX) for Business.
+            Encrypted at rest; only last 4 digits stored unencrypted.
+          pattern: '^\d{3}-\d{2}-\d{4}$|^\d{2}-\d{7}$'
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 20
+        address:
+          $ref: '#/components/schemas/Address'
+        notes:
+          type: string
+          maxLength: 2000
+
+    UpdateClientRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        businessName:
+          type: string
+          minLength: 1
+          maxLength: 200
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        responsibleParty:
+          type: string
+          maxLength: 200
+        taxIdentifier:
+          type: string
+          description: Can be updated (will be re-encrypted with audit trail)
+          pattern: '^\d{3}-\d{2}-\d{4}$|^\d{2}-\d{7}$'
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 20
+        address:
+          $ref: '#/components/schemas/Address'
+        notes:
+          type: string
+          maxLength: 2000
+        version:
+          type: integer
+          description: Required for optimistic concurrency. Send current version to detect conflicts.
+
+    ClientType:
+      type: string
+      enum: [Individual, Business]
+      description: |
+        - Individual: Person with SSN
+        - Business: Entity with EIN
+
+    EntityType:
+      type: string
+      enum:
+        - SoleProprietor
+        - Partnership
+        - SCorp
+        - CCorp
+        - LLC
+        - NonProfit
+        - Trust
+        - Estate
+      description: Business entity classification for tax purposes
+
+    Address:
+      type: object
+      required: [street1, city, state, postalCode]
+      properties:
+        street1:
+          type: string
+          maxLength: 200
+        street2:
+          type: string
+          maxLength: 200
+        city:
+          type: string
+          maxLength: 100
+        state:
+          type: string
+          maxLength: 50
+        postalCode:
+          type: string
+          maxLength: 20
+        country:
+          type: string
+          maxLength: 50
+          default: "US"
+
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+
+    AuthorizationSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/AuthorizationStatus'
+        taxYears:
+          type: array
+          items:
+            type: integer
+        expirationDate:
+          type: string
+          format: date
+
+    AuthorizationListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizationSummary'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    TranscriptSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        transcriptType:
+          $ref: '#/components/schemas/TranscriptType'
+        taxYear:
+          type: integer
+        uploadedAt:
+          type: string
+          format: date-time
+
+    TranscriptListResponse:
+      type: object
+      required: [items, totalCount, page, pageSize]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranscriptSummary'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+
+    AuthorizationStatus:
+      type: string
+      enum: [Draft, PendingSignature, Signed, SubmittedToCaf, Active, Expired, Revoked]
+
+    TranscriptType:
+      type: string
+      enum: [AccountTranscript, ReturnTranscript, RecordOfAccount, WageAndIncome]
+
+    ProblemDetails:
+      type: object
+      description: RFC 7807 Problem Details
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          example:
+            type: "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+            title: "Validation Error"
+            status: 400
+            errors:
+              taxIdentifier: ["Invalid SSN format. Expected XXX-XX-XXXX"]
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          example:
+            type: "https://api.example.com/errors/forbidden"
+            title: "Forbidden"
+            status: 403
+            detail: "ReadOnly users cannot create clients"
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'

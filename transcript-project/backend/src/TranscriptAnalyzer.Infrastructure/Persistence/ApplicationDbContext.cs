@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TranscriptAnalyzer.Application.Common;
 using TranscriptAnalyzer.Domain.Entities;
 
 namespace TranscriptAnalyzer.Infrastructure.Persistence;

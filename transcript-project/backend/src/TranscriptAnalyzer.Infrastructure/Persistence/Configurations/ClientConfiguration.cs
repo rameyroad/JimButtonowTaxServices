@@ -99,6 +99,11 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
         builder.Property(e => e.CreatedByUserId)
             .IsRequired();
 
+        builder.Property(e => e.Version)
+            .IsRequired()
+            .HasDefaultValue(1)
+            .IsConcurrencyToken();
+
         builder.Property(e => e.CreatedAt)
             .IsRequired();
 

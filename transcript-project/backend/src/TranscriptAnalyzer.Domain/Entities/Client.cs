@@ -19,6 +19,7 @@ public class Client : TenantEntity
     public Address Address { get; private set; }
     public string? Notes { get; private set; }
     public Guid CreatedByUserId { get; private set; }
+    public int Version { get; private set; } = 1;
 
     public Organization? Organization { get; private set; }
     public User? CreatedBy { get; private set; }
@@ -113,20 +114,20 @@ public class Client : TenantEntity
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         Email = email.Trim().ToLowerInvariant();
         Phone = phone?.Trim();
-        SetUpdatedAt();
+        IncrementVersion();
     }
 
     public void UpdateAddress(Address address)
     {
         ArgumentNullException.ThrowIfNull(address);
         Address = address;
-        SetUpdatedAt();
+        IncrementVersion();
     }
 
     public void UpdateNotes(string? notes)
     {
         Notes = notes?.Trim();
-        SetUpdatedAt();
+        IncrementVersion();
     }
 
     public void UpdateIndividualName(string firstName, string lastName)
@@ -141,7 +142,7 @@ public class Client : TenantEntity
 
         FirstName = firstName.Trim();
         LastName = lastName.Trim();
-        SetUpdatedAt();
+        IncrementVersion();
     }
 
     public void UpdateBusinessInfo(string businessName, BusinessEntityType entityType, string? responsibleParty)
@@ -156,6 +157,39 @@ public class Client : TenantEntity
         BusinessName = businessName.Trim();
         EntityType = entityType;
         ResponsibleParty = responsibleParty?.Trim();
+        IncrementVersion();
+    }
+
+    public void UpdateTaxIdentifier(EncryptedString taxIdentifier, string taxIdentifierLast4)
+    {
+        ArgumentNullException.ThrowIfNull(taxIdentifier);
+        ArgumentException.ThrowIfNullOrWhiteSpace(taxIdentifierLast4);
+
+        if (taxIdentifierLast4.Length != 4)
+        {
+            throw new ArgumentException("Tax identifier last 4 must be exactly 4 characters.", nameof(taxIdentifierLast4));
+        }
+
+        TaxIdentifier = taxIdentifier;
+        TaxIdentifierLast4 = taxIdentifierLast4;
+        IncrementVersion();
+    }
+
+    public void Archive()
+    {
+        SoftDelete();
+        IncrementVersion();
+    }
+
+    public void Unarchive()
+    {
+        Restore();
+        IncrementVersion();
+    }
+
+    private void IncrementVersion()
+    {
+        Version++;
         SetUpdatedAt();
     }
 }

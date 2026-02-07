@@ -1,14 +1,14 @@
+using TranscriptAnalyzer.Application.Common;
+
 namespace TranscriptAnalyzer.Infrastructure.Persistence;
 
-public interface ITenantContext
+public interface IWritableTenantContext : ITenantContext
 {
-    Guid? OrganizationId { get; }
-    Guid? UserId { get; }
     void SetTenant(Guid organizationId, Guid? userId = null);
     void Clear();
 }
 
-public sealed class TenantContext : ITenantContext
+public sealed class TenantContext : IWritableTenantContext
 {
     private readonly AsyncLocal<Guid?> _organizationId = new();
     private readonly AsyncLocal<Guid?> _userId = new();

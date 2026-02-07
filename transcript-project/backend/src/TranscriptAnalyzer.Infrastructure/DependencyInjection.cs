@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TranscriptAnalyzer.Application.Common;
 using TranscriptAnalyzer.Domain.Interfaces;
 using TranscriptAnalyzer.Infrastructure.Persistence;
 using TranscriptAnalyzer.Infrastructure.Security;
@@ -15,7 +16,10 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         // Multi-tenancy - register first so it's available for the interceptor
-        services.AddScoped<ITenantContext, TenantContext>();
+        // Register as singleton instance so the same context is shared across both interfaces
+        services.AddScoped<TenantContext>();
+        services.AddScoped<ITenantContext>(sp => sp.GetRequiredService<TenantContext>());
+        services.AddScoped<IWritableTenantContext>(sp => sp.GetRequiredService<TenantContext>());
 
         // Register the tenant connection interceptor
         services.AddScoped<TenantConnectionInterceptor>();
@@ -39,6 +43,9 @@ public static class DependencyInjection
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(tenantInterceptor);
         });
+
+        // Register DbContext as abstract type for Application layer handlers
+        services.AddScoped<DbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         // Admin DbContext factory for RLS bypass (maintenance operations)
         // Uses AdminConnection which connects as app_admin role

@@ -272,7 +272,7 @@ public class RlsIntegrationTests : IAsyncLifetime
     /// <summary>
     /// Test tenant context for RLS tests.
     /// </summary>
-    private sealed class TestTenantContext : ITenantContext
+    private sealed class TestTenantContext : IWritableTenantContext
     {
         private Guid? _organizationId;
         private Guid? _userId;
