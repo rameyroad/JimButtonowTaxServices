@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { Box, Drawer, AppBar, Toolbar, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
-import { Dashboard, People, Description, Assignment, Settings, Group, TableChart, AccountTree } from '@mui/icons-material';
+import { Dashboard, People, Description, Assignment, Settings, Group, TableChart, AccountTree, Functions } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import HeaderToolPanel from '@/components/layout/HeaderToolPanel';
@@ -21,6 +21,7 @@ const navItems = [
 const platformNavItems = [
   { text: 'Decision Tables', href: '/platform/decision-tables', icon: <TableChart /> },
   { text: 'Workflows', href: '/platform/workflows', icon: <AccountTree /> },
+  { text: 'Formulas', href: '/platform/formulas', icon: <Functions /> },
 ];
 
 interface DashboardLayoutProps {

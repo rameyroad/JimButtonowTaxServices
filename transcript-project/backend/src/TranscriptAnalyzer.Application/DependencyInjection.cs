@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using TranscriptAnalyzer.Application.Common.Behaviors;
+using TranscriptAnalyzer.Application.Formulas.Services;
 using TranscriptAnalyzer.Application.Issues.Services;
 using TranscriptAnalyzer.Application.Workflows.Services;
 using TranscriptAnalyzer.Domain.Enums;
@@ -34,11 +35,13 @@ public static class DependencyInjection
 
         // Workflow engine + step executors
         services.AddScoped<DecisionTableStepExecutor>();
+        services.AddScoped<CalculationStepExecutor>();
         services.AddScoped<TranscriptAnalysisStepExecutor>();
         services.AddScoped<IEnumerable<KeyValuePair<WorkflowStepType, IStepExecutor>>>(sp =>
             new List<KeyValuePair<WorkflowStepType, IStepExecutor>>
             {
                 new(WorkflowStepType.DecisionTable, sp.GetRequiredService<DecisionTableStepExecutor>()),
+                new(WorkflowStepType.Calculation, sp.GetRequiredService<CalculationStepExecutor>()),
             });
         services.AddScoped<IWorkflowEngine, WorkflowEngine>();
 
