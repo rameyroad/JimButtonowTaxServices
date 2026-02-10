@@ -7,6 +7,7 @@ import type {
   ListClientsParams,
   PaginatedResponse,
   UpdateClientRequest,
+  UpdateTaxIdentifierRequest,
 } from '@/lib/types/client';
 
 export const clientsApi = baseApi.injectEndpoints({
@@ -63,6 +64,19 @@ export const clientsApi = baseApi.injectEndpoints({
       ],
     }),
 
+    // Update tax identifier (SSN/EIN)
+    updateTaxIdentifier: builder.mutation<Client, { id: string; data: UpdateTaxIdentifierRequest }>({
+      query: ({ id, data }) => ({
+        url: `/clients/${id}/tax-identifier`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'Client', id },
+        { type: 'Client', id: 'LIST' },
+      ],
+    }),
+
     // Archive client (soft delete)
     archiveClient: builder.mutation<void, string>({
       query: (id) => ({
@@ -95,6 +109,7 @@ export const {
   useGetClientQuery,
   useCreateClientMutation,
   useUpdateClientMutation,
+  useUpdateTaxIdentifierMutation,
   useArchiveClientMutation,
   useRestoreClientMutation,
 } = clientsApi;

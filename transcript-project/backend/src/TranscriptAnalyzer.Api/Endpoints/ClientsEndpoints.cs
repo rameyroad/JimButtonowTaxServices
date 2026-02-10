@@ -3,6 +3,7 @@ using TranscriptAnalyzer.Application.Clients.Commands.ArchiveClient;
 using TranscriptAnalyzer.Application.Clients.Commands.CreateClient;
 using TranscriptAnalyzer.Application.Clients.Commands.RestoreClient;
 using TranscriptAnalyzer.Application.Clients.Commands.UpdateClient;
+using TranscriptAnalyzer.Application.Clients.Commands.UpdateTaxIdentifier;
 using TranscriptAnalyzer.Application.Clients.Queries;
 using TranscriptAnalyzer.Application.Clients.Queries.GetClient;
 
@@ -112,6 +113,30 @@ public static class ClientsEndpoints
         })
         .WithName("UpdateClient")
         .WithSummary("Update an existing client")
+        .RequireAuthorization("WriteClients")
+        .Produces(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden)
+        .Produces(StatusCodes.Status404NotFound)
+        .Produces(StatusCodes.Status409Conflict);
+
+        // PUT /clients/{id}/tax-identifier - Update tax identifier
+        clients.MapPut("/{id:guid}/tax-identifier", async (
+            Guid id,
+            UpdateTaxIdentifierCommand command,
+            ISender sender,
+            CancellationToken cancellationToken) =>
+        {
+            var commandWithId = command with { Id = id };
+            var result = await sender.Send(commandWithId, cancellationToken);
+
+            return result is null
+                ? Results.NotFound()
+                : Results.Ok(result);
+        })
+        .WithName("UpdateTaxIdentifier")
+        .WithSummary("Update a client's tax identifier (SSN/EIN)")
         .RequireAuthorization("WriteClients")
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest)

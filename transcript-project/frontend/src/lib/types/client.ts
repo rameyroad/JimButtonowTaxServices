@@ -83,6 +83,12 @@ export interface UpdateClientRequest {
   version: number;
 }
 
+export interface UpdateTaxIdentifierRequest {
+  taxIdentifier: string;
+  clientType: ClientType;
+  version: number;
+}
+
 export interface PaginatedResponse<T> {
   items: T[];
   totalCount: number;

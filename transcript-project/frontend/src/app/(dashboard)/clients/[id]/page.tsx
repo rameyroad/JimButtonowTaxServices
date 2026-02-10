@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useGetClientQuery, useArchiveClientMutation, useRestoreClientMutation } from '@/lib/api/clientsApi';
-import { ClientTypeBadge, TaxIdentifierDisplay } from '@/components/clients';
+import { ClientTypeBadge, TaxIdentifierDisplay, UpdateTaxIdentifierDialog } from '@/components/clients';
 
 export default function ClientDetailPage() {
   const params = useParams();
@@ -35,6 +35,7 @@ export default function ClientDetailPage() {
   const [restoreClient, { isLoading: isRestoring }] = useRestoreClientMutation();
 
   const [showArchiveDialog, setShowArchiveDialog] = useState(false);
+  const [showTaxIdDialog, setShowTaxIdDialog] = useState(false);
   const [archiveError, setArchiveError] = useState<string | null>(null);
 
   const handleArchive = async () => {
@@ -213,11 +214,18 @@ export default function ClientDetailPage() {
             <Typography variant="caption" color="text.secondary">
               Tax Identifier
             </Typography>
-            <TaxIdentifierDisplay
-              clientType={client.clientType}
-              maskedValue={client.taxIdentifierMasked}
-              last4={client.taxIdentifierLast4}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <TaxIdentifierDisplay
+                clientType={client.clientType}
+                maskedValue={client.taxIdentifierMasked}
+                last4={client.taxIdentifierLast4}
+              />
+              {!client.isArchived && (
+                <Button size="small" onClick={() => setShowTaxIdDialog(true)}>
+                  Update
+                </Button>
+              )}
+            </Box>
           </Box>
 
           <Box>
@@ -249,6 +257,16 @@ export default function ClientDetailPage() {
           </Box>
         </Box>
       </Paper>
+
+      {/* Update tax identifier dialog */}
+      <UpdateTaxIdentifierDialog
+        open={showTaxIdDialog}
+        onClose={() => setShowTaxIdDialog(false)}
+        clientId={clientId}
+        clientType={client.clientType}
+        currentLast4={client.taxIdentifierLast4}
+        version={client.version}
+      />
     </Box>
   );
 }
