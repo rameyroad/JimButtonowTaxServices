@@ -16,6 +16,9 @@ public class WorkflowDefinition : SoftDeletableEntity
     private readonly List<WorkflowStep> _steps = [];
     public IReadOnlyCollection<WorkflowStep> Steps => _steps.AsReadOnly();
 
+    private readonly List<WorkflowVersion> _versions = [];
+    public IReadOnlyCollection<WorkflowVersion> Versions => _versions.AsReadOnly();
+
 #pragma warning disable CS8618 // Required for EF Core
     private WorkflowDefinition() { }
 #pragma warning restore CS8618

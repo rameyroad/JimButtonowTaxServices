@@ -9,6 +9,7 @@ public record CaseWorkflowDetailDto
     public required Guid WorkflowDefinitionId { get; init; }
     public required string WorkflowName { get; init; }
     public required int WorkflowVersion { get; init; }
+    public Guid? WorkflowVersionId { get; init; }
     public required WorkflowExecutionStatus Status { get; init; }
     public DateTime? StartedAt { get; init; }
     public DateTime? CompletedAt { get; init; }

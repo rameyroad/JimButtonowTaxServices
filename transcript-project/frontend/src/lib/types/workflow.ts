@@ -102,6 +102,20 @@ export interface ListWorkflowDefinitionsParams {
   sortOrder?: 'asc' | 'desc';
 }
 
+export interface WorkflowVersionListItem {
+  id: string;
+  workflowDefinitionId: string;
+  versionNumber: number;
+  publishedAt: string;
+  publishedByUserId: string;
+  isActive: boolean;
+  createdAt: string;
+}
+
+export interface WorkflowVersionDetail extends WorkflowVersionListItem {
+  snapshotData: string;
+}
+
 export interface PaginatedResponse<T> {
   items: T[];
   totalCount: number;

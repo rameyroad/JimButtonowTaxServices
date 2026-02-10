@@ -8,6 +8,7 @@ public class CaseWorkflow : TenantEntity
     public Guid ClientId { get; private set; }
     public Guid WorkflowDefinitionId { get; private set; }
     public int WorkflowVersion { get; private set; }
+    public Guid? WorkflowVersionId { get; private set; }
     public WorkflowExecutionStatus Status { get; private set; }
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
@@ -17,6 +18,7 @@ public class CaseWorkflow : TenantEntity
 
     public Client Client { get; private set; } = null!;
     public WorkflowDefinition WorkflowDefinition { get; private set; } = null!;
+    public WorkflowVersion? WorkflowVersionEntity { get; private set; }
     public WorkflowStep? CurrentStep { get; private set; }
 
     private readonly List<StepExecution> _stepExecutions = [];
@@ -36,6 +38,11 @@ public class CaseWorkflow : TenantEntity
         WorkflowVersion = workflowVersion;
         StartedByUserId = startedByUserId;
         Status = WorkflowExecutionStatus.NotStarted;
+    }
+
+    public void SetWorkflowVersionId(Guid workflowVersionId)
+    {
+        WorkflowVersionId = workflowVersionId;
     }
 
     public void Start(Guid? firstStepId)

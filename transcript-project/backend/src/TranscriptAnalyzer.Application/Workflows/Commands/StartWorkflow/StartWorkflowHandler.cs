@@ -55,6 +55,11 @@ public class StartWorkflowHandler : IRequestHandler<StartWorkflowCommand, CaseWo
         if (workflowDefinition.Status != PublishStatus.Published)
             throw new InvalidOperationException("Cannot start a workflow that is not published.");
 
+        // Find the active version for this workflow
+        var activeVersion = await _dbContext.Set<WorkflowVersion>()
+            .FirstOrDefaultAsync(v => v.WorkflowDefinitionId == workflowDefinition.Id && v.IsActive,
+                cancellationToken);
+
         // Create case workflow
         var caseWorkflow = new CaseWorkflow(
             organizationId,
@@ -62,6 +67,11 @@ public class StartWorkflowHandler : IRequestHandler<StartWorkflowCommand, CaseWo
             request.WorkflowDefinitionId,
             workflowDefinition.CurrentVersion,
             userId);
+
+        if (activeVersion is not null)
+        {
+            caseWorkflow.SetWorkflowVersionId(activeVersion.Id);
+        }
 
         _dbContext.Set<CaseWorkflow>().Add(caseWorkflow);
         await _dbContext.SaveChangesAsync(cancellationToken);

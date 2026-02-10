@@ -31,5 +31,8 @@ public class WorkflowMappingProfile : Profile
         CreateMap<StepExecution, StepExecutionDto>()
             .ForMember(dest => dest.StepName, opt => opt.MapFrom(src => src.WorkflowStep.Name))
             .ForMember(dest => dest.StepType, opt => opt.MapFrom(src => src.WorkflowStep.StepType));
+
+        CreateMap<WorkflowVersion, WorkflowVersionListItemDto>();
+        CreateMap<WorkflowVersion, WorkflowVersionDetailDto>();
     }
 }

@@ -9,6 +9,8 @@ import type {
   WorkflowDefinitionDetail,
   WorkflowDefinitionListItem,
   WorkflowStep,
+  WorkflowVersionListItem,
+  WorkflowVersionDetail,
 } from '@/lib/types/workflow';
 
 export const workflowsApi = baseApi.injectEndpoints({
@@ -101,6 +103,7 @@ export const workflowsApi = baseApi.injectEndpoints({
       invalidatesTags: (_result, _error, id) => [
         { type: 'Workflow', id },
         { type: 'Workflow', id: 'LIST' },
+        { type: 'Workflow', id: `${id}-versions` },
       ],
     }),
 
@@ -112,6 +115,20 @@ export const workflowsApi = baseApi.injectEndpoints({
       invalidatesTags: (_result, _error, id) => [
         { type: 'Workflow', id },
         { type: 'Workflow', id: 'LIST' },
+      ],
+    }),
+
+    listWorkflowVersions: builder.query<WorkflowVersionListItem[], string>({
+      query: (workflowId) => `/workflows/${workflowId}/versions`,
+      providesTags: (_result, _error, workflowId) => [
+        { type: 'Workflow', id: `${workflowId}-versions` },
+      ],
+    }),
+
+    getWorkflowVersion: builder.query<WorkflowVersionDetail, { workflowId: string; versionId: string }>({
+      query: ({ workflowId, versionId }) => `/workflows/${workflowId}/versions/${versionId}`,
+      providesTags: (_result, _error, { workflowId }) => [
+        { type: 'Workflow', id: `${workflowId}-versions` },
       ],
     }),
   }),
@@ -128,4 +145,6 @@ export const {
   useRemoveWorkflowStepMutation,
   usePublishWorkflowMutation,
   useUnpublishWorkflowMutation,
+  useListWorkflowVersionsQuery,
+  useGetWorkflowVersionQuery,
 } = workflowsApi;

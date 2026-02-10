@@ -32,6 +32,7 @@ export interface CaseWorkflowDetail {
   workflowDefinitionId: string;
   workflowName: string;
   workflowVersion: number;
+  workflowVersionId?: string;
   status: WorkflowExecutionStatus;
   startedAt?: string;
   completedAt?: string;

@@ -33,6 +33,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<RuleOutput> RuleOutputs => Set<RuleOutput>();
     public DbSet<WorkflowDefinition> WorkflowDefinitions => Set<WorkflowDefinition>();
     public DbSet<WorkflowStep> WorkflowSteps => Set<WorkflowStep>();
+    public DbSet<WorkflowVersion> WorkflowVersions => Set<WorkflowVersion>();
     public DbSet<CalculationFormula> CalculationFormulas => Set<CalculationFormula>();
 
     // Subscriber-level entities (tenant-filtered)

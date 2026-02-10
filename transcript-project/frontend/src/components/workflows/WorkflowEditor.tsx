@@ -27,11 +27,16 @@ import {
   MenuItem,
   Switch,
   FormControlLabel,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 import {
   Add,
   Delete,
   Edit,
+  ExpandMore,
+  History,
   Publish,
   Unpublished,
 } from '@mui/icons-material';
@@ -43,6 +48,8 @@ import {
   useRemoveWorkflowStepMutation,
   usePublishWorkflowMutation,
   useUnpublishWorkflowMutation,
+  useListWorkflowVersionsQuery,
+  useGetWorkflowVersionQuery,
 } from '@/lib/api/workflowsApi';
 import type { PublishStatus } from '@/lib/types/decisionTable';
 import type { WorkflowStepType, WorkflowStep } from '@/lib/types/workflow';
@@ -89,6 +96,13 @@ export default function WorkflowEditor({ id }: WorkflowEditorProps) {
   const [removeStep] = useRemoveWorkflowStepMutation();
   const [publishWorkflow] = usePublishWorkflowMutation();
   const [unpublishWorkflow] = useUnpublishWorkflowMutation();
+
+  const { data: versions } = useListWorkflowVersionsQuery(id);
+  const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
+  const { data: selectedVersion } = useGetWorkflowVersionQuery(
+    { workflowId: id, versionId: selectedVersionId! },
+    { skip: !selectedVersionId }
+  );
 
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
@@ -313,6 +327,65 @@ export default function WorkflowEditor({ id }: WorkflowEditorProps) {
           </TableContainer>
         )}
       </Paper>
+
+      {/* Version History */}
+      {versions && versions.length > 0 && (
+        <Paper sx={{ p: 3, mt: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+            <History color="action" />
+            <Typography variant="h6">
+              Version History ({versions.length})
+            </Typography>
+          </Box>
+          <Box>
+            {versions.map((version) => (
+              <Accordion
+                key={version.id}
+                expanded={selectedVersionId === version.id}
+                onChange={(_, expanded) => setSelectedVersionId(expanded ? version.id : null)}
+                disableGutters
+              >
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
+                    <Typography variant="body2" fontWeight={600}>
+                      v{version.versionNumber}
+                    </Typography>
+                    {version.isActive && (
+                      <Chip label="Active" size="small" color="success" />
+                    )}
+                    <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto', mr: 2 }}>
+                      {new Date(version.publishedAt).toLocaleString()}
+                    </Typography>
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {selectedVersion && selectedVersionId === version.id ? (
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ mb: 1 }}>Snapshot Data</Typography>
+                      <Typography
+                        variant="body2"
+                        component="pre"
+                        sx={{
+                          fontSize: '0.75rem',
+                          overflow: 'auto',
+                          maxHeight: 300,
+                          bgcolor: 'grey.50',
+                          p: 1.5,
+                          borderRadius: 1,
+                        }}
+                      >
+                        {JSON.stringify(JSON.parse(selectedVersion.snapshotData), null, 2)}
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <CircularProgress size={20} />
+                  )}
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Box>
+        </Paper>
+      )}
 
       {/* Add/Edit Step Dialog */}
       <Dialog

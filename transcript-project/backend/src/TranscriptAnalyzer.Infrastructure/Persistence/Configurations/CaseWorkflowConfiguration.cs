@@ -23,6 +23,8 @@ public class CaseWorkflowConfiguration : IEntityTypeConfiguration<CaseWorkflow>
         builder.Property(e => e.WorkflowVersion)
             .IsRequired();
 
+        builder.Property(e => e.WorkflowVersionId);
+
         builder.Property(e => e.Status)
             .IsRequired()
             .HasConversion<string>()
@@ -58,6 +60,11 @@ public class CaseWorkflowConfiguration : IEntityTypeConfiguration<CaseWorkflow>
             .WithMany()
             .HasForeignKey(e => e.WorkflowDefinitionId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(e => e.WorkflowVersionEntity)
+            .WithMany()
+            .HasForeignKey(e => e.WorkflowVersionId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasOne(e => e.CurrentStep)
             .WithMany()

@@ -8,7 +8,9 @@ using TranscriptAnalyzer.Application.Workflows.Commands.UnpublishWorkflow;
 using TranscriptAnalyzer.Application.Workflows.Commands.UpdateWorkflowDefinition;
 using TranscriptAnalyzer.Application.Workflows.Commands.UpdateWorkflowStep;
 using TranscriptAnalyzer.Application.Workflows.Queries.GetWorkflowDefinition;
+using TranscriptAnalyzer.Application.Workflows.Queries.GetWorkflowVersion;
 using TranscriptAnalyzer.Application.Workflows.Queries.ListWorkflowDefinitions;
+using TranscriptAnalyzer.Application.Workflows.Queries.ListWorkflowVersions;
 using TranscriptAnalyzer.Domain.Enums;
 
 namespace TranscriptAnalyzer.Api.Endpoints;
@@ -243,6 +245,45 @@ public static class WorkflowsEndpoints
         })
         .WithName("UnpublishWorkflow")
         .WithSummary("Unpublish a workflow definition")
+        .RequireAuthorization("PlatformAdmin")
+        .Produces(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden)
+        .Produces(StatusCodes.Status404NotFound);
+
+        // GET /workflows/{id}/versions - List versions for a workflow
+        workflows.MapGet("/{id:guid}/versions", async (
+            Guid id,
+            ISender sender,
+            CancellationToken cancellationToken) =>
+        {
+            var query = new ListWorkflowVersionsQuery(id);
+            var result = await sender.Send(query, cancellationToken);
+            return Results.Ok(result);
+        })
+        .WithName("ListWorkflowVersions")
+        .WithSummary("List version history for a workflow definition")
+        .RequireAuthorization("PlatformAdmin")
+        .Produces(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden);
+
+        // GET /workflows/{id}/versions/{versionId} - Get version detail
+        workflows.MapGet("/{id:guid}/versions/{versionId:guid}", async (
+            Guid id,
+            Guid versionId,
+            ISender sender,
+            CancellationToken cancellationToken) =>
+        {
+            var query = new GetWorkflowVersionQuery(id, versionId);
+            var result = await sender.Send(query, cancellationToken);
+
+            return result is null
+                ? Results.NotFound()
+                : Results.Ok(result);
+        })
+        .WithName("GetWorkflowVersion")
+        .WithSummary("Get version detail with snapshot data")
         .RequireAuthorization("PlatformAdmin")
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status401Unauthorized)
