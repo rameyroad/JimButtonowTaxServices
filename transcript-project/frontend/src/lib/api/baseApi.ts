@@ -48,6 +48,7 @@ export const baseApi = createApi({
     'CaseWorkflow',
     'Issue',
     'Formula',
+    'HumanTask',
   ],
   endpoints: () => ({}),
 });

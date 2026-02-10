@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TranscriptAnalyzer.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using TranscriptAnalyzer.Infrastructure.Persistence;
 namespace TranscriptAnalyzer.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260210210302_AddHumanTasks")]
+    partial class AddHumanTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -766,78 +769,6 @@ namespace TranscriptAnalyzer.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_human_tasks_assignee_status");
 
                     b.ToTable("human_tasks", (string)null);
-                });
-
-            modelBuilder.Entity("TranscriptAnalyzer.Domain.Entities.Invitation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime?>("AcceptedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("accepted_at");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("email");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("expires_at");
-
-                    b.Property<Guid>("InvitedByUserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("invited_by_user_id");
-
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("organization_id");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("role");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("status");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("token");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_invitations");
-
-                    b.HasIndex("OrganizationId")
-                        .HasDatabaseName("ix_invitations_organization_id");
-
-                    b.HasIndex("Token")
-                        .IsUnique()
-                        .HasDatabaseName("ix_invitations_token");
-
-                    b.ToTable("invitations", (string)null);
                 });
 
             modelBuilder.Entity("TranscriptAnalyzer.Domain.Entities.Issue", b =>
@@ -1924,18 +1855,6 @@ namespace TranscriptAnalyzer.Infrastructure.Persistence.Migrations
                     b.Navigation("CaseWorkflow");
 
                     b.Navigation("StepExecution");
-                });
-
-            modelBuilder.Entity("TranscriptAnalyzer.Domain.Entities.Invitation", b =>
-                {
-                    b.HasOne("TranscriptAnalyzer.Domain.Entities.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_invitations_organizations_organization_id");
-
-                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("TranscriptAnalyzer.Domain.Entities.Issue", b =>

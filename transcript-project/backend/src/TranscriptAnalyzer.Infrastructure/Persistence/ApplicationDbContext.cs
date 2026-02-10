@@ -40,6 +40,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<CaseWorkflow> CaseWorkflows => Set<CaseWorkflow>();
     public DbSet<StepExecution> StepExecutions => Set<StepExecution>();
     public DbSet<Issue> Issues => Set<Issue>();
+    public DbSet<HumanTask> HumanTasks => Set<HumanTask>();
+    public DbSet<Invitation> Invitations => Set<Invitation>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,6 +81,12 @@ public class ApplicationDbContext : DbContext
             .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
 
         modelBuilder.Entity<Issue>()
+            .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
+
+        modelBuilder.Entity<HumanTask>()
+            .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
+
+        modelBuilder.Entity<Invitation>()
             .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
     }
 

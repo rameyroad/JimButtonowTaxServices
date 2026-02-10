@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { Box, Drawer, AppBar, Toolbar, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
-import { Dashboard, People, Description, Assignment, Settings, Group, TableChart, AccountTree, Functions } from '@mui/icons-material';
+import { Dashboard, People, Description, Assignment, Settings, Group, TableChart, AccountTree, Functions, TaskAlt } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import HeaderToolPanel from '@/components/layout/HeaderToolPanel';
@@ -12,6 +12,7 @@ const drawerWidth = 240;
 const navItems = [
   { text: 'Dashboard', href: '/', icon: <Dashboard /> },
   { text: 'Clients', href: '/clients', icon: <People /> },
+  { text: 'Tasks', href: '/tasks', icon: <TaskAlt /> },
   { text: 'Authorizations', href: '/authorizations', icon: <Assignment /> },
   { text: 'Transcripts', href: '/transcripts', icon: <Description /> },
   { text: 'Team', href: '/team', icon: <Group /> },
