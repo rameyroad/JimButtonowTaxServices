@@ -167,7 +167,7 @@ services:
       - "${WEB_PORT:-3000}:3000"
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:${API_PORT:-5100}
+      - NEXT_PUBLIC_API_URL=http://localhost:${API_PORT:-5100}/api/v1
       - WATCHPACK_POLLING=true
       # Auth settings
       - NEXT_PUBLIC_USE_DEV_AUTH=${USE_DEV_AUTH:-true}

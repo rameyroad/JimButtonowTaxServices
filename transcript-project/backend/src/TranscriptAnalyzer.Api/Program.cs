@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using TranscriptAnalyzer.Api;
 using TranscriptAnalyzer.Api.Configuration;
 using TranscriptAnalyzer.Api.Endpoints;
 using TranscriptAnalyzer.Api.Middleware;
@@ -68,4 +69,10 @@ apiV1.MapGet("/", () => Results.Ok(new { Version = "1.0", Status = "Ready" }))
     .WithTags("Info")
     .AllowAnonymous();
 
-app.Run();
+// Seed dev data in Development environment
+if (app.Environment.IsDevelopment())
+{
+    await DevDataSeeder.SeedDevDataAsync(app.Services);
+}
+
+await app.RunAsync();

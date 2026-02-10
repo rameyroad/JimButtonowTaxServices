@@ -5,6 +5,7 @@ import { Box, Drawer, AppBar, Toolbar, Typography, List, ListItem, ListItemButto
 import { Dashboard, People, Description, Assignment, Settings, Group } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import HeaderToolPanel from '@/components/layout/HeaderToolPanel';
 
 const drawerWidth = 240;
 
@@ -34,9 +35,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             IRS Transcript Analyzer
           </Typography>
+          <HeaderToolPanel />
         </Toolbar>
       </AppBar>
 
