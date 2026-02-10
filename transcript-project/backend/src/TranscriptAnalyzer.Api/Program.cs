@@ -70,6 +70,7 @@ apiV1.MapFormulasEndpoints();
 apiV1.MapHumanTasksEndpoints();
 apiV1.MapRegistrationEndpoints();
 apiV1.MapInvitationsEndpoints();
+apiV1.MapApprovalsEndpoints();
 
 // Placeholder endpoints (to be implemented in user story tasks)
 apiV1.MapGet("/", () => Results.Ok(new { Version = "1.0", Status = "Ready" }))
