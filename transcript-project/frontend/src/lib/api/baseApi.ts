@@ -44,6 +44,8 @@ export const baseApi = createApi({
     'Transcript',
     'Notification',
     'DecisionTable',
+    'Workflow',
+    'CaseWorkflow',
   ],
   endpoints: () => ({}),
 });

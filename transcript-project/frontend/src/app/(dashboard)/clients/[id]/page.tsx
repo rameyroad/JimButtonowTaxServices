@@ -16,6 +16,7 @@ import {
   Alert,
   Paper,
 } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import EditIcon from '@mui/icons-material/Edit';
 import RestoreIcon from '@mui/icons-material/Restore';
@@ -115,6 +116,14 @@ export default function ClientDetailPage() {
         <Box sx={{ flexGrow: 1 }} />
         {!client.isArchived && (
           <>
+            <Button
+              component={Link}
+              href={`/clients/${clientId}/workflows`}
+              variant="outlined"
+              startIcon={<AccountTreeIcon />}
+            >
+              Workflows
+            </Button>
             <Button
               component={Link}
               href={`/clients/${clientId}/edit`}

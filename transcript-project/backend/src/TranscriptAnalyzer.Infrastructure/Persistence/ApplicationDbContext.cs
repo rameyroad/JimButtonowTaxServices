@@ -31,6 +31,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<DecisionRule> DecisionRules => Set<DecisionRule>();
     public DbSet<RuleCondition> RuleConditions => Set<RuleCondition>();
     public DbSet<RuleOutput> RuleOutputs => Set<RuleOutput>();
+    public DbSet<WorkflowDefinition> WorkflowDefinitions => Set<WorkflowDefinition>();
+    public DbSet<WorkflowStep> WorkflowSteps => Set<WorkflowStep>();
+
+    // Subscriber-level entities (tenant-filtered)
+    public DbSet<CaseWorkflow> CaseWorkflows => Set<CaseWorkflow>();
+    public DbSet<StepExecution> StepExecutions => Set<StepExecution>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,6 +67,12 @@ public class ApplicationDbContext : DbContext
             .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
 
         modelBuilder.Entity<AuditLog>()
+            .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
+
+        modelBuilder.Entity<CaseWorkflow>()
+            .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
+
+        modelBuilder.Entity<StepExecution>()
             .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
     }
 
