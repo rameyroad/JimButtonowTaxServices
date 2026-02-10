@@ -65,6 +65,7 @@ apiV1.MapClientsEndpoints();
 apiV1.MapDecisionTablesEndpoints();
 apiV1.MapWorkflowsEndpoints();
 apiV1.MapCaseWorkflowsEndpoints();
+apiV1.MapIssuesEndpoints();
 
 // Placeholder endpoints (to be implemented in user story tasks)
 apiV1.MapGet("/", () => Results.Ok(new { Version = "1.0", Status = "Ready" }))

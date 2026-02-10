@@ -24,7 +24,9 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useGetClientQuery, useArchiveClientMutation, useRestoreClientMutation } from '@/lib/api/clientsApi';
+import BugReportIcon from '@mui/icons-material/BugReport';
 import { ClientTypeBadge, TaxIdentifierDisplay, UpdateTaxIdentifierDialog } from '@/components/clients';
+import { IssuesList } from '@/components/issues';
 
 export default function ClientDetailPage() {
   const params = useParams();
@@ -266,6 +268,17 @@ export default function ClientDetailPage() {
           </Box>
         </Box>
       </Paper>
+
+      {/* Issues section */}
+      {!client.isArchived && (
+        <Box sx={{ mt: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+            <BugReportIcon color="action" />
+            <Typography variant="h6">Issues</Typography>
+          </Box>
+          <IssuesList clientId={clientId} />
+        </Box>
+      )}
 
       {/* Update tax identifier dialog */}
       <UpdateTaxIdentifierDialog

@@ -37,6 +37,7 @@ public class ApplicationDbContext : DbContext
     // Subscriber-level entities (tenant-filtered)
     public DbSet<CaseWorkflow> CaseWorkflows => Set<CaseWorkflow>();
     public DbSet<StepExecution> StepExecutions => Set<StepExecution>();
+    public DbSet<Issue> Issues => Set<Issue>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -73,6 +74,9 @@ public class ApplicationDbContext : DbContext
             .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
 
         modelBuilder.Entity<StepExecution>()
+            .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
+
+        modelBuilder.Entity<Issue>()
             .HasQueryFilter(e => _tenantContext.OrganizationId == null || e.OrganizationId == _tenantContext.OrganizationId);
     }
 

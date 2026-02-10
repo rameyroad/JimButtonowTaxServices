@@ -46,6 +46,7 @@ export const baseApi = createApi({
     'DecisionTable',
     'Workflow',
     'CaseWorkflow',
+    'Issue',
   ],
   endpoints: () => ({}),
 });
