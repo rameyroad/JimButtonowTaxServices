@@ -1,8 +1,8 @@
 'use client';
 
 import { use } from 'react';
-import { Box, Typography, Breadcrumbs, Link } from '@mui/material';
-import { NavigateNext, AccountTree } from '@mui/icons-material';
+import { Box, Typography, Breadcrumbs, Link, Button } from '@mui/material';
+import { NavigateNext, AccountTree, ViewComfy } from '@mui/icons-material';
 import NextLink from 'next/link';
 import { WorkflowEditor } from '@/components/workflows';
 
@@ -39,6 +39,17 @@ export default function WorkflowDetailPage({ params }: PageProps) {
         </Link>
         <Typography color="text.primary">Detail</Typography>
       </Breadcrumbs>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Button
+          component={NextLink}
+          href={`/platform/workflows/${id}/builder`}
+          variant="outlined"
+          startIcon={<ViewComfy />}
+        >
+          Visual Builder
+        </Button>
+      </Box>
 
       <WorkflowEditor id={id} />
     </Box>
