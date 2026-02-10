@@ -13,6 +13,7 @@ public class Organization : SoftDeletableEntity
     public Address Address { get; private set; }
     public SubscriptionStatus SubscriptionStatus { get; private set; }
     public string? SubscriptionPlan { get; private set; }
+    public bool IsPlatformOrganization { get; private set; }
 
     private readonly List<User> _users = [];
     public IReadOnlyCollection<User> Users => _users.AsReadOnly();
@@ -77,5 +78,11 @@ public class Organization : SoftDeletableEntity
     {
         ArgumentNullException.ThrowIfNull(settings);
         Settings = settings;
+    }
+
+    public void SetPlatformOrganization(bool isPlatform)
+    {
+        IsPlatformOrganization = isPlatform;
+        SetUpdatedAt();
     }
 }

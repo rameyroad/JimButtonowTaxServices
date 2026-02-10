@@ -25,6 +25,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
+    // Platform-level entities (no tenant filter)
+    public DbSet<DecisionTable> DecisionTables => Set<DecisionTable>();
+    public DbSet<DecisionTableColumn> DecisionTableColumns => Set<DecisionTableColumn>();
+    public DbSet<DecisionRule> DecisionRules => Set<DecisionRule>();
+    public DbSet<RuleCondition> RuleConditions => Set<RuleCondition>();
+    public DbSet<RuleOutput> RuleOutputs => Set<RuleOutput>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

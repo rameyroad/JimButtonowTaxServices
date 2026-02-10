@@ -62,6 +62,7 @@ var apiV1 = app.MapGroup("/api/v1");
 
 // Register endpoints
 apiV1.MapClientsEndpoints();
+apiV1.MapDecisionTablesEndpoints();
 
 // Placeholder endpoints (to be implemented in user story tasks)
 apiV1.MapGet("/", () => Results.Ok(new { Version = "1.0", Status = "Ready" }))

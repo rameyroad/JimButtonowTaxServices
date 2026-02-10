@@ -25,7 +25,11 @@ export const baseApi = createApi({
       if (process.env.NODE_ENV === 'development') {
         headers.set('X-Organization-Id', DEV_ORGANIZATION_ID);
         headers.set('X-User-Id', DEV_USER_ID);
-        headers.set('X-User-Role', 'Admin');
+        // Check sessionStorage for role override (set by dev role switcher)
+        const devRole = typeof window !== 'undefined'
+          ? sessionStorage.getItem('devRole') || 'PlatformAdmin'
+          : 'PlatformAdmin';
+        headers.set('X-User-Role', devRole);
       }
 
       headers.set('Content-Type', 'application/json');
@@ -39,6 +43,7 @@ export const baseApi = createApi({
     'Authorization',
     'Transcript',
     'Notification',
+    'DecisionTable',
   ],
   endpoints: () => ({}),
 });

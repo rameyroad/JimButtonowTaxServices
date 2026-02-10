@@ -64,6 +64,10 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
         builder.Property(e => e.SubscriptionPlan)
             .HasMaxLength(50);
 
+        builder.Property(e => e.IsPlatformOrganization)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         builder.Property(e => e.CreatedAt)
             .IsRequired();
 

@@ -87,6 +87,17 @@ public static class AuthConfiguration
                     var role = httpContext.Request.Headers["X-User-Role"].FirstOrDefault();
                     return role == "Admin"; // Only Admin role allowed
                 }));
+
+            // PlatformAdmin policy - requires PlatformAdmin role
+            options.AddPolicy("PlatformAdmin", policy =>
+                policy.RequireAssertion(context =>
+                {
+                    var httpContext = context.Resource as HttpContext;
+                    if (httpContext == null) return true; // Allow if no HttpContext
+
+                    var role = httpContext.Request.Headers["X-User-Role"].FirstOrDefault();
+                    return role == "PlatformAdmin";
+                }));
         });
 
         return services;
@@ -142,6 +153,10 @@ public static class AuthConfiguration
             // AdminOnly policy for archive/restore operations
             options.AddPolicy("AdminOnly", policy =>
                 policy.RequireClaim("permissions", "admin:clients"));
+
+            // PlatformAdmin policy for platform-level operations
+            options.AddPolicy("PlatformAdmin", policy =>
+                policy.RequireClaim("permissions", "platform:admin"));
         });
 
         return services;
